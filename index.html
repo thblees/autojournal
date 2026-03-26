@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoJournal AI — Jespers Recherche-Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --carbon: #111318;
+    --steel: #1a1d24;
+    --chrome: #2a2d36;
+    --smoke: #3a3d48;
+    --mist: #8a8d98;
+    --silver: #c8cbd6;
+    --white: #f0f2f8;
+    --red: #e63030;
+    --red-glow: rgba(230, 48, 48, 0.15);
+    --amber: #f5a623;
+    --green: #2ecc71;
+    --blue: #3a7bd5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* SCAN LINES EFFECT */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255,255,255,0.012) 2px,
+      rgba(255,255,255,0.012) 4px
+    );
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--carbon);
+    border-bottom: 2px solid var(--red);
+    padding: 0 32px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 32px rgba(230, 48, 48, 0.1);
+  }
+
+  .logo {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .logo-main {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: var(--white);
+  }
+
+  .logo-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--red);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: 1px solid var(--red);
+    padding: 2px 8px;
+    border-radius: 2px;
+  }
+
+  .header-status {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .status-dot {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--mist);
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* GRID LAYOUT */
+  .dashboard {
+    display: grid;
+    grid-template-columns: 320px 1fr 340px;
+    grid-template-rows: auto auto;
+    gap: 16px;
+    padding: 20px 24px;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+
+  /* PANELS */
+  .panel {
+    background: var(--carbon);
+    border: 1px solid var(--chrome);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .panel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--red), transparent);
+  }
+
+  .panel-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--chrome);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .panel-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: var(--silver);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .panel-icon {
+    color: var(--red);
+    font-size: 14px;
+  }
+
+  .panel-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--mist);
+    border: 1px solid var(--smoke);
+    padding: 2px 8px;
+    border-radius: 2px;
+  }
+
+  /* MARKEN RADAR — left column */
+  .brands-panel {
+    grid-column: 1;
+    grid-row: 1 / 3;
+  }
+
+  .brand-list {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .brand-item {
+    background: var(--steel);
+    border: 1px solid var(--chrome);
+    border-radius: 3px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .brand-item::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--red);
+    transform: scaleY(0);
+    transition: transform 0.2s;
+  }
+
+  .brand-item:hover {
+    border-color: var(--red);
+    background: var(--chrome);
+  }
+
+  .brand-item:hover::after {
+    transform: scaleY(1);
+  }
+
+  .brand-item.active {
+    border-color: var(--red);
+    background: var(--chrome);
+  }
+
+  .brand-item.active::after {
+    transform: scaleY(1);
+  }
+
+  .brand-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+
+  .brand-name {
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--white);
+  }
+
+  .brand-sentiment {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 2px;
+  }
+
+  .sentiment-pos { background: rgba(46, 204, 113, 0.15); color: var(--green); border: 1px solid rgba(46, 204, 113, 0.3); }
+  .sentiment-neg { background: rgba(230, 48, 48, 0.15); color: var(--red); border: 1px solid rgba(230, 48, 48, 0.3); }
+  .sentiment-neu { background: rgba(138, 141, 152, 0.15); color: var(--mist); border: 1px solid rgba(138, 141, 152, 0.3); }
+
+  .brand-trend {
+    font-size: 11px;
+    color: var(--mist);
+    line-height: 1.4;
+  }
+
+  .brand-meter {
+    margin-top: 8px;
+    height: 2px;
+    background: var(--smoke);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+
+  .brand-meter-fill {
+    height: 100%;
+    border-radius: 1px;
+    transition: width 0.5s ease;
+  }
+
+  /* CENTER — AI Chat */
+  .chat-panel {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 520px;
+  }
+
+  .chat-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-height: 380px;
+    min-height: 380px;
+  }
+
+  .chat-messages::-webkit-scrollbar { width: 4px; }
+  .chat-messages::-webkit-scrollbar-track { background: var(--steel); }
+  .chat-messages::-webkit-scrollbar-thumb { background: var(--chrome); border-radius: 2px; }
+
+  .message {
+    display: flex;
+    gap: 12px;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .message.user {
+    flex-direction: row-reverse;
+  }
+
+  .msg-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .msg-avatar.ai {
+    background: var(--red-glow);
+    border: 1px solid rgba(230,48,48,0.3);
+    color: var(--red);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .msg-avatar.human {
+    background: rgba(58, 123, 213, 0.15);
+    border: 1px solid rgba(58, 123, 213, 0.3);
+    color: var(--blue);
+  }
+
+  .msg-content {
+    flex: 1;
+    max-width: 80%;
+  }
+
+  .message.user .msg-content {
+    text-align: right;
+  }
+
+  .msg-bubble {
+    display: inline-block;
+    padding: 10px 16px;
+    border-radius: 3px;
+    font-size: 13px;
+    line-height: 1.6;
+    text-align: left;
+  }
+
+  .message.ai .msg-bubble {
+    background: var(--steel);
+    border: 1px solid var(--chrome);
+    color: var(--silver);
+  }
+
+  .message.user .msg-bubble {
+    background: rgba(58, 123, 213, 0.15);
+    border: 1px solid rgba(58, 123, 213, 0.3);
+    color: var(--white);
+  }
+
+  .msg-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--smoke);
+    margin-top: 4px;
+    padding: 0 2px;
+  }
+
+  /* CHAT INPUT */
+  .chat-input-area {
+    padding: 16px 20px;
+    border-top: 1px solid var(--chrome);
+    background: var(--steel);
+  }
+
+  .quick-prompts {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .quick-btn {
+    background: var(--chrome);
+    border: 1px solid var(--smoke);
+    color: var(--mist);
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .quick-btn:hover {
+    background: var(--smoke);
+    color: var(--white);
+    border-color: var(--red);
+  }
+
+  .input-row {
+    display: flex;
+    gap: 10px;
+  }
+
+  .chat-input {
+    flex: 1;
+    background: var(--carbon);
+    border: 1px solid var(--chrome);
+    color: var(--white);
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    padding: 10px 16px;
+    border-radius: 3px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .chat-input:focus {
+    border-color: var(--red);
+  }
+
+  .chat-input::placeholder {
+    color: var(--smoke);
+  }
+
+  .send-btn {
+    background: var(--red);
+    border: none;
+    color: white;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .send-btn:hover {
+    background: #ff4040;
+    box-shadow: 0 0 20px rgba(230, 48, 48, 0.4);
+  }
+
+  .send-btn:disabled {
+    background: var(--smoke);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  /* STORY IDEAS */
+  .stories-panel {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .story-grid {
+    padding: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .story-card {
+    background: var(--steel);
+    border: 1px solid var(--chrome);
+    border-radius: 3px;
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .story-card:hover {
+    border-color: var(--amber);
+    background: var(--chrome);
+  }
+
+  .story-category {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .story-headline {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--white);
+    line-height: 1.4;
+  }
+
+  .story-generate-btn {
+    margin: 0 16px 16px;
+    width: calc(100% - 32px);
+    background: transparent;
+    border: 1px dashed var(--smoke);
+    color: var(--mist);
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    padding: 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .story-generate-btn:hover {
+    border-color: var(--amber);
+    color: var(--amber);
+  }
+
+  .story-generate-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  /* NEWS FEED — right column */
+  .news-panel {
+    grid-column: 3;
+    grid-row: 1 / 3;
+    max-height: 860px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .news-feed {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .news-feed::-webkit-scrollbar { width: 4px; }
+  .news-feed::-webkit-scrollbar-track { background: var(--steel); }
+  .news-feed::-webkit-scrollbar-thumb { background: var(--chrome); border-radius: 2px; }
+
+  .news-item {
+    background: var(--steel);
+    border: 1px solid var(--chrome);
+    border-radius: 3px;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .news-item:hover {
+    border-color: var(--blue);
+    background: var(--chrome);
+  }
+
+  .news-source {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--mist);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .news-time {
+    color: var(--smoke);
+  }
+
+  .news-headline {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--silver);
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+
+  .news-tags {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  .news-tag {
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 2px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .tag-ev { background: rgba(46, 204, 113, 0.1); color: #2ecc71; border: 1px solid rgba(46, 204, 113, 0.2); }
+  .tag-finance { background: rgba(245, 166, 35, 0.1); color: #f5a623; border: 1px solid rgba(245, 166, 35, 0.2); }
+  .tag-tech { background: rgba(58, 123, 213, 0.1); color: #3a7bd5; border: 1px solid rgba(58, 123, 213, 0.2); }
+  .tag-politics { background: rgba(230, 48, 48, 0.1); color: #e63030; border: 1px solid rgba(230, 48, 48, 0.2); }
+  .tag-china { background: rgba(180, 48, 48, 0.1); color: #cc4040; border: 1px solid rgba(180, 48, 48, 0.2); }
+
+  .news-refresh-btn {
+    margin: 12px;
+    background: transparent;
+    border: 1px solid var(--chrome);
+    color: var(--mist);
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    padding: 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .news-refresh-btn:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+  }
+
+  .news-refresh-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  /* LOADING SPINNER */
+  .spinner {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 2px solid transparent;
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* TYPING INDICATOR */
+  .typing-indicator {
+    display: flex;
+    gap: 4px;
+    padding: 8px 0;
+  }
+
+  .typing-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--red);
+    animation: typingBounce 1.2s infinite;
+  }
+
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes typingBounce {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+    40% { transform: scale(1); opacity: 1; }
+  }
+
+  /* STATS ROW */
+  .stats-row {
+    display: flex;
+    gap: 12px;
+    padding: 0;
+    margin: 0 0 16px 0;
+  }
+
+  .stat-box {
+    flex: 1;
+    background: var(--carbon);
+    border: 1px solid var(--chrome);
+    border-radius: 4px;
+    padding: 14px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--red), transparent);
+  }
+
+  .stat-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: var(--white);
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--mist);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 2px;
+  }
+
+  .stat-change {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    margin-top: 4px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1200px) {
+    .dashboard {
+      grid-template-columns: 280px 1fr;
+      grid-template-rows: auto auto auto;
+    }
+    .brands-panel { grid-column: 1; grid-row: 1 / 3; }
+    .chat-panel { grid-column: 2; grid-row: 1; }
+    .stories-panel { grid-column: 2; grid-row: 2; }
+    .news-panel { grid-column: 1 / 3; grid-row: 3; max-height: none; }
+    .news-feed { max-height: 400px; }
+  }
+
+  /* SCROLLBAR GLOBAL */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--steel); }
+  ::-webkit-scrollbar-thumb { background: var(--chrome); border-radius: 3px; }
+
+  /* TOOLTIP */
+  .tooltip {
+    position: relative;
+  }
+  .tooltip::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--chrome);
+    color: var(--silver);
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 2px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    margin-bottom: 4px;
+  }
+  .tooltip:hover::after { opacity: 1; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="logo-main">AutoJournal</span>
+    <span class="logo-sub">AI</span>
+  </div>
+  <div class="header-status">
+    <div class="status-dot">
+      <div class="dot"></div>
+      KI-System aktiv
+    </div>
+    <div class="status-dot" style="color: var(--mist)">
+      🚗 Dein Recherche-Cockpit für die Autoindustrie
+    </div>
+  </div>
+</header>
+
+<div style="padding: 16px 24px 0; max-width: 1600px; margin: 0 auto;">
+  <div class="stats-row">
+    <div class="stat-box">
+      <div class="stat-value" id="stat-brands">12</div>
+      <div class="stat-label">Marken im Radar</div>
+      <div class="stat-change" style="color: var(--green)">▲ DE, JP, US, CN</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value" id="stat-news">247</div>
+      <div class="stat-label">News heute analysiert</div>
+      <div class="stat-change" style="color: var(--amber)">⚡ KI-kuratiert</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">EV</div>
+      <div class="stat-label">Trend-Thema KW13</div>
+      <div class="stat-change" style="color: var(--blue)">Ladestopp-Debatte</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">↑82%</div>
+      <div class="stat-label">China-Importe Erwähnungen</div>
+      <div class="stat-change" style="color: var(--red)">▲ gegenüber Vorwoche</div>
+    </div>
+  </div>
+</div>
+
+<div class="dashboard">
+
+  <!-- LEFT: BRAND RADAR -->
+  <div class="panel brands-panel">
+    <div class="panel-header">
+      <div class="panel-title">
+        <span class="panel-icon">◈</span>
+        Marken-Radar
+      </div>
+      <div class="panel-badge">Live-Stimmung</div>
+    </div>
+    <div class="brand-list" id="brandList"></div>
+  </div>
+
+  <!-- CENTER TOP: AI CHAT -->
+  <div class="panel chat-panel">
+    <div class="panel-header">
+      <div class="panel-title">
+        <span class="panel-icon">▶</span>
+        KI-Recherche-Assistent
+      </div>
+      <div class="panel-badge">Claude AI</div>
+    </div>
+
+    <div class="chat-messages" id="chatMessages">
+      <div class="message ai">
+        <div class="msg-avatar ai">KI</div>
+        <div class="msg-content">
+          <div class="msg-bubble">
+            Hey Jesper! 👋 Ich bin dein KI-Recherche-Assistent für die Automobilindustrie. Ich kenne Produktionszahlen, Strategien, Technologietrends, Konzernstrukturen und aktuelle Debatten in der Branche — und helfe dir, komplexe Themen schnell zu durchdringen, Hintergründe zu verstehen und Fragen für Interviews vorzubereiten.<br><br>
+            Was möchtest du heute recherchieren?
+          </div>
+          <div class="msg-meta">AutoJournal AI · bereit</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-input-area">
+      <div class="quick-prompts">
+        <button class="quick-btn" onclick="sendQuick('Warum kämpft VW gerade so?')">VW in der Krise</button>
+        <button class="quick-btn" onclick="sendQuick('Was macht Tesla anders als europäische Hersteller?')">Tesla vs. Europa</button>
+        <button class="quick-btn" onclick="sendQuick('Warum sind chinesische E-Autos so billig?')">China-Faktor</button>
+        <button class="quick-btn" onclick="sendQuick('Wie funktioniert eigentlich ein Verbrennermotor — einfach erklärt?')">Technik-Basics</button>
+        <button class="quick-btn" onclick="sendQuick('Welche 5 Fragen würde ich Carlos Tavares stellen?')">Interview-Fragen</button>
+      </div>
+      <div class="input-row">
+        <input type="text" class="chat-input" id="chatInput" placeholder="Frage stellen, Thema recherchieren, Hintergrund verstehen..." />
+        <button class="send-btn" id="sendBtn" onclick="sendMessage()">SENDEN</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: NEWS FEED -->
+  <div class="panel news-panel">
+    <div class="panel-header">
+      <div class="panel-title">
+        <span class="panel-icon">◉</span>
+        Live News-Radar
+      </div>
+      <div class="panel-badge" id="newsCount">Lädt...</div>
+    </div>
+    <div class="news-feed" id="newsFeed">
+      <div style="padding: 20px; text-align: center; color: var(--mist); font-size: 12px;">
+        <div class="spinner" style="margin: 0 auto 10px;"></div>
+        Lade aktuelle Auto-News...
+      </div>
+    </div>
+    <button class="news-refresh-btn" id="refreshNewsBtn" onclick="loadNews()">
+      <span>⟳</span> News aktualisieren
+    </button>
+  </div>
+
+  <!-- CENTER BOTTOM: STORY IDEAS -->
+  <div class="panel stories-panel">
+    <div class="panel-header">
+      <div class="panel-title">
+        <span class="panel-icon">✦</span>
+        Story-Ideen Generator
+      </div>
+      <div class="panel-badge">KI-generiert</div>
+    </div>
+    <div class="story-grid" id="storyGrid">
+      <div style="grid-column: 1/3; padding: 16px; text-align: center; color: var(--mist); font-size: 12px;">
+        <div class="spinner" style="margin: 0 auto 8px;"></div>
+        Generiere Story-Ideen...
+      </div>
+    </div>
+    <button class="story-generate-btn" id="storyBtn" onclick="generateStories()">
+      <span>✦</span> Neue Ideen generieren
+    </button>
+  </div>
+
+</div>
+
+<script>
+const BRANDS = [
+  { name: "Volkswagen", country: "🇩🇪", sentiment: "neg", trend: "Stellenabbau, Plattform-Neustart, China-Verluste", score: 28, color: "#e63030" },
+  { name: "BMW", country: "🇩🇪", sentiment: "pos", trend: "Rekordumsatz, China-Partnerschaft stabil, EV-Ausbau", score: 74, color: "#2ecc71" },
+  { name: "Mercedes-Benz", country: "🇩🇪", sentiment: "neu", trend: "Luxus-Pivot, EV-Pläne reduziert, Marge hält", score: 52, color: "#f5a623" },
+  { name: "Tesla", country: "🇺🇸", sentiment: "neg", trend: "Musk-Politisierung, Absatzrückgang Europa, FSD-Debatte", score: 31, color: "#e63030" },
+  { name: "Toyota", country: "🇯🇵", sentiment: "pos", trend: "Hybrid-Strategie funktioniert, Solide Zahlen", score: 78, color: "#2ecc71" },
+  { name: "BYD", country: "🇨🇳", sentiment: "pos", trend: "Weltgrößter EV-Anbieter, Europa-Expansion, Preiskampf", score: 82, color: "#2ecc71" },
+  { name: "Stellantis", country: "🇪🇺", sentiment: "neg", trend: "CEO-Abgang, Gewinnwarnung, Überkapazitäten", score: 22, color: "#e63030" },
+  { name: "Porsche AG", country: "🇩🇪", sentiment: "neu", trend: "Taycan-Absatz schwächelt, Verbrenner bleibt Kern", score: 55, color: "#f5a623" },
+  { name: "Rivian", country: "🇺🇸", sentiment: "neu", trend: "Amazon-Deal, Produktionsausbau, Burn Rate hoch", score: 48, color: "#f5a623" },
+  { name: "NIO", country: "🇨🇳", sentiment: "neg", trend: "Cashflow-Probleme, Deutschland-Expansion zögerlich", score: 33, color: "#e63030" },
+  { name: "Honda", country: "🇯🇵", sentiment: "neu", trend: "Nissan-Fusion geplant, EV-Joint-Venture", score: 58, color: "#f5a623" },
+  { name: "Renault", country: "🇫🇷", sentiment: "pos", trend: "Ampere EV-Spin-off, Kostensenkung greift", score: 65, color: "#2ecc71" },
+];
+
+const STORY_IDEAS = [
+  { cat: "DEEP DIVE", headline: "Der stille Abschied vom Verbrenner: Wann ist wirklich Schluss?" },
+  { cat: "PERSONALIE", headline: "Wer führt VW in die Zukunft? Eine Analyse der neuen Führungsriege" },
+  { cat: "DATENJOURNALISMUS", headline: "EV-Ladenetz: Wo Deutschland im Europa-Vergleich steht" },
+  { cat: "WIRTSCHAFT", headline: "Wie BYD in 5 Jahren zur größten Automarke der Welt wurde" },
+  { cat: "TECHNOLOGIE", headline: "Software statt Stahl: Warum Autos jetzt wie iPhones verkauft werden" },
+  { cat: "POLITIK", headline: "EU-Strafzölle auf China-Autos: Schutz oder Selbsttäuschung?" },
+  { cat: "INVESTIGATIV", headline: "Lobbying in Brüssel: Wie die Autoindustrie den Green Deal formt" },
+  { cat: "REPORTAGE", headline: "Wolfsburg 2025: Was bleibt von der VW-Stadt, wenn Jobs wegfallen?" },
+];
+
+// Render brands
+function renderBrands() {
+  const list = document.getElementById('brandList');
+  list.innerHTML = BRANDS.map((b, i) => `
+    <div class="brand-item" onclick="askAboutBrand('${b.name}')">
+      <div class="brand-top">
+        <span class="brand-name">${b.country} ${b.name}</span>
+        <span class="brand-sentiment sentiment-${b.sentiment}">${b.sentiment === 'pos' ? '▲ POSITIV' : b.sentiment === 'neg' ? '▼ NEGATIV' : '◆ NEUTRAL'}</span>
+      </div>
+      <div class="brand-trend">${b.trend}</div>
+      <div class="brand-meter">
+        <div class="brand-meter-fill" style="width: ${b.score}%; background: ${b.color};"></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function askAboutBrand(name) {
+  document.getElementById('chatInput').value = `Was sind die wichtigsten Entwicklungen bei ${name} gerade?`;
+  sendMessage();
+}
+
+// Load News via AI
+async function loadNews() {
+  const btn = document.getElementById('refreshNewsBtn');
+  const feed = document.getElementById('newsFeed');
+  btn.disabled = true;
+  feed.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--mist); font-size: 12px;"><div class="spinner" style="margin: 0 auto 10px;"></div>KI analysiert aktuelle Meldungen...</div>';
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: `Du bist ein Nachrichten-Analyst für die Automobilindustrie. Generiere 8 realistische, typische aktuelle News-Meldungen (Stand: März 2025) über die Autoindustrie. Antworte NUR mit validem JSON, kein Markdown, keine Erklärung. Format:
+{"news":[{"source":"Quelle","time":"vor Xh","headline":"Überschrift max 80 Zeichen","tags":["ev","finance","tech","politics","china"]}]}
+Nutze maximal 2 Tags pro Meldung. Mische deutsche und internationale Quellen (Handelsblatt, FAZ, Spiegel, Manager Magazin, Reuters, Bloomberg, Automobilwoche). Themen: EV, Preiskampf, China-Import, Stellenabbau, Software, Ladesäulen, Strafzölle, neue Modelle, Konzernstrategie.`,
+        messages: [{ role: 'user', content: 'Generiere 8 aktuelle Auto-News für März 2025.' }]
+      })
+    });
+    const data = await resp.json();
+    let text = data.content.filter(c => c.type === 'text').map(c => c.text).join('');
+    text = text.replace(/```json|```/g, '').trim();
+    const parsed = JSON.parse(text);
+    renderNews(parsed.news);
+    document.getElementById('newsCount').textContent = `${parsed.news.length} Meldungen`;
+  } catch(e) {
+    feed.innerHTML = '<div style="padding: 16px; color: var(--mist); font-size: 12px;">Verbindungsfehler. Bitte erneut versuchen.</div>';
+  }
+  btn.disabled = false;
+}
+
+function renderNews(newsItems) {
+  const feed = document.getElementById('newsFeed');
+  feed.innerHTML = newsItems.map(n => `
+    <div class="news-item" onclick="askAboutNews('${n.headline.replace(/'/g, "\\'")}')">
+      <div class="news-source">
+        <span>${n.source}</span>
+        <span class="news-time">${n.time}</span>
+      </div>
+      <div class="news-headline">${n.headline}</div>
+      <div class="news-tags">
+        ${n.tags.map(t => `<span class="news-tag tag-${t}">${t.toUpperCase()}</span>`).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function askAboutNews(headline) {
+  document.getElementById('chatInput').value = `Erkläre mir den Hintergrund zu: "${headline}"`;
+  sendMessage();
+}
+
+// Generate Story Ideas via AI
+async function generateStories() {
+  const btn = document.getElementById('storyBtn');
+  const grid = document.getElementById('storyGrid');
+  btn.disabled = true;
+  grid.innerHTML = '<div style="grid-column:1/3; padding: 20px; text-align: center; color: var(--mist); font-size: 12px;"><div class="spinner" style="margin: 0 auto 8px;"></div>KI generiert Story-Ideen...</div>';
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 800,
+        system: `Du bist ein erfahrener Wirtschaftsredakteur für Automobilthemen bei einem großen deutschen Medium. Generiere 6 packende Story-Ideen für einen jungen Journalisten. Antworte NUR mit validem JSON, kein Markdown. Format:
+{"stories":[{"cat":"KATEGORIE","headline":"Headline max 70 Zeichen"}]}
+Kategorien: INVESTIGATIV, REPORTAGE, DEEP DIVE, DATENJOURNALISMUS, PERSONALIE, WIRTSCHAFT, TECHNOLOGIE, POLITIK. Themen: aktuelle Krisen, Personen, Zahlen, gesellschaftliche Relevanz.`,
+        messages: [{ role: 'user', content: 'Generiere 6 Story-Ideen für Auto-Journalismus 2025.' }]
+      })
+    });
+    const data = await resp.json();
+    let text = data.content.filter(c => c.type === 'text').map(c => c.text).join('');
+    text = text.replace(/```json|```/g, '').trim();
+    const parsed = JSON.parse(text);
+    renderStories(parsed.stories);
+  } catch(e) {
+    // Fallback
+    renderStories(STORY_IDEAS);
+  }
+  btn.disabled = false;
+}
+
+function renderStories(stories) {
+  const grid = document.getElementById('storyGrid');
+  grid.innerHTML = stories.map(s => `
+    <div class="story-card" onclick="developStory('${s.headline.replace(/'/g, "\\'")}')">
+      <div class="story-category">${s.cat}</div>
+      <div class="story-headline">${s.headline}</div>
+    </div>
+  `).join('');
+}
+
+function developStory(headline) {
+  document.getElementById('chatInput').value = `Hilf mir, diese Story-Idee zu entwickeln: "${headline}". Was sind die wichtigsten Fragen, Quellen und Gesprächspartner?`;
+  sendMessage();
+}
+
+// AI Chat
+let conversationHistory = [];
+
+async function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  input.value = '';
+  addMessage('user', text);
+
+  conversationHistory.push({ role: 'user', content: text });
+
+  const btn = document.getElementById('sendBtn');
+  btn.disabled = true;
+
+  // Show typing
+  const typingId = 'typing-' + Date.now();
+  const messagesDiv = document.getElementById('chatMessages');
+  messagesDiv.innerHTML += `
+    <div class="message ai" id="${typingId}">
+      <div class="msg-avatar ai">KI</div>
+      <div class="msg-content">
+        <div class="msg-bubble">
+          <div class="typing-indicator">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: `Du bist AutoJournal AI, ein Recherche-Assistent für angehende Journalisten mit Fokus auf die Automobilindustrie. Du sprichst Jesper, 22, an — einen Autofan, der Journalismus studiert. 
+
+Deine Stärken:
+- Erkläre Branchenzusammenhänge verständlich, aber ohne zu simplifizieren
+- Nenne konkrete Zahlen, Personen, Unternehmen
+- Zeige journalistische Perspektiven: Welche Story steckt dahinter? Welche Fragen sollte ein Journalist stellen?
+- Hilf bei Recherchestrategien, Quellen, Interview-Fragen
+- Begeistere für das Thema
+
+Ton: Locker, direkt, kompetent — wie ein erfahrener Redakteur, der einem jungen Kollegen erklärt wie es wirklich läuft. Antworte auf Deutsch. Maximal 200 Wörter pro Antwort.`,
+        messages: conversationHistory
+      })
+    });
+
+    const data = await resp.json();
+    const aiText = data.content.filter(c => c.type === 'text').map(c => c.text).join('');
+
+    document.getElementById(typingId)?.remove();
+    addMessage('ai', aiText);
+    conversationHistory.push({ role: 'assistant', content: aiText });
+
+    if (conversationHistory.length > 20) {
+      conversationHistory = conversationHistory.slice(-16);
+    }
+  } catch(e) {
+    document.getElementById(typingId)?.remove();
+    addMessage('ai', 'Verbindungsfehler. Bitte erneut versuchen.');
+  }
+
+  btn.disabled = false;
+  input.focus();
+}
+
+function addMessage(role, text) {
+  const div = document.getElementById('chatMessages');
+  const time = new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+  div.innerHTML += `
+    <div class="message ${role}">
+      <div class="msg-avatar ${role === 'ai' ? 'ai' : 'human'}">${role === 'ai' ? 'KI' : '👤'}</div>
+      <div class="msg-content">
+        <div class="msg-bubble">${text.replace(/\n/g, '<br>')}</div>
+        <div class="msg-meta">${role === 'ai' ? 'AutoJournal AI' : 'Du'} · ${time}</div>
+      </div>
+    </div>`;
+  div.scrollTop = div.scrollHeight;
+}
+
+function sendQuick(text) {
+  document.getElementById('chatInput').value = text;
+  sendMessage();
+}
+
+// Enter key
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('chatInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+
+  renderBrands();
+  loadNews();
+  generateStories();
+});
+</script>
+</body>
+</html>
