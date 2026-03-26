@@ -56,6 +56,15 @@
   .brand-snippet { font-size:11px; color:#4a6a9a; line-height:1.4; margin-top:3px; }
   .brand-meter { margin-top:6px; height:3px; background:#b8d4f0; border-radius:2px; overflow:hidden; }
   .brand-meter-fill { height:100%; border-radius:2px; transition:width .8s ease; }
+  .brand-headlines { display:none; margin-top:8px; border-top:1px solid #b8d4f0; padding-top:8px; }
+  .brand-item.open .brand-headlines { display:block; }
+  .brand-item.open { border-color:#1a3a6b; background:#dbeafe; }
+  .brand-hl-item { font-size:11px; color:#1a2f5a; padding:4px 0; border-bottom:1px solid #ccdff4; line-height:1.4; }
+  .brand-hl-item:last-child { border-bottom:none; }
+  .brand-hl-link { font-size:11px; color:#2563eb; text-decoration:none; }
+  .brand-hl-link:hover { text-decoration:underline; }
+  .brand-px-btn { display:inline-flex; align-items:center; gap:5px; background:#1a3a6b; border:none; color:#fff; font-size:11px; font-family:'DM Sans',sans-serif; padding:5px 12px; border-radius:6px; cursor:pointer; transition:all .2s; margin-top:8px; width:100%; justify-content:center; text-decoration:none; }
+  .brand-px-btn:hover { background:#2563eb; }
 
   /* CHAT */
   .chat-panel { grid-column:2; grid-row:1; display:flex; flex-direction:column; }
@@ -585,9 +594,9 @@ function updateBrandRadar() {
   const brandData = {};
   allNews.forEach(n => {
     detectBrands(n.headline).forEach(b => {
-      if (!brandData[b]) brandData[b] = { count:0, headlines:[] };
+      if (!brandData[b]) brandData[b] = { count:0, items:[] };
       brandData[b].count++;
-      if (brandData[b].headlines.length < 2) brandData[b].headlines.push(n.headline);
+      brandData[b].items.push(n);
     });
   });
 
@@ -606,16 +615,31 @@ function updateBrandRadar() {
     const pct = Math.round((data.count / max) * 100);
     const pillClass = pct >= 70 ? 'pill-hot' : pct >= 35 ? 'pill-mid' : 'pill-low';
     const barColor = pct >= 70 ? '#dc2626' : pct >= 35 ? '#d97706' : '#2563eb';
-    const snippet = data.headlines[0] ? data.headlines[0].substring(0,60)+'…' : '';
-    return `<div class="brand-item" onclick="askAboutBrand('${brand}')">
+    const pxUrl = `https://www.perplexity.ai/search?q=${encodeURIComponent(brand+' aktuell Neuigkeiten Automobil')}`;
+    const hlItems = data.items.slice(0,5).map(n => {
+      const linkHtml = n.link
+        ? `<a class="brand-hl-link" href="${n.link}" target="_blank" onclick="event.stopPropagation()">${n.headline}</a>`
+        : `<span>${n.headline}</span>`;
+      return `<div class="brand-hl-item">${linkHtml}<span style="color:#9ab4d0;margin-left:5px">${n.time}</span></div>`;
+    }).join('');
+    return `<div class="brand-item" onclick="toggleBrand(this)">
       <div class="brand-top">
         <span class="brand-name">${brand}</span>
-        <span class="brand-pill ${pillClass}">${data.count}×</span>
+        <span class="brand-pill ${pillClass}">${data.count}× ▾</span>
       </div>
-      <div class="brand-snippet">${snippet}</div>
       <div class="brand-meter"><div class="brand-meter-fill" style="width:${pct}%;background:${barColor}"></div></div>
+      <div class="brand-headlines">
+        ${hlItems}
+        <a class="brand-px-btn" href="${pxUrl}" target="_blank" onclick="event.stopPropagation()">🔍 ${brand} in Perplexity recherchieren</a>
+      </div>
     </div>`;
   }).join('');
+}
+
+function toggleBrand(el) {
+  const wasOpen = el.classList.contains('open');
+  document.querySelectorAll('.brand-item.open').forEach(e => e.classList.remove('open'));
+  if (!wasOpen) el.classList.add('open');
 }
 
 function switchTab(tab, el) {
@@ -770,7 +794,7 @@ function addMessage(role, text) {
 }
 
 function sendQuick(text) { document.getElementById('chatInput').value = text; sendMessage(); }
-function askAboutBrand(name) { sendQuick(`Was sind die wichtigsten aktuellen Entwicklungen bei ${name}?`); }
+// askAboutBrand replaced by toggleBrand + Perplexity
 function askAboutNews(headline) { sendQuick(`Erkläre mir den journalistischen Hintergrund zu: "${headline}"`); }
 function developStory(h) { sendQuick(`Hilf mir diese Story zu entwickeln: "${h}". Wichtigste Fragen, Quellen, Interviewpartner?`); }
 
