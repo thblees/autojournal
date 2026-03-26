@@ -956,7 +956,9 @@ async function loadNews() {
   try {
     const resp = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'x-api-key': 'sk-ant- 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
+', 'anthropic-version': '2023-06-01' },
+
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 1000,
@@ -1009,7 +1011,9 @@ async function generateStories() {
   try {
     const resp = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'x-api-key': 'sk-ant- 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
+', 'anthropic-version': '2023-06-01' },
+
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 800,
@@ -1083,7 +1087,9 @@ async function sendMessage() {
   try {
     const resp = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'x-api-key': 'sk-ant- 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
+', 'anthropic-version': '2023-06-01' },
+
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 1000,
