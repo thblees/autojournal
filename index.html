@@ -813,6 +813,8 @@ document.addEventListener('DOMContentLoaded', () => {
   renderPress();
   renderExperts();
   loadAllNews();
+  // Auto-refresh alle 15 Minuten
+  setInterval(loadAllNews, 15 * 60 * 1000);
 });
 </script>
 </body>
