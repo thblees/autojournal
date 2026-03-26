@@ -17,6 +17,13 @@
   .status-dot { display:flex; align-items:center; gap:7px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#a8c8f0; }
   .dot { width:8px; height:8px; border-radius:50%; background:#4ade80; animation:pulse 2s infinite; }
   @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.4} }
+  .px-search { display:flex; align-items:center; gap:0; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.25); border-radius:8px; overflow:hidden; }
+  .px-search input { background:transparent; border:none; color:#fff; font-family:'DM Sans',sans-serif; font-size:13px; padding:7px 12px; width:210px; outline:none; }
+  .px-search input::placeholder { color:rgba(255,255,255,.5); }
+  .px-search button { background:#20a6e0; border:none; color:#fff; font-family:'Bebas Neue',sans-serif; font-size:13px; letter-spacing:1px; padding:7px 14px; cursor:pointer; transition:background .2s; }
+  .px-search button:hover { background:#0e8bc0; }
+  .px-btn { display:inline-flex; align-items:center; gap:5px; background:#e8f6fd; border:1px solid #93c5fd; color:#0369a1; font-size:11px; font-family:'DM Sans',sans-serif; padding:3px 9px; border-radius:5px; cursor:pointer; transition:all .2s; text-decoration:none; margin-top:5px; }
+  .px-btn:hover { background:#0e8bc0; color:#fff; border-color:#0e8bc0; }
 
   .stats-row { display:flex; gap:10px; padding:14px 20px 0; max-width:1800px; margin:0 auto; }
   .stat-box { flex:1; background:#deeaf8; border:1px solid #a8c8e8; border-radius:10px; padding:13px 16px; position:relative; overflow:hidden; box-shadow:0 2px 10px rgba(26,58,107,.1); }
@@ -152,6 +159,10 @@
     <div class="status-dot"><div class="dot"></div>Live</div>
     <div class="status-dot">🚗 Jespers Recherche-Cockpit · Autoindustrie</div>
     <div class="status-dot" id="lastUpdate">lädt...</div>
+    <div class="px-search">
+      <input type="text" id="pxInput" placeholder="🔍 In Perplexity recherchieren..." onkeydown="if(event.key==='Enter'&&this.value) openPx(this.value)" />
+      <button onclick="if(document.getElementById('pxInput').value) openPx(document.getElementById('pxInput').value)">→ Suchen</button>
+    </div>
   </div>
 </header>
 
@@ -629,6 +640,7 @@ function renderNews() {
       </div>
       <div class="news-headline">${n.headline}</div>
       ${n.link ? `<a class="news-read" href="${n.link}" target="_blank" onclick="event.stopPropagation()">→ Artikel lesen</a>` : ''}
+      <a class="px-btn" href="#" onclick="event.stopPropagation();openPx(n.headline);return false">🔍 Perplexity</a>
     </div>`).join('');
 }
 
@@ -700,6 +712,7 @@ function renderStories(stories) {
     <div class="story-card" onclick="developStory('${s.headline.replace(/'/g,"\\'")}')">
       <div class="story-category">${s.cat}</div>
       <div class="story-headline">${s.headline}</div>
+      <a class="px-btn" href="#" onclick="event.stopPropagation();openPx(s.headline+' Autoindustrie');return false">🔍 Recherchieren</a>
     </div>`).join('');
 }
 
@@ -762,6 +775,13 @@ function askAboutNews(headline) { sendQuick(`Erkläre mir den journalistischen H
 function developStory(h) { sendQuick(`Hilf mir diese Story zu entwickeln: "${h}". Wichtigste Fragen, Quellen, Interviewpartner?`); }
 
 // ── INIT ───────────────────────────────────────────────────
+// ── PERPLEXITY ────────────────────────────────────────────
+function openPx(query) {
+  if (!query || !query.trim()) return;
+  const q = encodeURIComponent(query.trim());
+  window.open(`https://www.perplexity.ai/search?q=${q}`, '_blank');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('chatInput').addEventListener('keydown', e => {
     if (e.key==='Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
