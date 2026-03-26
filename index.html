@@ -640,7 +640,7 @@ function renderNews() {
       </div>
       <div class="news-headline">${n.headline}</div>
       ${n.link ? `<a class="news-read" href="${n.link}" target="_blank" onclick="event.stopPropagation()">→ Artikel lesen</a>` : ''}
-      <a class="px-btn" href="#" onclick="event.stopPropagation();openPx(n.headline);return false">🔍 Perplexity</a>
+      <a class="px-btn" href="${`https://www.perplexity.ai/search?q=${encodeURIComponent(n.headline)}`}" target="_blank" onclick="event.stopPropagation()">🔍 Perplexity</a>
     </div>`).join('');
 }
 
@@ -712,7 +712,7 @@ function renderStories(stories) {
     <div class="story-card" onclick="developStory('${s.headline.replace(/'/g,"\\'")}')">
       <div class="story-category">${s.cat}</div>
       <div class="story-headline">${s.headline}</div>
-      <a class="px-btn" href="#" onclick="event.stopPropagation();openPx(s.headline+' Autoindustrie');return false">🔍 Recherchieren</a>
+      <a class="px-btn" href="${`https://www.perplexity.ai/search?q=${encodeURIComponent(s.headline+' Autoindustrie 2025')}`}" target="_blank" onclick="event.stopPropagation()">🔍 Recherchieren</a>
     </div>`).join('');
 }
 
