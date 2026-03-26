@@ -31,52 +31,14 @@
   }
 
   .logo { display: flex; align-items: baseline; gap: 10px; }
-
-  .logo-main {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
-    letter-spacing: 3px;
-    color: #ffffff;
-  }
-
-  .logo-sub {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: #7eb8f5;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    border: 1px solid #7eb8f5;
-    padding: 2px 8px;
-    border-radius: 3px;
-  }
-
+  .logo-main { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 3px; color: #ffffff; }
+  .logo-sub { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #7eb8f5; letter-spacing: 2px; text-transform: uppercase; border: 1px solid #7eb8f5; padding: 2px 8px; border-radius: 3px; }
   .header-status { display: flex; align-items: center; gap: 24px; }
-
-  .status-dot {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: #a8c8f0;
-  }
-
-  .dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: #4ade80;
-    animation: pulse 2s infinite;
-  }
-
+  .status-dot { display: flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #a8c8f0; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; animation: pulse 2s infinite; }
   @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
-  .stats-row {
-    display: flex;
-    gap: 12px;
-    padding: 16px 24px 0;
-    max-width: 1600px;
-    margin: 0 auto;
-  }
+  .stats-row { display: flex; gap: 12px; padding: 16px 24px 0; max-width: 1700px; margin: 0 auto; }
 
   .stat-box {
     flex: 1;
@@ -88,43 +50,19 @@
     overflow: hidden;
     box-shadow: 0 2px 10px rgba(26, 58, 107, 0.1);
   }
+  .stat-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #1a3a6b, #3b7dd8, transparent); }
+  .stat-value { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; color: #1a2f5a; }
+  .stat-label { font-size: 11px; color: #4a6a9a; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+  .stat-change { font-family: 'JetBrains Mono', monospace; font-size: 10px; margin-top: 4px; }
 
-  .stat-box::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #1a3a6b, #3b7dd8, transparent);
-  }
-
-  .stat-value {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
-    letter-spacing: 2px;
-    color: #1a2f5a;
-  }
-
-  .stat-label {
-    font-size: 11px;
-    color: #4a6a9a;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-top: 2px;
-  }
-
-  .stat-change {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    margin-top: 4px;
-  }
-
+  /* MAIN GRID: 4 columns */
   .dashboard {
     display: grid;
-    grid-template-columns: 320px 1fr 340px;
+    grid-template-columns: 260px 1fr 300px 220px;
     grid-template-rows: auto auto;
     gap: 14px;
     padding: 14px 24px 24px;
-    max-width: 1600px;
+    max-width: 1700px;
     margin: 0 auto;
   }
 
@@ -136,429 +74,152 @@
     position: relative;
     box-shadow: 0 2px 14px rgba(26, 58, 107, 0.1);
   }
-
-  .panel::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #1a3a6b, #3b7dd8, transparent);
-  }
+  .panel::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #1a3a6b, #3b7dd8, transparent); }
 
   .panel-header {
-    padding: 13px 18px;
+    padding: 12px 16px;
     border-bottom: 1px solid #b8d4f0;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background: #ccdff4;
   }
+  .panel-title { font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 2px; color: #1a2f5a; display: flex; align-items: center; gap: 8px; }
+  .panel-icon { color: #1a3a6b; font-size: 13px; }
+  .panel-badge { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #3a6aaa; border: 1px solid #a8c8e8; padding: 2px 7px; border-radius: 3px; background: #eef5fd; }
 
-  .panel-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 16px;
-    letter-spacing: 2px;
-    color: #1a2f5a;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .panel-icon { color: #1a3a6b; font-size: 14px; }
-
-  .panel-badge {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: #3a6aaa;
-    border: 1px solid #a8c8e8;
-    padding: 2px 8px;
-    border-radius: 3px;
-    background: #eef5fd;
-  }
-
+  /* BRAND RADAR — col 1 */
   .brands-panel { grid-column: 1; grid-row: 1 / 3; }
-
-  .brand-list {
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-    overflow-y: auto;
-    max-height: calc(100vh - 220px);
-  }
-
-  .brand-item {
-    background: #eef5fd;
-    border: 1px solid #b8d4f0;
-    border-radius: 7px;
-    padding: 11px 14px;
-    cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .brand-item::after {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
-    background: #1a3a6b;
-    transform: scaleY(0);
-    transition: transform 0.2s;
-  }
-
-  .brand-item:hover {
-    border-color: #1a3a6b;
-    background: #dbeafe;
-    box-shadow: 0 2px 8px rgba(26, 58, 107, 0.15);
-    transform: translateX(2px);
-  }
-
+  .brand-list { padding: 8px; display: flex; flex-direction: column; gap: 6px; overflow-y: auto; max-height: calc(100vh - 200px); }
+  .brand-item { background: #eef5fd; border: 1px solid #b8d4f0; border-radius: 7px; padding: 10px 12px; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; }
+  .brand-item::after { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: #1a3a6b; transform: scaleY(0); transition: transform 0.2s; }
+  .brand-item:hover { border-color: #1a3a6b; background: #dbeafe; transform: translateX(2px); }
   .brand-item:hover::after { transform: scaleY(1); }
-
-  .brand-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 5px;
-  }
-
-  .brand-name { font-weight: 700; font-size: 13px; color: #1a2f5a; }
-
-  .brand-sentiment {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    padding: 2px 6px;
-    border-radius: 3px;
-  }
-
+  .brand-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  .brand-name { font-weight: 700; font-size: 12px; color: #1a2f5a; }
+  .brand-sentiment { font-family: 'JetBrains Mono', monospace; font-size: 9px; padding: 1px 5px; border-radius: 3px; }
   .sentiment-pos { background: #dcfce7; color: #16a34a; border: 1px solid #bbf7d0; }
   .sentiment-neg { background: #fee2e2; color: #dc2626; border: 1px solid #fecaca; }
   .sentiment-neu { background: #fef3c7; color: #d97706; border: 1px solid #fde68a; }
-
-  .brand-trend { font-size: 11px; color: #4a6a9a; line-height: 1.4; }
-
-  .brand-meter { margin-top: 7px; height: 3px; background: #b8d4f0; border-radius: 2px; overflow: hidden; }
+  .brand-trend { font-size: 10px; color: #4a6a9a; line-height: 1.4; }
+  .brand-meter { margin-top: 6px; height: 3px; background: #b8d4f0; border-radius: 2px; overflow: hidden; }
   .brand-meter-fill { height: 100%; border-radius: 2px; transition: width 0.5s ease; }
 
-  .chat-panel { grid-column: 2; grid-row: 1; display: flex; flex-direction: column; min-height: 520px; }
-
-  .chat-messages {
-    flex: 1;
-    padding: 18px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    max-height: 380px;
-    min-height: 380px;
-    background: #c8ddf2;
-  }
-
+  /* CHAT — col 2 row 1 */
+  .chat-panel { grid-column: 2; grid-row: 1; display: flex; flex-direction: column; min-height: 480px; }
+  .chat-messages { flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; max-height: 340px; min-height: 340px; background: #c8ddf2; }
   .message { display: flex; gap: 10px; animation: fadeIn 0.3s ease; }
   .message.user { flex-direction: row-reverse; }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .msg-avatar {
-    width: 32px; height: 32px;
-    border-radius: 6px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px; flex-shrink: 0;
-  }
-
-  .msg-avatar.ai {
-    background: #dbeafe;
-    border: 1px solid #93c5fd;
-    color: #1d4ed8;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; font-weight: 600;
-  }
-
-  .msg-avatar.human {
-    background: #dcfce7;
-    border: 1px solid #86efac;
-    color: #16a34a;
-  }
-
-  .msg-content { flex: 1; max-width: 80%; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  .msg-avatar { width: 30px; height: 30px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+  .msg-avatar.ai { background: #dbeafe; border: 1px solid #93c5fd; color: #1d4ed8; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; }
+  .msg-avatar.human { background: #dcfce7; border: 1px solid #86efac; color: #16a34a; }
+  .msg-content { flex: 1; max-width: 82%; }
   .message.user .msg-content { text-align: right; }
+  .msg-bubble { display: inline-block; padding: 9px 14px; border-radius: 10px; font-size: 13px; line-height: 1.6; text-align: left; }
+  .message.ai .msg-bubble { background: #eef5fd; border: 1px solid #b8d4f0; color: #1a2f5a; box-shadow: 0 1px 4px rgba(26,58,107,0.08); }
+  .message.user .msg-bubble { background: #1a3a6b; border: 1px solid #1a3a6b; color: #ffffff; }
+  .msg-meta { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #6a90b8; margin-top: 3px; padding: 0 2px; }
 
-  .msg-bubble {
-    display: inline-block;
-    padding: 10px 15px;
-    border-radius: 10px;
-    font-size: 13px;
-    line-height: 1.6;
-    text-align: left;
-  }
-
-  .message.ai .msg-bubble {
-    background: #eef5fd;
-    border: 1px solid #b8d4f0;
-    color: #1a2f5a;
-    box-shadow: 0 1px 4px rgba(26,58,107,0.08);
-  }
-
-  .message.user .msg-bubble {
-    background: #1a3a6b;
-    border: 1px solid #1a3a6b;
-    color: #ffffff;
-  }
-
-  .msg-meta {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: #6a90b8;
-    margin-top: 4px;
-    padding: 0 2px;
-  }
-
-  .chat-input-area {
-    padding: 14px 18px;
-    border-top: 1px solid #b8d4f0;
-    background: #ccdff4;
-  }
-
-  .quick-prompts { display: flex; gap: 7px; margin-bottom: 10px; flex-wrap: wrap; }
-
-  .quick-btn {
-    background: #eef5fd;
-    border: 1px solid #a8c8e8;
-    color: #1a3a6b;
-    font-size: 11px;
-    padding: 4px 12px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-family: 'DM Sans', sans-serif;
-  }
-
-  .quick-btn:hover {
-    background: #1a3a6b;
-    color: #ffffff;
-    border-color: #1a3a6b;
-    box-shadow: 0 2px 8px rgba(26, 58, 107, 0.2);
-  }
-
-  .input-row { display: flex; gap: 10px; }
-
-  .chat-input {
-    flex: 1;
-    background: #eef5fd;
-    border: 1px solid #a8c8e8;
-    color: #1a2f5a;
-    font-size: 13px;
-    font-family: 'DM Sans', sans-serif;
-    padding: 10px 16px;
-    border-radius: 8px;
-    outline: none;
-    transition: all 0.2s;
-  }
-
-  .chat-input:focus {
-    border-color: #1a3a6b;
-    box-shadow: 0 0 0 3px rgba(26, 58, 107, 0.15);
-    background: #ffffff;
-  }
-
+  .chat-input-area { padding: 12px 16px; border-top: 1px solid #b8d4f0; background: #ccdff4; }
+  .quick-prompts { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+  .quick-btn { background: #eef5fd; border: 1px solid #a8c8e8; color: #1a3a6b; font-size: 11px; padding: 3px 10px; border-radius: 20px; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+  .quick-btn:hover { background: #1a3a6b; color: #ffffff; border-color: #1a3a6b; }
+  .input-row { display: flex; gap: 8px; }
+  .chat-input { flex: 1; background: #eef5fd; border: 1px solid #a8c8e8; color: #1a2f5a; font-size: 13px; font-family: 'DM Sans', sans-serif; padding: 9px 14px; border-radius: 8px; outline: none; transition: all 0.2s; }
+  .chat-input:focus { border-color: #1a3a6b; box-shadow: 0 0 0 3px rgba(26,58,107,0.12); background: #fff; }
   .chat-input::placeholder { color: #7a9ac0; }
+  .send-btn { background: #1a3a6b; border: none; color: white; font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 1px; padding: 9px 20px; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+  .send-btn:hover { background: #2563eb; box-shadow: 0 4px 14px rgba(26,58,107,0.3); }
+  .send-btn:disabled { background: #8aabcc; cursor: not-allowed; }
 
-  .send-btn {
-    background: #1a3a6b;
-    border: none;
-    color: white;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 14px;
-    letter-spacing: 1px;
-    padding: 10px 22px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .send-btn:hover {
-    background: #2563eb;
-    box-shadow: 0 4px 14px rgba(26, 58, 107, 0.3);
-  }
-
-  .send-btn:disabled { background: #8aabcc; cursor: not-allowed; box-shadow: none; }
-
+  /* STORY IDEAS — col 2 row 2 */
   .stories-panel { grid-column: 2; grid-row: 2; }
-
-  .story-grid {
-    padding: 14px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-
-  .story-card {
-    background: #eef5fd;
-    border: 1px solid #b8d4f0;
-    border-radius: 8px;
-    padding: 13px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .story-card:hover {
-    border-color: #d97706;
-    background: #fffbeb;
-    box-shadow: 0 2px 8px rgba(217, 119, 6, 0.15);
-    transform: translateY(-1px);
-  }
-
-  .story-category {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: #d97706;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 5px;
-  }
-
+  .story-grid { padding: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .story-card { background: #eef5fd; border: 1px solid #b8d4f0; border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s; }
+  .story-card:hover { border-color: #d97706; background: #fffbeb; transform: translateY(-1px); box-shadow: 0 3px 10px rgba(217,119,6,0.12); }
+  .story-category { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #d97706; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
   .story-headline { font-size: 12px; font-weight: 500; color: #1a2f5a; line-height: 1.4; }
-
-  .story-generate-btn {
-    margin: 0 14px 14px;
-    width: calc(100% - 28px);
-    background: transparent;
-    border: 1px dashed #8aabcc;
-    color: #4a6a9a;
-    font-size: 12px;
-    font-family: 'DM Sans', sans-serif;
-    padding: 9px;
-    border-radius: 7px;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-  }
-
+  .story-generate-btn { margin: 0 12px 12px; width: calc(100% - 24px); background: transparent; border: 1px dashed #8aabcc; color: #4a6a9a; font-size: 12px; font-family: 'DM Sans', sans-serif; padding: 8px; border-radius: 7px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
   .story-generate-btn:hover { border-color: #d97706; color: #d97706; background: #fffbeb; }
   .story-generate-btn:disabled { cursor: not-allowed; opacity: 0.5; }
 
-  .news-panel {
-    grid-column: 3;
-    grid-row: 1 / 3;
-    max-height: 860px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .news-feed {
-    flex: 1;
-    overflow-y: auto;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-  }
-
-  .news-item {
-    background: #eef5fd;
-    border: 1px solid #b8d4f0;
-    border-radius: 7px;
-    padding: 11px 13px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .news-item:hover {
-    border-color: #1a3a6b;
-    background: #dbeafe;
-    box-shadow: 0 2px 8px rgba(26, 58, 107, 0.12);
-    transform: translateX(-2px);
-  }
-
-  .news-source {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: #4a6a9a;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 5px;
-    display: flex;
-    justify-content: space-between;
-  }
-
+  /* NEWS FEED — col 3 rows 1+2 */
+  .news-panel { grid-column: 3; grid-row: 1 / 3; display: flex; flex-direction: column; max-height: 820px; }
+  .news-tabs { display: flex; padding: 8px 10px 0; gap: 6px; background: #ccdff4; border-bottom: 1px solid #b8d4f0; }
+  .news-tab { font-size: 11px; font-family: 'JetBrains Mono', monospace; padding: 4px 10px; border-radius: 4px 4px 0 0; cursor: pointer; color: #4a6a9a; background: transparent; border: none; transition: all 0.2s; }
+  .news-tab.active { background: #deeaf8; color: #1a2f5a; font-weight: 600; }
+  .news-feed { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 7px; }
+  .news-item { background: #eef5fd; border: 1px solid #b8d4f0; border-radius: 7px; padding: 10px 12px; cursor: pointer; transition: all 0.2s; }
+  .news-item:hover { border-color: #1a3a6b; background: #dbeafe; transform: translateX(-2px); }
+  .news-source { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #4a6a9a; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; display: flex; justify-content: space-between; }
   .news-time { color: #7a9ac0; }
-  .news-headline { font-size: 12px; font-weight: 500; color: #1a2f5a; line-height: 1.4; margin-bottom: 6px; }
-  .news-tags { display: flex; gap: 4px; flex-wrap: wrap; }
-
-  .news-tag {
-    font-size: 10px;
-    padding: 1px 7px;
-    border-radius: 10px;
-    font-family: 'JetBrains Mono', monospace;
-  }
-
-  .tag-ev       { background: #dcfce7; color: #16a34a; border: 1px solid #bbf7d0; }
-  .tag-finance  { background: #fef3c7; color: #d97706; border: 1px solid #fde68a; }
-  .tag-tech     { background: #dbeafe; color: #2563eb; border: 1px solid #bfdbfe; }
+  .news-headline { font-size: 12px; font-weight: 500; color: #1a2f5a; line-height: 1.4; margin-bottom: 5px; }
+  .news-link { font-size: 11px; color: #2563eb; text-decoration: none; }
+  .news-link:hover { text-decoration: underline; }
+  .news-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px; }
+  .news-tag { font-size: 10px; padding: 1px 7px; border-radius: 10px; font-family: 'JetBrains Mono', monospace; }
+  .tag-ev { background: #dcfce7; color: #16a34a; border: 1px solid #bbf7d0; }
+  .tag-finance { background: #fef3c7; color: #d97706; border: 1px solid #fde68a; }
+  .tag-tech { background: #dbeafe; color: #2563eb; border: 1px solid #bfdbfe; }
   .tag-politics { background: #fee2e2; color: #dc2626; border: 1px solid #fecaca; }
-  .tag-china    { background: #fce7f3; color: #be185d; border: 1px solid #fbcfe8; }
-
-  .news-refresh-btn {
-    margin: 10px;
-    background: transparent;
-    border: 1px solid #a8c8e8;
-    color: #3a6aaa;
-    font-size: 12px;
-    font-family: 'DM Sans', sans-serif;
-    padding: 8px;
-    border-radius: 7px;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-  }
-
+  .tag-china { background: #fce7f3; color: #be185d; border: 1px solid #fbcfe8; }
+  .news-refresh-btn { margin: 8px; background: transparent; border: 1px solid #a8c8e8; color: #3a6aaa; font-size: 12px; font-family: 'DM Sans', sans-serif; padding: 7px; border-radius: 7px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
   .news-refresh-btn:hover { border-color: #1a3a6b; color: #1a3a6b; background: #dbeafe; }
   .news-refresh-btn:disabled { cursor: not-allowed; opacity: 0.5; }
 
-  .spinner {
-    display: inline-block;
-    width: 12px; height: 12px;
-    border: 2px solid transparent;
-    border-top-color: currentColor;
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-  }
+  /* PRESS LINKS — col 4 rows 1+2 */
+  .press-panel { grid-column: 4; grid-row: 1 / 3; display: flex; flex-direction: column; max-height: 820px; }
+  .press-list { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 6px; }
 
+  .press-section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: #4a6a9a;
+    padding: 8px 4px 4px;
+    border-bottom: 1px solid #b8d4f0;
+    margin-top: 6px;
+  }
+  .press-section-title:first-child { margin-top: 0; }
+
+  .press-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #eef5fd;
+    border: 1px solid #b8d4f0;
+    border-radius: 7px;
+    padding: 9px 11px;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .press-item:hover { border-color: #1a3a6b; background: #dbeafe; transform: translateX(2px); }
+  .press-flag { font-size: 14px; flex-shrink: 0; }
+  .press-info { flex: 1; min-width: 0; }
+  .press-name { font-size: 12px; font-weight: 700; color: #1a2f5a; }
+  .press-desc { font-size: 10px; color: #4a6a9a; margin-top: 1px; }
+  .press-arrow { color: #a8c8e8; font-size: 12px; }
+
+  /* SPINNER & TYPING */
+  .spinner { display: inline-block; width: 12px; height: 12px; border: 2px solid transparent; border-top-color: currentColor; border-radius: 50%; animation: spin 0.7s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
-
   .typing-indicator { display: flex; gap: 4px; padding: 8px 0; }
-
-  .typing-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: #3b7dd8;
-    animation: typingBounce 1.2s infinite;
-  }
-
+  .typing-dot { width: 6px; height: 6px; border-radius: 50%; background: #3b7dd8; animation: typingBounce 1.2s infinite; }
   .typing-dot:nth-child(2) { animation-delay: 0.2s; }
   .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typingBounce { 0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; } 40% { transform: scale(1); opacity: 1; } }
 
-  @keyframes typingBounce {
-    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
-    40% { transform: scale(1); opacity: 1; }
-  }
-
-  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: #b8d4f0; border-radius: 3px; }
   ::-webkit-scrollbar-thumb { background: #7a9ac0; border-radius: 3px; }
 
-  @media (max-width: 1200px) {
-    .dashboard { grid-template-columns: 280px 1fr; grid-template-rows: auto auto auto; }
-    .brands-panel { grid-column: 1; grid-row: 1 / 3; }
-    .chat-panel { grid-column: 2; grid-row: 1; }
-    .stories-panel { grid-column: 2; grid-row: 2; }
-    .news-panel { grid-column: 1 / 3; grid-row: 3; max-height: none; }
-    .news-feed { max-height: 400px; }
+  @media (max-width: 1300px) {
+    .dashboard { grid-template-columns: 240px 1fr 280px; }
+    .press-panel { grid-column: 1 / 4; grid-row: 3; max-height: none; }
+    .press-list { flex-direction: row; flex-wrap: wrap; }
+    .press-section-title { width: 100%; }
   }
 </style>
 </head>
@@ -571,7 +232,7 @@
   </div>
   <div class="header-status">
     <div class="status-dot"><div class="dot"></div>KI-System aktiv</div>
-    <div class="status-dot">🚗 Dein Recherche-Cockpit für die Autoindustrie</div>
+    <div class="status-dot">🚗 Jespers Recherche-Cockpit · Autoindustrie</div>
   </div>
 </header>
 
@@ -582,32 +243,34 @@
     <div class="stat-change" style="color:#16a34a">▲ DE, JP, US, CN</div>
   </div>
   <div class="stat-box">
-    <div class="stat-value">247</div>
-    <div class="stat-label">News heute analysiert</div>
-    <div class="stat-change" style="color:#d97706">⚡ KI-kuratiert</div>
+    <div class="stat-value" id="rssCount">—</div>
+    <div class="stat-label">Live News geladen</div>
+    <div class="stat-change" style="color:#2563eb">⚡ Echte RSS-Feeds</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-value">18</div>
+    <div class="stat-label">Presseseiten verlinkt</div>
+    <div class="stat-change" style="color:#d97706">🔗 Direkt zur Quelle</div>
   </div>
   <div class="stat-box">
     <div class="stat-value">EV</div>
-    <div class="stat-label">Trend-Thema KW13</div>
-    <div class="stat-change" style="color:#2563eb">Ladestopp-Debatte</div>
-  </div>
-  <div class="stat-box">
-    <div class="stat-value">↑82%</div>
-    <div class="stat-label">China-Importe Erwähnungen</div>
-    <div class="stat-change" style="color:#dc2626">▲ gegenüber Vorwoche</div>
+    <div class="stat-label">Trend-Thema</div>
+    <div class="stat-change" style="color:#dc2626">Preiskampf 2025</div>
   </div>
 </div>
 
 <div class="dashboard">
 
+  <!-- COL 1: BRAND RADAR -->
   <div class="panel brands-panel">
     <div class="panel-header">
       <div class="panel-title"><span class="panel-icon">◈</span> Marken-Radar</div>
-      <div class="panel-badge">Live-Stimmung</div>
+      <div class="panel-badge">Stimmung</div>
     </div>
     <div class="brand-list" id="brandList"></div>
   </div>
 
+  <!-- COL 2 ROW 1: AI CHAT -->
   <div class="panel chat-panel">
     <div class="panel-header">
       <div class="panel-title"><span class="panel-icon">▶</span> KI-Recherche-Assistent</div>
@@ -618,8 +281,8 @@
         <div class="msg-avatar ai">KI</div>
         <div class="msg-content">
           <div class="msg-bubble">
-            Hey Jesper! 👋 Ich bin dein KI-Recherche-Assistent für die Automobilindustrie. Ich kenne Produktionszahlen, Strategien, Technologietrends, Konzernstrukturen und aktuelle Debatten in der Branche — und helfe dir, komplexe Themen schnell zu durchdringen, Hintergründe zu verstehen und Fragen für Interviews vorzubereiten.<br><br>
-            Was möchtest du heute recherchieren?
+            Hey Jesper! 👋 Ich bin dein KI-Recherche-Assistent für die Autoindustrie. Rechts siehst du echte Live-News aus RSS-Feeds und direkte Links zu den Presseseiten aller großen Konzerne.<br><br>
+            Stell mir eine Frage oder klick auf eine Marke — ich erkläre dir den Hintergrund wie ein erfahrener Redakteur!
           </div>
           <div class="msg-meta">AutoJournal AI · bereit</div>
         </div>
@@ -627,11 +290,11 @@
     </div>
     <div class="chat-input-area">
       <div class="quick-prompts">
-        <button class="quick-btn" onclick="sendQuick('Warum kämpft VW gerade so?')">VW in der Krise</button>
+        <button class="quick-btn" onclick="sendQuick('Warum kämpft VW gerade so?')">VW-Krise</button>
         <button class="quick-btn" onclick="sendQuick('Was macht Tesla anders als europäische Hersteller?')">Tesla vs. Europa</button>
         <button class="quick-btn" onclick="sendQuick('Warum sind chinesische E-Autos so billig?')">China-Faktor</button>
-        <button class="quick-btn" onclick="sendQuick('Wie funktioniert eigentlich ein Verbrennermotor — einfach erklärt?')">Technik-Basics</button>
-        <button class="quick-btn" onclick="sendQuick('Welche 5 Fragen würde ich Carlos Tavares stellen?')">Interview-Fragen</button>
+        <button class="quick-btn" onclick="sendQuick('Erkläre mir den Unterschied zwischen Hybrid und vollelektrisch')">Hybrid vs. EV</button>
+        <button class="quick-btn" onclick="sendQuick('Welche 5 Fragen würde ich Oliver Blume stellen?')">Interview-Fragen</button>
       </div>
       <div class="input-row">
         <input type="text" class="chat-input" id="chatInput" placeholder="Frage stellen, Thema recherchieren, Hintergrund verstehen..." />
@@ -640,22 +303,38 @@
     </div>
   </div>
 
+  <!-- COL 3: NEWS FEED -->
   <div class="panel news-panel">
     <div class="panel-header">
       <div class="panel-title"><span class="panel-icon">◉</span> Live News-Radar</div>
       <div class="panel-badge" id="newsCount">Lädt...</div>
     </div>
+    <div class="news-tabs">
+      <button class="news-tab active" onclick="switchTab('all', this)">Alle</button>
+      <button class="news-tab" onclick="switchTab('de', this)">🇩🇪 DE</button>
+      <button class="news-tab" onclick="switchTab('en', this)">🌍 EN</button>
+    </div>
     <div class="news-feed" id="newsFeed">
       <div style="padding:20px;text-align:center;color:#4a6a9a;font-size:12px;">
         <div class="spinner" style="margin:0 auto 10px;"></div>
-        Lade aktuelle Auto-News...
+        Lade echte RSS-News...
       </div>
     </div>
-    <button class="news-refresh-btn" id="refreshNewsBtn" onclick="loadNews()">
+    <button class="news-refresh-btn" id="refreshNewsBtn" onclick="loadRSSNews()">
       <span>⟳</span> News aktualisieren
     </button>
   </div>
 
+  <!-- COL 4: PRESS LINKS -->
+  <div class="panel press-panel">
+    <div class="panel-header">
+      <div class="panel-title"><span class="panel-icon">🔗</span> Presseseiten</div>
+      <div class="panel-badge">Direkt zur Quelle</div>
+    </div>
+    <div class="press-list" id="pressList"></div>
+  </div>
+
+  <!-- COL 2 ROW 2: STORY IDEAS -->
   <div class="panel stories-panel">
     <div class="panel-header">
       <div class="panel-title"><span class="panel-icon">✦</span> Story-Ideen Generator</div>
@@ -675,38 +354,79 @@
 </div>
 
 <script>
+const WORKER = 'https://orange-shape-5ada-autojournal.tblees.workers.dev';
+
+// RSS FEEDS — gemischt DE + EN
+const RSS_FEEDS = [
+  { url: 'https://www.automobilwoche.de/rss/alle-news', source: 'Automobilwoche', lang: 'de' },
+  { url: 'https://www.auto-motor-und-sport.de/rss/news/', source: 'auto motor sport', lang: 'de' },
+  { url: 'https://www.manager-magazin.de/themen/auto/index.rss', source: 'Manager Magazin', lang: 'de' },
+  { url: 'https://feeds.reuters.com/reuters/businessNews', source: 'Reuters', lang: 'en' },
+  { url: 'https://feeds.bbci.co.uk/news/business/rss.xml', source: 'BBC Business', lang: 'en' },
+  { url: 'https://rss.dw.com/rdf/rss-en-bus', source: 'DW Business', lang: 'en' },
+];
+
+// PRESS PAGES
+const PRESS_LINKS = [
+  { section: '🇩🇪 Deutschland' },
+  { flag: '🔵', name: 'Volkswagen', desc: 'VW Newsroom', url: 'https://www.volkswagen-newsroom.com/de' },
+  { flag: '⚪', name: 'BMW Group', desc: 'BMW Presse', url: 'https://www.press.bmwgroup.com/deutschland' },
+  { flag: '⭐', name: 'Mercedes-Benz', desc: 'MB Media', url: 'https://media.mercedes-benz.com/de' },
+  { flag: '🟡', name: 'Porsche AG', desc: 'Porsche Newsroom', url: 'https://newsroom.porsche.com/de.html' },
+  { flag: '🔴', name: 'Audi', desc: 'Audi MediaCenter', url: 'https://www.audi-mediacenter.com/de' },
+  { flag: '🔵', name: 'Stellantis', desc: 'Stellantis Press', url: 'https://www.stellantis.com/en/news' },
+  { section: '🇺🇸 USA' },
+  { flag: '🔴', name: 'Tesla', desc: 'Tesla Blog', url: 'https://www.tesla.com/blog' },
+  { flag: '🔵', name: 'Ford', desc: 'Ford Media', url: 'https://media.ford.com' },
+  { flag: '🟡', name: 'GM', desc: 'GM Newsroom', url: 'https://news.gm.com' },
+  { flag: '🟢', name: 'Rivian', desc: 'Rivian Newsroom', url: 'https://rivian.com/newsroom' },
+  { section: '🇯🇵 Japan' },
+  { flag: '🔴', name: 'Toyota', desc: 'Toyota Newsroom', url: 'https://newsroom.toyota.eu/de/' },
+  { flag: '🔵', name: 'Honda', desc: 'Honda Newsroom', url: 'https://hondanews.eu/de-DE' },
+  { flag: '⚪', name: 'Nissan', desc: 'Nissan Media', url: 'https://europe.nissannews.com/de-DE' },
+  { section: '🇨🇳 China' },
+  { flag: '🟢', name: 'BYD', desc: 'BYD Europe News', url: 'https://bydeurope.com/newsroom' },
+  { flag: '🔵', name: 'NIO', desc: 'NIO Newsroom', url: 'https://www.nio.com/news' },
+  { flag: '🟡', name: 'SAIC', desc: 'MG / SAIC Press', url: 'https://www.saicmotor.com/english/media/' },
+  { section: '📊 Branchenmedien' },
+  { flag: '📰', name: 'Automobilwoche', desc: 'Branchenmagazin', url: 'https://www.automobilwoche.de' },
+  { flag: '📰', name: 'auto motor sport', desc: 'Testberichte & News', url: 'https://www.auto-motor-und-sport.de' },
+];
+
+// BRANDS
 const BRANDS = [
-  { name: "Volkswagen", country: "🇩🇪", sentiment: "neg", trend: "Stellenabbau, Plattform-Neustart, China-Verluste", score: 28, color: "#dc2626" },
-  { name: "BMW", country: "🇩🇪", sentiment: "pos", trend: "Rekordumsatz, China-Partnerschaft stabil, EV-Ausbau", score: 74, color: "#16a34a" },
-  { name: "Mercedes-Benz", country: "🇩🇪", sentiment: "neu", trend: "Luxus-Pivot, EV-Pläne reduziert, Marge hält", score: 52, color: "#d97706" },
-  { name: "Tesla", country: "🇺🇸", sentiment: "neg", trend: "Musk-Politisierung, Absatzrückgang Europa, FSD-Debatte", score: 31, color: "#dc2626" },
-  { name: "Toyota", country: "🇯🇵", sentiment: "pos", trend: "Hybrid-Strategie funktioniert, Solide Zahlen", score: 78, color: "#16a34a" },
-  { name: "BYD", country: "🇨🇳", sentiment: "pos", trend: "Weltgrößter EV-Anbieter, Europa-Expansion, Preiskampf", score: 82, color: "#16a34a" },
-  { name: "Stellantis", country: "🇪🇺", sentiment: "neg", trend: "CEO-Abgang, Gewinnwarnung, Überkapazitäten", score: 22, color: "#dc2626" },
-  { name: "Porsche AG", country: "🇩🇪", sentiment: "neu", trend: "Taycan-Absatz schwächelt, Verbrenner bleibt Kern", score: 55, color: "#d97706" },
-  { name: "Rivian", country: "🇺🇸", sentiment: "neu", trend: "Amazon-Deal, Produktionsausbau, Burn Rate hoch", score: 48, color: "#d97706" },
-  { name: "NIO", country: "🇨🇳", sentiment: "neg", trend: "Cashflow-Probleme, Deutschland-Expansion zögerlich", score: 33, color: "#dc2626" },
-  { name: "Honda", country: "🇯🇵", sentiment: "neu", trend: "Nissan-Fusion geplant, EV-Joint-Venture", score: 58, color: "#d97706" },
-  { name: "Renault", country: "🇫🇷", sentiment: "pos", trend: "Ampere EV-Spin-off, Kostensenkung greift", score: 65, color: "#16a34a" },
+  { name: "Volkswagen", country: "🇩🇪", sentiment: "neg", trend: "Stellenabbau, China-Verluste, Neustart", score: 28, color: "#dc2626" },
+  { name: "BMW", country: "🇩🇪", sentiment: "pos", trend: "Rekordumsatz, EV-Ausbau stabil", score: 74, color: "#16a34a" },
+  { name: "Mercedes-Benz", country: "🇩🇪", sentiment: "neu", trend: "Luxus-Pivot, EV-Pläne reduziert", score: 52, color: "#d97706" },
+  { name: "Tesla", country: "🇺🇸", sentiment: "neg", trend: "Musk-Effekt, Absatzrückgang Europa", score: 31, color: "#dc2626" },
+  { name: "Toyota", country: "🇯🇵", sentiment: "pos", trend: "Hybrid-Strategie funktioniert", score: 78, color: "#16a34a" },
+  { name: "BYD", country: "🇨🇳", sentiment: "pos", trend: "Weltgrößter EV-Anbieter, Europa-Push", score: 82, color: "#16a34a" },
+  { name: "Stellantis", country: "🇪🇺", sentiment: "neg", trend: "CEO-Abgang, Überkapazitäten", score: 22, color: "#dc2626" },
+  { name: "Porsche AG", country: "🇩🇪", sentiment: "neu", trend: "Taycan schwächelt, Verbrenner stark", score: 55, color: "#d97706" },
+  { name: "Rivian", country: "🇺🇸", sentiment: "neu", trend: "Amazon-Deal, Burn Rate hoch", score: 48, color: "#d97706" },
+  { name: "NIO", country: "🇨🇳", sentiment: "neg", trend: "Cashflow-Probleme", score: 33, color: "#dc2626" },
+  { name: "Honda", country: "🇯🇵", sentiment: "neu", trend: "Nissan-Fusion, EV-Joint-Venture", score: 58, color: "#d97706" },
+  { name: "Renault", country: "🇫🇷", sentiment: "pos", trend: "Ampere EV-Spin-off, Kosten sinken", score: 65, color: "#16a34a" },
 ];
 
 const STORY_IDEAS = [
   { cat: "DEEP DIVE", headline: "Der stille Abschied vom Verbrenner: Wann ist wirklich Schluss?" },
-  { cat: "PERSONALIE", headline: "Wer führt VW in die Zukunft? Eine Analyse der neuen Führungsriege" },
-  { cat: "DATENJOURNALISMUS", headline: "EV-Ladenetz: Wo Deutschland im Europa-Vergleich steht" },
-  { cat: "WIRTSCHAFT", headline: "Wie BYD in 5 Jahren zur größten Automarke der Welt wurde" },
-  { cat: "TECHNOLOGIE", headline: "Software statt Stahl: Warum Autos jetzt wie iPhones verkauft werden" },
-  { cat: "POLITIK", headline: "EU-Strafzölle auf China-Autos: Schutz oder Selbsttäuschung?" },
-  { cat: "INVESTIGATIV", headline: "Lobbying in Brüssel: Wie die Autoindustrie den Green Deal formt" },
-  { cat: "REPORTAGE", headline: "Wolfsburg 2025: Was bleibt von der VW-Stadt, wenn Jobs wegfallen?" },
+  { cat: "PERSONALIE", headline: "Wer führt VW in die Zukunft?" },
+  { cat: "DATENJOURNALISMUS", headline: "EV-Ladenetz: Wo Deutschland im Vergleich steht" },
+  { cat: "WIRTSCHAFT", headline: "Wie BYD zur größten Automarke der Welt wurde" },
+  { cat: "TECHNOLOGIE", headline: "Software statt Stahl: Autos wie iPhones verkaufen" },
+  { cat: "POLITIK", headline: "EU-Strafzölle auf China-Autos: Schutz oder Fehler?" },
+  { cat: "INVESTIGATIV", headline: "Lobbying in Brüssel: Wie die Autoindustrie Politik formt" },
+  { cat: "REPORTAGE", headline: "Wolfsburg 2025: Was bleibt, wenn Jobs wegfallen?" },
 ];
 
+// ── RENDER BRANDS ──────────────────────────────────────────
 function renderBrands() {
   document.getElementById('brandList').innerHTML = BRANDS.map(b => `
     <div class="brand-item" onclick="askAboutBrand('${b.name}')">
       <div class="brand-top">
         <span class="brand-name">${b.country} ${b.name}</span>
-        <span class="brand-sentiment sentiment-${b.sentiment}">${b.sentiment==='pos'?'▲ POSITIV':b.sentiment==='neg'?'▼ NEGATIV':'◆ NEUTRAL'}</span>
+        <span class="brand-sentiment sentiment-${b.sentiment}">${b.sentiment==='pos'?'▲':b.sentiment==='neg'?'▼':'◆'}</span>
       </div>
       <div class="brand-trend">${b.trend}</div>
       <div class="brand-meter"><div class="brand-meter-fill" style="width:${b.score}%;background:${b.color};"></div></div>
@@ -718,35 +438,124 @@ function askAboutBrand(name) {
   sendMessage();
 }
 
-async function loadNews() {
+// ── RENDER PRESS LINKS ─────────────────────────────────────
+function renderPressLinks() {
+  document.getElementById('pressList').innerHTML = PRESS_LINKS.map(item => {
+    if (item.section) {
+      return `<div class="press-section-title">${item.section}</div>`;
+    }
+    return `
+      <a class="press-item" href="${item.url}" target="_blank" rel="noopener">
+        <span class="press-flag">${item.flag}</span>
+        <div class="press-info">
+          <div class="press-name">${item.name}</div>
+          <div class="press-desc">${item.desc}</div>
+        </div>
+        <span class="press-arrow">→</span>
+      </a>`;
+  }).join('');
+}
+
+// ── RSS NEWS ───────────────────────────────────────────────
+let allNewsItems = [];
+let currentTab = 'all';
+
+async function loadRSSNews() {
   const btn = document.getElementById('refreshNewsBtn');
   const feed = document.getElementById('newsFeed');
   btn.disabled = true;
-  feed.innerHTML = '<div style="padding:20px;text-align:center;color:#4a6a9a;font-size:12px;"><div class="spinner" style="margin:0 auto 10px;"></div>KI analysiert aktuelle Meldungen...</div>';
-  try {
-    const resp = await fetch('https://orange-shape-5ada-autojournal.tblees.workers.dev', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514', max_tokens: 1000,
-        system: `Du bist ein Nachrichten-Analyst für die Automobilindustrie. Generiere 8 realistische News-Meldungen (Stand: März 2025). Antworte NUR mit validem JSON: {"news":[{"source":"Quelle","time":"vor Xh","headline":"max 80 Zeichen","tags":["ev","finance","tech","politics","china"]}]} Max 2 Tags. Quellen: Handelsblatt, FAZ, Spiegel, Reuters, Bloomberg, Automobilwoche.`,
-        messages: [{ role: 'user', content: 'Generiere 8 aktuelle Auto-News für März 2025.' }]
-      })
-    });
-    const data = await resp.json();
-    let text = data.content.filter(c=>c.type==='text').map(c=>c.text).join('');
-    text = text.replace(/```json|```/g,'').trim();
-    const parsed = JSON.parse(text);
-    document.getElementById('newsFeed').innerHTML = parsed.news.map(n => `
-      <div class="news-item" onclick="askAboutNews('${n.headline.replace(/'/g,"\\'")}')">
-        <div class="news-source"><span>${n.source}</span><span class="news-time">${n.time}</span></div>
-        <div class="news-headline">${n.headline}</div>
-        <div class="news-tags">${n.tags.map(t=>`<span class="news-tag tag-${t}">${t.toUpperCase()}</span>`).join('')}</div>
-      </div>`).join('');
-    document.getElementById('newsCount').textContent = `${parsed.news.length} Meldungen`;
-  } catch(e) {
-    document.getElementById('newsFeed').innerHTML = '<div style="padding:16px;color:#4a6a9a;font-size:12px;">Verbindungsfehler. Bitte erneut versuchen.</div>';
+  feed.innerHTML = '<div style="padding:20px;text-align:center;color:#4a6a9a;font-size:12px;"><div class="spinner" style="margin:0 auto 10px;"></div>Lade echte RSS-Feeds...</div>';
+
+  allNewsItems = [];
+  let loaded = 0;
+
+  // Load feeds via worker as RSS proxy
+  const feedPromises = RSS_FEEDS.map(async (feedInfo) => {
+    try {
+      const resp = await fetch(`${WORKER}?rss=${encodeURIComponent(feedInfo.url)}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      if (!resp.ok) throw new Error('RSS fetch failed');
+      const text = await resp.text();
+      const parser = new DOMParser();
+      const xml = parser.parseFromString(text, 'text/xml');
+      const items = xml.querySelectorAll('item');
+      items.forEach((item, i) => {
+        if (i >= 4) return; // max 4 per feed
+        const title = item.querySelector('title')?.textContent?.trim() || '';
+        const link = item.querySelector('link')?.textContent?.trim() || '';
+        const pubDate = item.querySelector('pubDate')?.textContent?.trim() || '';
+        if (title && title.length > 10) {
+          allNewsItems.push({
+            source: feedInfo.source,
+            lang: feedInfo.lang,
+            headline: title,
+            link: link,
+            time: formatRelativeTime(pubDate),
+          });
+        }
+      });
+      loaded++;
+    } catch(e) {
+      // feed failed silently
+    }
+  });
+
+  await Promise.all(feedPromises);
+
+  // Sort by most recent first (rough)
+  allNewsItems = allNewsItems.slice(0, 30);
+
+  if (allNewsItems.length === 0) {
+    // Fallback: use AI-generated news
+    await loadAINews();
+    return;
   }
+
+  document.getElementById('rssCount').textContent = allNewsItems.length;
+  document.getElementById('newsCount').textContent = `${allNewsItems.length} Live`;
+  renderNewsItems();
   btn.disabled = false;
+}
+
+function formatRelativeTime(dateStr) {
+  if (!dateStr) return 'heute';
+  try {
+    const date = new Date(dateStr);
+    const now = new Date();
+    const diff = Math.floor((now - date) / 1000 / 60);
+    if (diff < 60) return `vor ${diff}min`;
+    if (diff < 1440) return `vor ${Math.floor(diff/60)}h`;
+    return `vor ${Math.floor(diff/1440)}d`;
+  } catch(e) { return 'heute'; }
+}
+
+function switchTab(tab, el) {
+  currentTab = tab;
+  document.querySelectorAll('.news-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderNewsItems();
+}
+
+function renderNewsItems() {
+  const filtered = currentTab === 'all' ? allNewsItems :
+    allNewsItems.filter(n => n.lang === currentTab);
+
+  if (filtered.length === 0) {
+    document.getElementById('newsFeed').innerHTML = '<div style="padding:16px;color:#4a6a9a;font-size:12px;">Keine Meldungen für diesen Filter.</div>';
+    return;
+  }
+
+  document.getElementById('newsFeed').innerHTML = filtered.map(n => `
+    <div class="news-item" onclick="askAboutNews('${n.headline.replace(/'/g,"\\'").replace(/"/g,'&quot;')}')">
+      <div class="news-source">
+        <span>${n.lang === 'de' ? '🇩🇪' : '🌍'} ${n.source}</span>
+        <span class="news-time">${n.time}</span>
+      </div>
+      <div class="news-headline">${n.headline}</div>
+      ${n.link ? `<a class="news-link" href="${n.link}" target="_blank" onclick="event.stopPropagation()">→ Artikel lesen</a>` : ''}
+    </div>`).join('');
 }
 
 function askAboutNews(headline) {
@@ -754,12 +563,40 @@ function askAboutNews(headline) {
   sendMessage();
 }
 
+// Fallback: AI-generated news if RSS fails
+async function loadAINews() {
+  const btn = document.getElementById('refreshNewsBtn');
+  try {
+    const resp = await fetch(WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514', max_tokens: 1000,
+        system: `Generiere 10 realistische Auto-News (März 2025). NUR JSON: {"news":[{"source":"Quelle","time":"vor Xh","headline":"max 90 Zeichen","lang":"de oder en"}]} Mische deutsche und englische Quellen.`,
+        messages: [{ role: 'user', content: 'Generiere 10 Auto-News.' }]
+      })
+    });
+    const data = await resp.json();
+    let text = data.content.filter(c=>c.type==='text').map(c=>c.text).join('');
+    text = text.replace(/```json|```/g,'').trim();
+    const parsed = JSON.parse(text);
+    allNewsItems = parsed.news;
+    document.getElementById('rssCount').textContent = allNewsItems.length + ' (KI)';
+    document.getElementById('newsCount').textContent = `${allNewsItems.length} Meldungen`;
+    renderNewsItems();
+  } catch(e) {
+    document.getElementById('newsFeed').innerHTML = '<div style="padding:16px;color:#4a6a9a;font-size:12px;">Fehler beim Laden. Bitte erneut versuchen.</div>';
+  }
+  btn.disabled = false;
+}
+
+// ── STORY IDEAS ────────────────────────────────────────────
 async function generateStories() {
   const btn = document.getElementById('storyBtn');
   btn.disabled = true;
-  document.getElementById('storyGrid').innerHTML = '<div style="grid-column:1/3;padding:20px;text-align:center;color:#4a6a9a;font-size:12px;"><div class="spinner" style="margin:0 auto 8px;"></div>KI generiert Story-Ideen...</div>';
+  document.getElementById('storyGrid').innerHTML = '<div style="grid-column:1/3;padding:16px;text-align:center;color:#4a6a9a;font-size:12px;"><div class="spinner" style="margin:0 auto 8px;"></div>KI generiert Story-Ideen...</div>';
   try {
-    const resp = await fetch('https://orange-shape-5ada-autojournal.tblees.workers.dev', {
+    const resp = await fetch(WORKER, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514', max_tokens: 800,
@@ -788,6 +625,7 @@ function developStory(headline) {
   sendMessage();
 }
 
+// ── AI CHAT ────────────────────────────────────────────────
 let conversationHistory = [];
 
 async function sendMessage() {
@@ -805,11 +643,11 @@ async function sendMessage() {
   div.scrollTop = div.scrollHeight;
 
   try {
-    const resp = await fetch('https://orange-shape-5ada-autojournal.tblees.workers.dev', {
+    const resp = await fetch(WORKER, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514', max_tokens: 1000,
-        system: `Du bist AutoJournal AI, Recherche-Assistent für Jesper (22), Autofan und angehender Journalismus-Student. Erkläre Branchenzusammenhänge verständlich, nenne konkrete Zahlen und Personen, zeige journalistische Perspektiven (welche Story steckt dahinter?), hilf bei Recherchestrategien und Interview-Fragen. Ton: locker, direkt, kompetent. Deutsch. Max 200 Wörter.`,
+        system: `Du bist AutoJournal AI, Recherche-Assistent für Jesper (22), Autofan und angehender Journalismus-Student. Erkläre Branchenzusammenhänge verständlich, nenne konkrete Zahlen und Personen, zeige journalistische Perspektiven (welche Story steckt dahinter?), hilf bei Recherchestrategien und Interview-Fragen. Ton: locker, direkt, kompetent. Auf Deutsch. Max 200 Wörter.`,
         messages: conversationHistory
       })
     });
@@ -848,7 +686,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
   });
   renderBrands();
-  loadNews();
+  renderPressLinks();
+  loadRSSNews();
   generateStories();
 });
 </script>
