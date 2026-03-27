@@ -1001,7 +1001,9 @@ async function loadAllNews() {
   updateStats();renderNews();updateBrandRadar();
   document.getElementById('lastUpdate').textContent='🕐 '+new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
   btn.disabled=false;
-  setTimeout(()=>generateStories(),500);
+  // Story-Generierung nur auf Klick, nicht automatisch
+  document.getElementById('storyBtn').disabled = false;
+  document.getElementById('storyBadge').textContent = 'Klick zum Generieren';
 }
 
 function updateStats(){
@@ -1057,7 +1059,7 @@ async function loadAIFallback(){
     allNews=JSON.parse(text).news;
     document.getElementById('statNews').textContent=allNews.length+' (KI)';
     document.getElementById('newsCount').textContent=allNews.length+' KI';
-    renderNews();updateBrandRadar();generateStories();
+    renderNews();updateBrandRadar();
   }catch(e){document.getElementById('newsFeed').innerHTML='<div style="padding:16px;color:#4a6a9a;font-size:13px">Fehler beim Laden. Bitte aktualisieren.</div>';}
   document.getElementById('refreshBtn').disabled=false;
 }
