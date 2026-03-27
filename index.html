@@ -891,75 +891,22 @@ async function generateStories() {
 }
 
 function renderStories(stories) {
-  // Store for index-based access
   window._stories = stories;
   document.getElementById('storyGrid').innerHTML = stories.map((s, i) => {
     const pxUrl = 'https://www.perplexity.ai/search?q=' + encodeURIComponent(s.headline + ' Autoindustrie 2025');
-    return `<div class="story-card" onclick="developStory(window._stories[${i}].headline)">
+    return `<div class="story-card" data-idx="${i}" onclick="storyClick(this)">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:4px">
         <div class="story-category">${s.cat}</div>
-        <button class="bookmark-btn" style="font-size:12px" onclick="event.stopPropagation();addBookmark('story',window._stories[${i}].headline)" title="Lesezeichen">📌</button>
+        <button class="bookmark-btn" style="font-size:12px" data-idx="${i}" onclick="event.stopPropagation();storyBookmark(this)" title="Lesezeichen">📌</button>
       </div>
       <div class="story-headline">${s.headline}</div>
       <a class="px-btn" href="${pxUrl}" target="_blank" onclick="event.stopPropagation()">🔍 Recherchieren</a>
     </div>`;
   }).join('');
 }
+function storyClick(el) { const s = window._stories[+el.dataset.idx]; if(s) developStory(s.headline); }
+function storyBookmark(el) { const s = window._stories[+el.dataset.idx]; if(s) addBookmark("story", s.headline); }
 
-// ── AI CHAT ────────────────────────────────────────────────
-async function sendMessage() {
-  const input = document.getElementById('chatInput');
-  const text = input.value.trim();
-  if (!text) return;
-  input.value = '';
-  addMessage('user', text);
-  conversationHistory.push({role:'user', content:text});
-  document.getElementById('sendBtn').disabled = true;
-
-  const typingId = 'typing-' + Date.now();
-  const div = document.getElementById('chatMessages');
-  div.innerHTML += `<div class="message ai" id="${typingId}"><div class="msg-avatar ai">KI</div><div class="msg-content"><div class="msg-bubble"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div></div></div>`;
-  div.scrollTop = div.scrollHeight;
-
-  try {
-    const resp = await fetch(WORKER, {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        model:'claude-sonnet-4-20250514', max_tokens:1000,
-        system: researchModeActive ? RESEARCH_SYSTEM_PROMPT : `Du bist AutoJournal AI, Recherche-Assistent für Jesper (22), Autofan und angehender Journalismus-Student. Erkläre Branchenzusammenhänge verständlich, nenne konkrete Zahlen und Personen, zeige journalistische Perspektiven (welche Story steckt dahinter? wen sollte man interviewen? welche Quellen?), hilf bei Recherchestrategien und Interview-Fragen. Ton: locker, direkt, kompetent — wie ein erfahrener Redakteur. Auf Deutsch. Max 220 Wörter.`,
-        messages: conversationHistory
-      })
-    });
-    const data = await resp.json();
-    const aiText = data.content.filter(c=>c.type==='text').map(c=>c.text).join('');
-    document.getElementById(typingId)?.remove();
-    addMessage('ai', aiText);
-    conversationHistory.push({role:'assistant', content:aiText});
-    if (conversationHistory.length > 20) conversationHistory = conversationHistory.slice(-16);
-  } catch(e) {
-    document.getElementById(typingId)?.remove();
-    addMessage('ai', 'Verbindungsfehler. Bitte erneut versuchen.');
-  }
-  document.getElementById('sendBtn').disabled = false;
-  input.focus();
-}
-
-function addMessage(role, text) {
-  const div = document.getElementById('chatMessages');
-  const time = new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
-  div.innerHTML += `<div class="message ${role}">
-    <div class="msg-avatar ${role==='ai'?'ai':'human'}">${role==='ai'?'KI':'👤'}</div>
-    <div class="msg-content">
-      <div class="msg-bubble">${text.replace(/\n/g,'<br>')}</div>
-      <div class="msg-meta">${role==='ai'?'AutoJournal AI':'Du'} · ${time}</div>
-    </div>
-  </div>`;
-  div.scrollTop = div.scrollHeight;
-}
-
-function sendQuick(text) { document.getElementById('chatInput').value = text; sendMessage(); }
-// askAboutBrand replaced by toggleBrand + Perplexity
-function askAboutNews(headline) { sendQuick(`Erkläre mir den journalistischen Hintergrund zu: "${headline}"`); }
 function developStory(h) { if (typeof h === 'number') h = window._stories[h].headline; sendQuick('Hilf mir diese Story zu entwickeln: ' + h + '. Wichtigste Fragen, Quellen, Interviewpartner?'); }
 
 // ── INIT ───────────────────────────────────────────────────
@@ -1015,10 +962,11 @@ function toggleMic() {
 }
 
 // ── BOOKMARKS ──────────────────────────────────────────────
-let bookmarks = JSON.parse(localStorage.getItem('autojournal_bookmarks') || '[]');
+let bookmarks = [];
+try { bookmarks = JSON.parse(localStorage.getItem('autojournal_bookmarks') || '[]'); } catch(e) { bookmarks = []; }
 
 function saveBookmarks() {
-  localStorage.setItem('autojournal_bookmarks', JSON.stringify(bookmarks));
+  try { localStorage.setItem('autojournal_bookmarks', JSON.stringify(bookmarks)); } catch(e) {}
   updateBookmarksBadge();
   renderBookmarks();
 }
@@ -1088,22 +1036,15 @@ function exportBookmarksEmail() {
   const subject = encodeURIComponent('AutoJournal — Meine Lesezeichen');
   const newsItems = bookmarks.filter(b => b.type === 'news');
   const storyItems = bookmarks.filter(b => b.type === 'story');
-  let body = 'Meine gespeicherten AutoJournal-Lesezeichen:
-
-';
+  let body = 'Meine gespeicherten AutoJournal-Lesezeichen:\n\n';
   if (newsItems.length) {
-    body += '📰 NEWS:
-';
-    newsItems.forEach(b => body += `• ${b.text} (${b.date})
-`);
-    body += '
-';
+    body += '📰 NEWS:\n';
+    newsItems.forEach(b => body += '• ' + b.text + ' (' + b.date + ')\n');
+    body += '\n';
   }
   if (storyItems.length) {
-    body += '✦ STORY-IDEEN:
-';
-    storyItems.forEach(b => body += `• ${b.text}
-`);
+    body += '✦ STORY-IDEEN:\n';
+    storyItems.forEach(b => body += '• ' + b.text + '\n');
   }
   window.open(`mailto:?subject=${subject}&body=${encodeURIComponent(body)}`);
 }
