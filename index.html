@@ -32,7 +32,7 @@
   .stat-label { font-size:11px; color:#4a6a9a; text-transform:uppercase; letter-spacing:1px; margin-top:2px; }
   .stat-change { font-family:'JetBrains Mono',monospace; font-size:11px; margin-top:3px; }
 
-  .dashboard { display:grid; grid-template-columns:250px 1fr 280px 200px 210px; grid-template-rows:auto auto; gap:12px; padding:12px 20px 24px; max-width:1800px; margin:0 auto; }
+  .dashboard { display:grid; grid-template-columns:250px 1fr 280px 200px 210px; grid-template-rows:auto auto auto; gap:12px; padding:12px 20px 24px; max-width:1800px; margin:0 auto; }
 
   .panel { background:#deeaf8; border:1px solid #a8c8e8; border-radius:10px; overflow:hidden; position:relative; box-shadow:0 2px 14px rgba(26,58,107,.1); }
   .panel::before { content:''; position:absolute; top:0;left:0;right:0; height:3px; background:linear-gradient(90deg,#1a3a6b,#3b7dd8,transparent); }
@@ -92,6 +92,14 @@
   .send-btn { background:#1a3a6b; border:none; color:white; font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:1px; padding:9px 20px; border-radius:8px; cursor:pointer; transition:all .2s; }
   .send-btn:hover { background:#2563eb; }
   .send-btn:disabled { background:#8aabcc; cursor:not-allowed; }
+  .research-btn { background:transparent; border:1px solid #a8c8e8; color:#1a3a6b; font-family:'DM Sans',sans-serif; font-size:12px; padding:4px 11px; border-radius:20px; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:5px; }
+  .research-btn:hover { background:#1a3a6b; color:#fff; border-color:#1a3a6b; }
+  .research-btn.active { background:#7c3aed; color:#fff; border-color:#7c3aed; }
+  .research-mode-banner { background:linear-gradient(90deg,#7c3aed,#5b21b6); color:#fff; font-size:12px; padding:7px 14px; display:flex; align-items:center; justify-content:space-between; display:none; }
+  .research-mode-banner.visible { display:flex; }
+  .research-mode-banner-text { display:flex; align-items:center; gap:7px; }
+  .research-off-btn { background:rgba(255,255,255,.2); border:1px solid rgba(255,255,255,.4); color:#fff; font-size:11px; font-family:'DM Sans',sans-serif; padding:3px 10px; border-radius:5px; cursor:pointer; }
+  .research-off-btn:hover { background:rgba(255,255,255,.35); }
   .typing-indicator { display:flex; gap:4px; padding:6px 0; }
   .typing-dot { width:6px; height:6px; border-radius:50%; background:#3b7dd8; animation:bounce 1.2s infinite; }
   .typing-dot:nth-child(2){animation-delay:.2s}.typing-dot:nth-child(3){animation-delay:.4s}
@@ -154,6 +162,28 @@
   .expert-link:hover { text-decoration:underline; }
   .expert-ask { margin-top:6px; background:transparent; border:1px solid #a8c8e8; color:#3a6aaa; font-size:11px; font-family:'DM Sans',sans-serif; padding:5px 10px; border-radius:6px; cursor:pointer; transition:all .2s; width:100%; }
   .expert-ask:hover { background:#1a3a6b; color:#fff; border-color:#1a3a6b; }
+
+  /* PDF UPLOAD PANEL */
+  .pdf-panel { grid-column:2; grid-row:3; }
+  .pdf-dropzone { margin:12px; border:2px dashed #a8c8e8; border-radius:10px; padding:20px; text-align:center; cursor:pointer; transition:all .2s; background:#eef5fd; }
+  .pdf-dropzone:hover, .pdf-dropzone.dragover { border-color:#1a3a6b; background:#dbeafe; }
+  .pdf-dropzone-icon { font-size:28px; margin-bottom:8px; }
+  .pdf-dropzone-text { font-size:13px; color:#4a6a9a; line-height:1.5; }
+  .pdf-dropzone-text strong { color:#1a2f5a; }
+  .pdf-file-info { margin:0 12px 8px; background:#dbeafe; border:1px solid #93c5fd; border-radius:8px; padding:10px 14px; display:flex; align-items:center; gap:10px; }
+  .pdf-file-name { font-size:13px; font-weight:600; color:#1a2f5a; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .pdf-file-size { font-size:11px; color:#4a6a9a; font-family:"JetBrains Mono",monospace; }
+  .pdf-buttons { display:flex; gap:8px; margin:0 12px 12px; flex-wrap:wrap; }
+  .pdf-action-btn { flex:1; background:#1a3a6b; border:none; color:#fff; font-family:"DM Sans",sans-serif; font-size:13px; padding:9px 12px; border-radius:8px; cursor:pointer; transition:all .2s; text-align:center; }
+  .pdf-action-btn:hover { background:#2563eb; }
+  .pdf-action-btn.secondary { background:#eef5fd; color:#1a3a6b; border:1px solid #a8c8e8; }
+  .pdf-action-btn.secondary:hover { background:#dbeafe; }
+  .pdf-action-btn:disabled { background:#a0b8d8; cursor:not-allowed; }
+  .pdf-result { margin:0 12px 12px; background:#f8faff; border:1px solid #b8d4f0; border-radius:8px; padding:14px; font-size:13px; color:#1a2f5a; line-height:1.7; max-height:200px; overflow-y:auto; display:none; }
+  .pdf-result.visible { display:block; }
+  .pdf-result-header { font-family:"Bebas Neue",sans-serif; font-size:13px; letter-spacing:1px; color:#1a3a6b; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; }
+  .pdf-clear-btn { font-size:11px; background:transparent; border:1px solid #b8d4f0; color:#7a9ac0; padding:2px 8px; border-radius:4px; cursor:pointer; font-family:"DM Sans",sans-serif; }
+  .pdf-clear-btn:hover { border-color:#dc2626; color:#dc2626; }
 
   .spinner { display:inline-block; width:12px; height:12px; border:2px solid transparent; border-top-color:currentColor; border-radius:50%; animation:spin .7s linear infinite; }
   @keyframes spin { to{transform:rotate(360deg)} }
@@ -234,6 +264,10 @@
         </div>
       </div>
     </div>
+    <div class="research-mode-banner" id="researchBanner">
+      <div class="research-mode-banner-text">🔬 <strong>Tiefenrecherche aktiv</strong> — Ich führe dich durch einen strukturierten Rechercheprozess mit Websuchen und Bericht</div>
+      <button class="research-off-btn" onclick="toggleResearch(false)">✕ Beenden</button>
+    </div>
     <div class="chat-input-area">
       <div class="quick-prompts">
         <button class="quick-btn" onclick="sendQuick('Warum kämpft VW gerade so?')">VW-Krise</button>
@@ -241,6 +275,7 @@
         <button class="quick-btn" onclick="sendQuick('Warum sind chinesische E-Autos so billig?')">China-Faktor</button>
         <button class="quick-btn" onclick="sendQuick('Erkläre Hybrid vs. vollelektrisch')">Hybrid vs. EV</button>
         <button class="quick-btn" onclick="sendQuick('Welche 5 Fragen würde ich Oliver Blume stellen?')">Interview-Fragen</button>
+        <button class="research-btn" id="researchBtn" onclick="toggleResearch(true)">🔬 Tiefenrecherche</button>
       </div>
       <div class="input-row">
         <input type="text" class="chat-input" id="chatInput" placeholder="Frage stellen, Thema recherchieren..." />
@@ -294,6 +329,40 @@
       <div style="grid-column:1/3;padding:14px;text-align:center;color:#4a6a9a;font-size:13px"><div class="spinner" style="margin:0 auto 8px"></div>Warte auf aktuelle Headlines...</div>
     </div>
     <button class="story-btn" id="storyBtn" onclick="generateStories()" disabled>✦ Neue Ideen aus aktuellen News generieren</button>
+  </div>
+
+  <!-- COL 2 ROW 3: PDF UPLOAD -->
+  <div class="panel pdf-panel">
+    <div class="panel-header">
+      <div class="panel-title">📄 Studien & Dokumente analysieren</div>
+      <div class="panel-badge">PDF-Analyse</div>
+    </div>
+    <div class="pdf-dropzone" id="pdfDropzone" onclick="document.getElementById('pdfFileInput').click()" ondragover="pdfDragOver(event)" ondragleave="pdfDragLeave(event)" ondrop="pdfDrop(event)">
+      <div class="pdf-dropzone-icon">📂</div>
+      <div class="pdf-dropzone-text">
+        <strong>PDF hier ablegen oder klicken zum Auswählen</strong><br>
+        Studien, Berichte, Pressemitteilungen — KI fasst zusammen
+      </div>
+    </div>
+    <input type="file" id="pdfFileInput" accept=".pdf" style="display:none" onchange="pdfFileSelected(this)">
+    <div class="pdf-file-info" id="pdfFileInfo" style="display:none">
+      <span style="font-size:20px">📄</span>
+      <span class="pdf-file-name" id="pdfFileName">—</span>
+      <span class="pdf-file-size" id="pdfFileSize">—</span>
+    </div>
+    <div class="pdf-buttons" id="pdfButtons" style="display:none">
+      <button class="pdf-action-btn" onclick="analyzePDF('summary')">📝 Zusammenfassen</button>
+      <button class="pdf-action-btn" onclick="analyzePDF('key')">🎯 Kernaussagen</button>
+      <button class="pdf-action-btn" onclick="analyzePDF('simple')">🙋 Für Laien erklären</button>
+      <button class="pdf-action-btn secondary" onclick="analyzePDF('journalist')">🎤 Story-Winkel finden</button>
+    </div>
+    <div class="pdf-result" id="pdfResult">
+      <div class="pdf-result-header">
+        <span id="pdfResultTitle">Analyse</span>
+        <button class="pdf-clear-btn" onclick="pdfClear()">✕ Schließen</button>
+      </div>
+      <div id="pdfResultText"></div>
+    </div>
   </div>
 
 </div>
@@ -379,7 +448,7 @@ const EXPERTS = [
     topics: ['Marktanalyse','E-Mobilität','Absatzzahlen','VW-Krise'],
     links: [
       { label: '🌐 CAR-Institut', url: 'https://www.car-institute.com' },
-      { label: '🔗 LinkedIn', url: 'https://www.linkedin.com/in/ferdinand-dudenh%C3%B6fer-a1a47816/' },
+      { label: '🔗 LinkedIn', url: 'https://www.linkedin.com/in/prof-dr-ferdinand-dudenhöffer/' },
     ],
     ask: 'Was sagt Prof. Dudenhöfer zur aktuellen Lage der deutschen Automobilindustrie?'
   },
@@ -388,8 +457,8 @@ const EXPERTS = [
     title: 'Direktor, Center of Automotive Management (CAM), FH Bergisch Gladbach',
     topics: ['Transformation','China','Elektro','Innovation'],
     links: [
-      { label: '🌐 CAM-Studie', url: 'https://www.auto-institut.de' },
-      { label: '🔗 LinkedIn', url: 'https://www.linkedin.com/in/stefan-bratzel/' },
+      { label: '🌐 CAM-Institut', url: 'https://www.auto-institut.de' },
+      { label: '🔗 LinkedIn', url: 'https://www.linkedin.com/in/stefan-bratzel-prof-dr-2b9336/' },
     ],
     ask: 'Wie bewertet Prof. Bratzel die Innovationskraft der deutschen Autohersteller?'
   },
@@ -399,67 +468,47 @@ const EXPERTS = [
     title: 'Global Automotive Practice — jährliche CEO-Studie',
     topics: ['CEO-Studie','EV-Trends','Lieferkette','Strategie'],
     links: [
-      { label: '🌐 KPMG Auto', url: 'https://kpmg.com/xx/en/home/industries/automotive.html' },
-      { label: '📄 CEO Survey', url: 'https://kpmg.com/xx/en/home/insights/2024/01/kpmg-global-automotive-executive-survey.html' },
+      { label: '🌐 KPMG Automotive DE', url: 'https://kpmg.com/de/de/branchen/automobilindustrie.html' },
     ],
     ask: 'Was sind die wichtigsten Erkenntnisse aus der aktuellen KPMG Automotive CEO Studie?'
   },
   {
-    name: 'McKinsey Center for Future Mobility',
-    title: 'McKinsey & Company — Mobility Research',
+    name: 'McKinsey Automotive',
+    title: 'McKinsey & Company — Automobil & Zulieferer',
     topics: ['Zukunft Mobilität','SDV','Autonomes Fahren','China'],
     links: [
-      { label: '🌐 McKinsey Mobility', url: 'https://www.mckinsey.com/industries/automotive-and-assembly/our-insights' },
+      { label: '🌐 McKinsey Automotive DE', url: 'https://www.mckinsey.de/branchen/automobil-zulieferer' },
     ],
     ask: 'Was sagt McKinsey über die Zukunft der Automobilindustrie bis 2030?'
   },
   {
     name: 'EY Automotive',
-    title: 'Ernst & Young — Global Automotive Practice',
+    title: 'Ernst & Young — Automotive & Transportation',
     topics: ['EV-Markt','M&A','Profitabilität','OEM-Strategie'],
     links: [
-      { label: '🌐 EY Automotive', url: 'https://www.ey.com/en_gl/automotive-transportation' },
+      { label: '🌐 EY Automotive DE', url: 'https://www.ey.com/de_de/industries/automotive' },
     ],
     ask: 'Wie bewertet EY die Profitabilität der E-Auto-Hersteller aktuell?'
   },
-  { section: '🎓 Wissenschaft & Verbände' },
-  {
-    name: 'Fraunhofer ISI',
-    title: 'Institut für System- und Innovationsforschung — Elektromobilität',
-    topics: ['Batterietechnologie','Ladeinfrastruktur','Marktdiffusion'],
-    links: [
-      { label: '🌐 Fraunhofer ISI', url: 'https://www.isi.fraunhofer.de/de/kompetenzfelder/energietechnologien/elektromobilitaet.html' },
-    ],
-    ask: 'Was forscht das Fraunhofer ISI zur Elektromobilität in Deutschland?'
-  },
+  { section: '🎓 Verbände & Organisationen' },
   {
     name: 'VDA — Verband der Automobilindustrie',
     title: 'Branchenverband — Hildegard Müller (Präsidentin)',
     topics: ['Lobbyarbeit','Statistiken','Politik','Regulierung'],
     links: [
-      { label: '🌐 VDA', url: 'https://www.vda.de' },
+      { label: '🌐 VDA Pressekontakte', url: 'https://www.vda.de/de/presse/ihre-ansprechpartner' },
       { label: '📊 Statistiken', url: 'https://www.vda.de/de/topics/wirtschaft-und-zahlen' },
     ],
     ask: 'Was fordert der VDA aktuell von der Politik zur Förderung der Elektromobilität?'
   },
   {
-    name: 'ADAC Fahrzeugtechnik',
-    title: 'Allgemeiner Deutscher Automobil-Club — Technik & Tests',
+    name: 'ADAC Presse',
+    title: 'Allgemeiner Deutscher Automobil-Club — Pressestelle',
     topics: ['Verbrauchersicht','Tests','Ladeinfrastruktur','Reichweite'],
     links: [
-      { label: '🌐 ADAC', url: 'https://www.adac.de/rund-ums-fahrzeug/elektromobilitaet/' },
+      { label: '🌐 ADAC Pressezentrum', url: 'https://presse.adac.de/home/index.html' },
     ],
     ask: 'Wie bewertet der ADAC die aktuelle Ladeinfrastruktur in Deutschland?'
-  },
-  { section: '📰 Fachjournalisten' },
-  {
-    name: 'Gregor Honsel',
-    title: 'Technology Review / MIT — Mobilitäts-Redakteur',
-    topics: ['Technologie','Autonomes Fahren','Zukunft Mobilität'],
-    links: [
-      { label: '🌐 Tech Review', url: 'https://www.heise.de/tr/' },
-    ],
-    ask: 'Wie sieht die technologische Roadmap für autonomes Fahren aus?'
   },
 ];
 
@@ -760,9 +809,7 @@ async function sendMessage() {
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
         model:'claude-sonnet-4-20250514', max_tokens:1000,
-        system:`Du bist AutoJournal AI, Recherche-Assistent für Jesper (22), Autofan und angehender Journalismus-Student. 
-Erkläre Branchenzusammenhänge verständlich, nenne konkrete Zahlen und Personen, zeige journalistische Perspektiven (welche Story steckt dahinter? wen sollte man interviewen? welche Quellen?), hilf bei Recherchestrategien und Interview-Fragen. 
-Ton: locker, direkt, kompetent — wie ein erfahrener Redakteur. Auf Deutsch. Max 220 Wörter.`,
+        system: researchModeActive ? RESEARCH_SYSTEM_PROMPT : `Du bist AutoJournal AI, Recherche-Assistent für Jesper (22), Autofan und angehender Journalismus-Student. Erkläre Branchenzusammenhänge verständlich, nenne konkrete Zahlen und Personen, zeige journalistische Perspektiven (welche Story steckt dahinter? wen sollte man interviewen? welche Quellen?), hilf bei Recherchestrategien und Interview-Fragen. Ton: locker, direkt, kompetent — wie ein erfahrener Redakteur. Auf Deutsch. Max 220 Wörter.`,
         messages: conversationHistory
       })
     });
@@ -804,6 +851,175 @@ function openPx(query) {
   if (!query || !query.trim()) return;
   const q = encodeURIComponent(query.trim());
   window.open(`https://www.perplexity.ai/search?q=${q}`, '_blank');
+}
+
+// ── PDF ANALYSIS ──────────────────────────────────────────
+let pdfBase64 = null;
+let pdfName = '';
+
+function pdfDragOver(e) {
+  e.preventDefault();
+  document.getElementById('pdfDropzone').classList.add('dragover');
+}
+
+function pdfDragLeave(e) {
+  document.getElementById('pdfDropzone').classList.remove('dragover');
+}
+
+function pdfDrop(e) {
+  e.preventDefault();
+  document.getElementById('pdfDropzone').classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if (file && file.type === 'application/pdf') loadPDF(file);
+}
+
+function pdfFileSelected(input) {
+  const file = input.files[0];
+  if (file) loadPDF(file);
+}
+
+function loadPDF(file) {
+  pdfName = file.name;
+  const sizeMB = (file.size / 1024 / 1024).toFixed(1);
+  document.getElementById('pdfFileName').textContent = file.name;
+  document.getElementById('pdfFileSize').textContent = sizeMB + ' MB';
+  document.getElementById('pdfFileInfo').style.display = 'flex';
+  document.getElementById('pdfButtons').style.display = 'flex';
+  document.getElementById('pdfDropzone').style.display = 'none';
+  document.getElementById('pdfResult').classList.remove('visible');
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    pdfBase64 = e.target.result.split(',')[1];
+  };
+  reader.readAsDataURL(file);
+}
+
+function pdfClear() {
+  pdfBase64 = null;
+  pdfName = '';
+  document.getElementById('pdfFileInput').value = '';
+  document.getElementById('pdfFileInfo').style.display = 'none';
+  document.getElementById('pdfButtons').style.display = 'none';
+  document.getElementById('pdfDropzone').style.display = 'block';
+  document.getElementById('pdfResult').classList.remove('visible');
+}
+
+async function analyzePDF(mode) {
+  if (!pdfBase64) return;
+
+  const prompts = {
+    summary:    'Fasse dieses Dokument in maximal 200 Wörtern zusammen. Schreibe klar und verständlich. Beginne direkt mit der Zusammenfassung.',
+    key:        'Was sind die 5 wichtigsten Aussagen dieses Dokuments? Nummeriere sie. Schreibe jeden Punkt in 1-2 Sätzen, klar und präzise.',
+    simple:     'Erkläre die wichtigsten Inhalte dieses Dokuments so, dass ein interessierter Laie ohne Fachkenntnisse es versteht. Vermeide Fachjargon oder erkläre ihn sofort. Maximal 200 Wörter.',
+    journalist: 'Du bist ein erfahrener Wirtschaftsjournalist. Welche 3-4 journalistischen Story-Winkel siehst du in diesem Dokument? Was ist überraschend, kontrovers oder gesellschaftlich relevant? Welche Fragen würdest du dem Autor stellen?',
+  };
+
+  const titles = {
+    summary: '📝 Zusammenfassung',
+    key: '🎯 Kernaussagen',
+    simple: '🙋 Laienverständlich',
+    journalist: '🎤 Story-Winkel',
+  };
+
+  const btns = document.querySelectorAll('.pdf-action-btn');
+  btns.forEach(b => b.disabled = true);
+
+  const resultDiv = document.getElementById('pdfResult');
+  const resultText = document.getElementById('pdfResultText');
+  document.getElementById('pdfResultTitle').textContent = titles[mode];
+  resultText.innerHTML = '<span style="color:#4a6a9a"><span class="spinner"></span> KI analysiert Dokument...</span>';
+  resultDiv.classList.add('visible');
+
+  try {
+    const resp = await fetch(WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{
+          role: 'user',
+          content: [
+            {
+              type: 'document',
+              source: {
+                type: 'base64',
+                media_type: 'application/pdf',
+                data: pdfBase64
+              }
+            },
+            {
+              type: 'text',
+              text: prompts[mode]
+            }
+          ]
+        }]
+      })
+    });
+    const data = await resp.json();
+    const text = data.content.filter(c => c.type === 'text').map(c => c.text).join('');
+    resultText.innerHTML = text.replace(/\n/g, '<br>');
+  } catch(e) {
+    resultText.innerHTML = '<span style="color:#dc2626">Fehler bei der Analyse. Bitte erneut versuchen.</span>';
+  }
+
+  btns.forEach(b => b.disabled = false);
+}
+
+// ── RESEARCH MODE ─────────────────────────────────────────
+const RESEARCH_SYSTEM_PROMPT = `Du bist ein hochqualifizierter Rechercheassistent im AutoJournal-Dashboard. Du führst den Nutzer durch einen strukturierten, interaktiven Rechercheprozess.
+
+WICHTIG: Du hast KEINEN direkten Internetzugang. Weise den Nutzer darauf hin, dass du auf dein Trainingswissen bis Anfang 2025 zurückgreifst, und empfehle für tagesaktuelle Fakten Perplexity (Button im Dashboard).
+
+Dein Prozess — folge diesen Schritten genau:
+
+SCHRITT 1 — THEMA ANALYSIEREN & RECHERCHEFRAGEN VORSCHLAGEN:
+Wenn der Nutzer ein Thema nennt, analysiere es sofort und schlage 4–5 konkrete Recherchefragen vor. Frage dann:
+"Passen diese Fragen zu deinem Informationsbedarf, oder möchtest du sie anpassen?"
+Warte auf Bestätigung bevor du weitermachst.
+
+SCHRITT 2 — SEQUENZIELL RECHERCHIEREN:
+Arbeite jede Frage einzeln ab. Für jede Frage:
+- Nenne die Frage als Überschrift
+- Liefere 3–5 fundierte Antwortpunkte aus deinem Wissen
+- Nenne relevante Zahlen, Personen, Studien wo vorhanden
+- Frage dann: "Soll ich mit Frage [N+1] weitermachen?"
+
+SCHRITT 3 — NACHFRAGE:
+Nach allen Fragen: "Benötigst du zu bestimmten Punkten noch mehr Details, oder soll ich jetzt den finalen Bericht erstellen?"
+
+SCHRITT 4 — FINALER BERICHT:
+Erstelle einen strukturierten Bericht mit:
+## Recherche-Bericht: [Thema]
+**Zusammenfassung** (2–3 Sätze)
+**Haupterkenntnisse** (5–7 Punkte)
+**Detailanalyse** (nach Recherchefragen gegliedert)
+**Schlussfolgerung**
+**Journalistische Anknüpfungspunkte** (Story-Winkel, Interviewpartner, offene Fragen)
+
+Ton: professionell, direkt, wie ein erfahrener Redakteur. Auf Deutsch. Maximal 400 Wörter pro Antwort.`;
+
+let researchModeActive = false;
+
+function toggleResearch(active) {
+  researchModeActive = active;
+  document.getElementById('researchBanner').classList.toggle('visible', active);
+  document.getElementById('researchBtn').classList.toggle('active', active);
+
+  if (active) {
+    // Reset conversation and start research mode
+    conversationHistory = [];
+    document.getElementById('chatMessages').innerHTML = '';
+    addMessage('ai', '🔬 <strong>Tiefenrecherche-Modus aktiviert!</strong><br><br>Nenn mir das Thema das du recherchieren möchtest — zum Beispiel eine Frage, ein Unternehmen, ein Trend oder ein Ereignis aus der Autoindustrie.<br><br>Ich werde dir dann konkrete Recherchefragen vorschlagen, sie mit dir abstimmen und anschließend jeden Aspekt strukturiert aufarbeiten. Am Ende bekommst du einen vollständigen Recherche-Bericht.');
+    document.getElementById('chatInput').placeholder = 'Recherche-Thema eingeben, z.B. "BYD Expansion Europa" oder "VW Krise Ursachen"...';
+  } else {
+    conversationHistory = [];
+    document.getElementById('chatMessages').innerHTML = '';
+    addMessage('ai', 'Tiefenrecherche beendet. Wie kann ich dir weiterhelfen?');
+    document.getElementById('chatInput').placeholder = 'Frage stellen, Thema recherchieren...';
+  }
+  document.getElementById('chatInput').focus();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
