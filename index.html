@@ -31,6 +31,16 @@
   .px-btn { display:inline-flex; align-items:center; gap:5px; background:#e8f6fd; border:1px solid #93c5fd; color:#0369a1; font-size:11px; font-family:'DM Sans',sans-serif; padding:3px 9px; border-radius:5px; cursor:pointer; transition:all .2s; text-decoration:none; margin-top:5px; }
   .px-btn:hover { background:#0e8bc0; color:#fff; border-color:#0e8bc0; }
 
+  /* ── MAIN NAV TABS ── */
+  .main-nav { background:#1a3a6b; border-bottom:2px solid #2a4f8a; padding:0 20px; display:flex; gap:4px; }
+  .main-tab { font-family:'Bebas Neue',sans-serif; font-size:14px; letter-spacing:2px; color:#7eb8f5; padding:10px 18px; border-bottom:3px solid transparent; cursor:pointer; transition:all .2s; border:none; background:transparent; }
+  .main-tab:hover { color:#fff; }
+  .main-tab.active { color:#fff; border-bottom-color:#20a6e0; }
+
+  /* ── VIEWS ── */
+  .view { display:none; }
+  .view.active { display:block; }
+
   .stats-row { display:flex; gap:10px; padding:14px 20px 0; max-width:1800px; margin:0 auto; }
   .stat-box { flex:1; background:#deeaf8; border:1px solid #a8c8e8; border-radius:10px; padding:13px 16px; position:relative; overflow:hidden; box-shadow:0 2px 10px rgba(26,58,107,.1); }
   .stat-box::before { content:''; position:absolute; top:0;left:0;right:0; height:3px; background:linear-gradient(90deg,#1a3a6b,#3b7dd8,transparent); }
@@ -235,7 +245,101 @@
   .export-btn { background:transparent; border:1px solid #a8c8e8; color:#1a3a6b; font-family:'DM Sans',sans-serif; font-size:12px; padding:4px 11px; border-radius:20px; cursor:pointer; transition:all .2s; }
   .export-btn:hover { background:#1a3a6b; color:#fff; }
 
-  /* MOBILE */
+
+  /* PR ENTLARVER PANEL */
+  .pr-panel { grid-column:2; grid-row:4; }
+  .pr-textarea { width:100%; background:#eef5fd; border:1px solid #a8c8e8; color:#1a2f5a; font-family:'DM Sans',sans-serif; font-size:13px; padding:10px 12px; border-radius:8px; outline:none; resize:vertical; min-height:100px; transition:all .2s; }
+  .pr-textarea:focus { border-color:#1a3a6b; box-shadow:0 0 0 3px rgba(26,58,107,.12); background:#fff; }
+  .pr-textarea::placeholder { color:#7a9ac0; }
+  .pr-result { margin:0 12px 12px; background:#f8faff; border:1px solid #b8d4f0; border-radius:8px; padding:14px; font-size:13px; color:#1a2f5a; line-height:1.7; max-height:220px; overflow-y:auto; display:none; }
+  .pr-result.visible { display:block; }
+  .pr-result-header { font-family:'Bebas Neue',sans-serif; font-size:13px; letter-spacing:1px; color:#1a3a6b; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; }
+
+  /* INTERVIEW VORBEREITER PANEL */
+  .iv-panel { grid-column:2; grid-row:5; }
+  .iv-fields { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:12px 12px 8px; }
+  .iv-input { background:#eef5fd; border:1px solid #a8c8e8; color:#1a2f5a; font-family:'DM Sans',sans-serif; font-size:13px; padding:9px 12px; border-radius:8px; outline:none; transition:all .2s; width:100%; }
+  .iv-input:focus { border-color:#1a3a6b; box-shadow:0 0 0 3px rgba(26,58,107,.12); background:#fff; }
+  .iv-input::placeholder { color:#7a9ac0; }
+  .iv-topic { grid-column:1/3; }
+  .iv-type-row { display:flex; gap:6px; margin:0 12px 10px; flex-wrap:wrap; }
+  .iv-type-btn { font-size:11px; font-family:'DM Sans',sans-serif; padding:4px 12px; border-radius:20px; border:1px solid #a8c8e8; background:#eef5fd; color:#4a6a9a; cursor:pointer; transition:all .2s; }
+  .iv-type-btn:hover { border-color:#1a3a6b; color:#1a3a6b; }
+  .iv-type-btn.active { background:#1a3a6b; border-color:#1a3a6b; color:#fff; }
+  .iv-result { margin:0 12px 12px; background:#f8faff; border:1px solid #b8d4f0; border-radius:8px; padding:14px; font-size:13px; color:#1a2f5a; line-height:1.7; max-height:220px; overflow-y:auto; display:none; }
+  .iv-result.visible { display:block; }
+  .iv-result-header { font-family:'Bebas Neue',sans-serif; font-size:13px; letter-spacing:1px; color:#1a3a6b; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; }
+
+  /* ═══════════════════════════════════════════
+     BRANCHENKALENDER VIEW
+  ═══════════════════════════════════════════ */
+  #kalenderView { padding:20px; max-width:1200px; margin:0 auto; }
+
+  .kal-header { margin-bottom:20px; }
+  .kal-header h2 { font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:3px; color:#1a2f5a; }
+  .kal-header p { font-size:13px; color:#4a6a9a; margin-top:4px; }
+
+  .kal-stats { display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
+  .kal-stat { flex:1; min-width:120px; background:#deeaf8; border:1px solid #a8c8e8; border-radius:10px; padding:12px 16px; text-align:center; position:relative; overflow:hidden; }
+  .kal-stat::before { content:''; position:absolute; top:0;left:0;right:0; height:3px; background:linear-gradient(90deg,#1a3a6b,#3b7dd8,transparent); }
+  .kal-stat-num { font-family:'Bebas Neue',sans-serif; font-size:26px; color:#1a2f5a; }
+  .kal-stat-label { font-size:11px; color:#4a6a9a; text-transform:uppercase; letter-spacing:1px; }
+
+  .kal-filter-bar { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
+  .kal-filter-btn { padding:7px 16px; border-radius:20px; border:1px solid #a8c8e8; background:#deeaf8; color:#4a6a9a; font-size:12px; font-family:'DM Sans',sans-serif; cursor:pointer; transition:all .2s; }
+  .kal-filter-btn:hover { border-color:#1a3a6b; color:#1a3a6b; }
+  .kal-filter-btn.active { background:#1a3a6b; border-color:#1a3a6b; color:#fff; }
+
+  .kal-timeline { position:relative; padding-left:36px; }
+  .kal-timeline::before { content:''; position:absolute; left:13px; top:0; bottom:0; width:2px; background:linear-gradient(to bottom,#1a3a6b,#3b7dd844); }
+
+  .kal-month-group { margin-bottom:6px; }
+  .kal-month-label { position:relative; display:flex; align-items:center; gap:10px; margin-bottom:12px; margin-top:28px; }
+  .kal-month-label::before { content:''; position:absolute; left:-28px; width:14px; height:14px; border-radius:50%; background:#1a3a6b; border:3px solid #c8ddf2; box-shadow:0 0 0 3px #1a3a6b44; }
+  .kal-month-label h3 { font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:2px; color:#1a3a6b; text-transform:uppercase; }
+  .kal-month-count { font-family:'JetBrains Mono',monospace; font-size:11px; background:#dbeafe; color:#2563eb; padding:2px 9px; border-radius:10px; }
+  .kal-now-badge { font-family:'JetBrains Mono',monospace; font-size:11px; background:#dcfce7; color:#16a34a; padding:2px 9px; border-radius:10px; border:1px solid #86efac; }
+
+  .kal-month-group.kal-current .kal-month-label::before { background:#16a34a; box-shadow:0 0 0 3px #16a34a44; }
+  .kal-month-group.kal-current .kal-month-label h3 { color:#16a34a; }
+
+  .kal-events { display:flex; flex-direction:column; gap:8px; margin-bottom:8px; }
+
+  .kal-card { background:#deeaf8; border:1px solid #a8c8e8; border-radius:10px; padding:14px 16px; cursor:pointer; transition:all .2s; position:relative; overflow:hidden; }
+  .kal-card::before { content:''; position:absolute; left:0;top:0;bottom:0; width:4px; border-radius:4px 0 0 4px; }
+  .kal-card.kal-messe::before { background:#dc2626; }
+  .kal-card.kal-kongress::before { background:#7c3aed; }
+  .kal-card.kal-international::before { background:#d97706; }
+  .kal-card.kal-branche::before { background:#16a34a; }
+
+  .kal-card:hover { border-color:#1a3a6b; transform:translateX(4px); background:#ccdff4; }
+  .kal-card.kal-expanded { border-color:#1a3a6b; background:#ccdff4; }
+
+  .kal-card-top { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+  .kal-card-name { font-size:14px; font-weight:700; color:#1a2f5a; flex:1; }
+  .kal-card-badges { display:flex; gap:6px; flex-shrink:0; flex-wrap:wrap; justify-content:flex-end; }
+
+  .kal-badge { font-size:11px; padding:2px 9px; border-radius:10px; font-family:'JetBrains Mono',monospace; }
+  .kal-badge.messe { background:#fee2e2; color:#dc2626; border:1px solid #fecaca; }
+  .kal-badge.kongress { background:#ede9fe; color:#7c3aed; border:1px solid #ddd6fe; }
+  .kal-badge.international { background:#fef3c7; color:#d97706; border:1px solid #fde68a; }
+  .kal-badge.branche { background:#dcfce7; color:#16a34a; border:1px solid #bbf7d0; }
+  .kal-badge.highlight { background:#fef9c3; color:#854d0e; border:1px solid #fde047; }
+
+  .kal-card-meta { display:flex; gap:16px; margin-top:8px; font-size:12px; color:#4a6a9a; flex-wrap:wrap; }
+  .kal-card-meta span { display:flex; align-items:center; gap:4px; }
+
+  .kal-card-desc { margin-top:10px; font-size:13px; color:#1a2f5a; line-height:1.6; display:none; border-top:1px solid #b8d4f0; padding-top:10px; }
+  .kal-card.kal-expanded .kal-card-desc { display:block; }
+
+  .kal-card-tip { margin-top:10px; padding:9px 13px; background:#dbeafe; border:1px solid #93c5fd; border-radius:7px; font-size:12px; color:#1d4ed8; line-height:1.5; }
+
+  .kal-card-actions { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+  .kal-ask-btn { background:#1a3a6b; border:none; color:#fff; font-family:'DM Sans',sans-serif; font-size:12px; padding:6px 14px; border-radius:6px; cursor:pointer; transition:all .2s; }
+  .kal-ask-btn:hover { background:#2563eb; }
+
+  .kal-hidden { display:none !important; }
+
   @media (max-width:900px) {
     .dashboard { grid-template-columns:1fr 1fr; grid-template-rows:auto; }
     .brands-panel { grid-column:1; grid-row:1; max-height:300px; }
@@ -245,6 +349,8 @@
     .experts-panel { grid-column:2; grid-row:3; max-height:none; }
     .stories-panel { grid-column:1/3; grid-row:4; }
     .pdf-panel { grid-column:1/3; grid-row:5; }
+    .pr-panel { grid-column:1/3; grid-row:6; }
+    .iv-panel { grid-column:1/3; grid-row:7; }
     .stats-row { flex-wrap:wrap; }
     .stat-box { min-width:calc(50% - 5px); }
     .px-search { display:none; }
@@ -252,6 +358,8 @@
     .header-right { gap:10px; }
     .dashboard { padding:8px 10px 16px; }
     .stats-row { padding:10px 10px 0; }
+    #kalenderView { padding:12px; }
+    .kal-stats { gap:6px; }
   }
   @media (max-width:600px) {
     .dashboard { grid-template-columns:1fr; }
@@ -263,7 +371,10 @@
     .press-panel { grid-row:5; }
     .experts-panel { grid-row:6; }
     .pdf-panel { grid-row:7; }
+    .pr-panel { grid-row:8; }
+    .iv-panel { grid-row:9; }
     .stat-box { min-width:100%; }
+    .kal-card-top { flex-direction:column; }
   }
 
   .spinner { display:inline-block; width:12px; height:12px; border:2px solid transparent; border-top-color:currentColor; border-radius:50%; animation:spin .7s linear infinite; }
@@ -286,6 +397,15 @@
     </div>
   </div>
 </header>
+
+<!-- MAIN NAV -->
+<nav class="main-nav">
+  <button class="main-tab active" onclick="switchView('cockpit', this)">🚗 Recherche-Cockpit</button>
+  <button class="main-tab" onclick="switchView('kalender', this)">📅 Branchenkalender</button>
+</nav>
+
+<!-- ═══ VIEW: COCKPIT ═══ -->
+<div class="view active" id="cockpitView">
 
 <div class="stats-row">
   <div class="stat-box">
@@ -316,7 +436,6 @@
 </div>
 
 <div class="dashboard">
-
   <!-- COL 1: BRAND RADAR -->
   <div class="panel brands-panel">
     <div class="panel-header">
@@ -357,6 +476,7 @@
         <button class="quick-btn" onclick="sendQuick('Warum sind chinesische E-Autos so billig?')">China-Faktor</button>
         <button class="quick-btn" onclick="sendQuick('Erkläre Hybrid vs. vollelektrisch')">Hybrid vs. EV</button>
         <button class="quick-btn" onclick="generateInterviewQuestions()">🎤 Interview-Fragen</button>
+        <button class="quick-btn" id="weiterdrehenBtn" onclick="weiterdrehenNachricht()" style="background:#fffbeb;border-color:#d97706;color:#92400e;" title="Nachricht journalistisch weiterdrehen — Anschlussgeschichten entwickeln">🔄 Weiterdrehen</button>
         <button class="research-btn" id="researchBtn" onclick="toggleResearch(true)">🔬 Tiefenrecherche</button>
       </div>
       <div class="input-row">
@@ -454,6 +574,89 @@
     </div>
   </div>
 
+  <!-- COL 2 ROW 4: PR ENTLARVER -->
+  <div class="panel pr-panel">
+    <div class="panel-header">
+      <div class="panel-title">🔍 Pressemitteilungs-Entlarver</div>
+      <div class="panel-badge">PR-Analyse</div>
+    </div>
+    <div style="padding:12px 12px 8px">
+      <textarea class="pr-textarea" id="prInput" placeholder="Pressemitteilung hier einfügen — KI filtert heraus, was wirklich neu ist, was Marketing-Sprech ist, welche Rückfragen entstehen und welcher journalistische Aufhänger steckt..."></textarea>
+    </div>
+    <div style="display:flex;gap:8px;margin:0 12px 12px;flex-wrap:wrap">
+      <button class="pdf-action-btn" onclick="analyzePR('news')">📰 Was ist wirklich neu?</button>
+      <button class="pdf-action-btn" onclick="analyzePR('spin')">🎭 PR-Sprech entlarven</button>
+      <button class="pdf-action-btn" onclick="analyzePR('questions')">❓ Kritische Rückfragen</button>
+      <button class="pdf-action-btn secondary" onclick="analyzePR('angle')">🎯 Journalistischer Aufhänger</button>
+    </div>
+    <div class="pr-result" id="prResult">
+      <div class="pr-result-header">
+        <span id="prResultTitle">Analyse</span>
+        <button class="pdf-clear-btn" onclick="prClear()">✕ Schließen</button>
+      </div>
+      <div id="prResultText"></div>
+    </div>
+  </div>
+
+  <!-- COL 2 ROW 5: INTERVIEW VORBEREITER -->
+  <div class="panel iv-panel">
+    <div class="panel-header">
+      <div class="panel-title">🎙️ Interview-Vorbereiter</div>
+      <div class="panel-badge">Fragenkatalog</div>
+    </div>
+    <div class="iv-fields">
+      <input type="text" class="iv-input" id="ivPerson" placeholder="Gesprächspartner (z.B. VW-CEO)" />
+      <input type="text" class="iv-input" id="ivRole" placeholder="Funktion / Organisation" />
+      <input type="text" class="iv-input iv-topic" id="ivTopic" placeholder="Thema des Interviews (z.B. VW-Stellenabbau, E-Auto-Strategie)" />
+    </div>
+    <div class="iv-type-row">
+      <span style="font-size:11px;color:#4a6a9a;align-self:center;font-family:'DM Sans',sans-serif">Typ:</span>
+      <button class="iv-type-btn active" id="ivType-ceo" onclick="setIvType('ceo',this)">CEO / Vorstand</button>
+      <button class="iv-type-btn" id="ivType-experte" onclick="setIvType('experte',this)">Experte / Analyst</button>
+      <button class="iv-type-btn" id="ivType-politiker" onclick="setIvType('politiker',this)">Politik / Verband</button>
+      <button class="iv-type-btn" id="ivType-betroffene" onclick="setIvType('betroffene',this)">Betroffene / Arbeitnehmer</button>
+    </div>
+    <div style="display:flex;gap:8px;margin:0 12px 12px">
+      <button class="pdf-action-btn" onclick="generateIV()">🎙️ Fragenkatalog generieren</button>
+      <button class="pdf-action-btn secondary" onclick="ivClear()">✕ Zurücksetzen</button>
+    </div>
+    <div class="iv-result" id="ivResult">
+      <div class="iv-result-header">
+        <span id="ivResultTitle">Fragenkatalog</span>
+        <button class="pdf-clear-btn" onclick="ivClear()">✕ Schließen</button>
+      </div>
+      <div id="ivResultText"></div>
+    </div>
+  </div>
+
+</div>
+
+</div><!-- end cockpitView -->
+
+<!-- ═══ VIEW: BRANCHENKALENDER ═══ -->
+<div class="view" id="kalenderView">
+  <div class="kal-header">
+    <h2>📅 Branchenkalender Automobil</h2>
+    <p>April 2026 – März 2027 · Messen, Kongresse & wichtige Branchentermine · Klick auf ein Event für Details & Journalistentipps</p>
+  </div>
+
+  <div class="kal-stats">
+    <div class="kal-stat"><div class="kal-stat-num" id="kalTotal">20</div><div class="kal-stat-label">Events gesamt</div></div>
+    <div class="kal-stat"><div class="kal-stat-num" style="color:#dc2626" id="kalMesse">8</div><div class="kal-stat-label">Messen</div></div>
+    <div class="kal-stat"><div class="kal-stat-num" style="color:#7c3aed" id="kalKongress">6</div><div class="kal-stat-label">Kongresse</div></div>
+    <div class="kal-stat"><div class="kal-stat-num" style="color:#d97706" id="kalIntl">6</div><div class="kal-stat-label">International</div></div>
+    <div class="kal-stat"><div class="kal-stat-num" style="color:#854d0e" id="kalHighlight">8</div><div class="kal-stat-label">Highlights</div></div>
+  </div>
+
+  <div class="kal-filter-bar">
+    <button class="kal-filter-btn active" onclick="kalFilter('all',this)">Alle Events</button>
+    <button class="kal-filter-btn" onclick="kalFilter('messe',this)">🏛 Messen</button>
+    <button class="kal-filter-btn" onclick="kalFilter('kongress',this)">🎤 Kongresse</button>
+    <button class="kal-filter-btn" onclick="kalFilter('international',this)">🌍 International</button>
+    <button class="kal-filter-btn" onclick="kalFilter('highlight',this)">⭐ Highlights</button>
+  </div>
+
+  <div class="kal-timeline" id="kalTimeline"></div>
 </div>
 
 <!-- BOOKMARKS FAB -->
@@ -482,20 +685,189 @@
 </div>
 
 <script>
+// ── VIEW SWITCHING ─────────────────────────────────────────
+function switchView(view, btn) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(view + 'View').classList.add('active');
+  btn.classList.add('active');
+}
+
+// ════════════════════════════════════════════════════════════
+//  BRANCHENKALENDER DATA & LOGIC
+// ════════════════════════════════════════════════════════════
+const KAL_EVENTS = [
+  { monat:'April 2026', datum:'08.–09. Apr 2026', name:'Automotive Masterminds', ort:'Berlin', typ:'kongress', highlight:false,
+    desc:'Führender Strategie-Kongress der deutschen Automobilindustrie. Fokus: Transformation, Software-Defined Vehicles, E-Mobilitätsstrategie. Entscheider von OEMs und Zulieferern.',
+    tip:'Früh akkreditieren — Vorabgespräche mit Entscheidern sind hier oft ergiebiger als die offiziellen Panels.' },
+  { monat:'April 2026', datum:'14.–18. Apr 2026', name:'Auto Shanghai 2026', ort:'Shanghai, China', typ:'international', highlight:true,
+    desc:'Größte Automesse Asiens im Zweijahresrhythmus. Weltpremieren chinesischer Hersteller — entscheidend für die Europa-Strategie von BYD, NIO, SAIC und Co.',
+    tip:'Entscheidend für China-Faktor-Berichterstattung. Was hier gezeigt wird, landet 6–12 Monate später in Europa.' },
+  { monat:'Mai 2026', datum:'05.–06. Mai 2026', name:'Bordnetze im Automobil', ort:'Ludwigsburg', typ:'kongress', highlight:false,
+    desc:'Internationales Fachforum für Bordnetz-Entwickler. High-Voltage-Architekturen, Software-Defined Vehicles, Kabelbaum-Automation.',
+    tip:'Sehr technisch, aber goldwert für Zulieferer-Storys und SDV-Hintergründe.' },
+  { monat:'Mai 2026', datum:'19.–20. Mai 2026', name:'Automotive Software Summit', ort:'München', typ:'kongress', highlight:true,
+    desc:'Deep-Dive in Automotive-Software-Strategien. Fokus: Connected Vehicles, KI im Fahrzeug, Over-the-Air Updates. Software-Strategen der großen OEMs.',
+    tip:'Hier treffen sich die Software-Strategen der OEMs — ideal für Exklusiv-Interviews zur Digitalstrategie.' },
+  { monat:'Mai 2026', datum:'Anfang Mai 2026', name:'Automotive Dealer Day', ort:'Verona, Italien', typ:'international', highlight:false,
+    desc:'Größter Händlerkongress Europas. Vertriebstransformation, E-Mobilität im Handel, Direktvertrieb der Hersteller vs. Händlernetz.',
+    tip:'Händlerperspektive — oft unterschätzte Story über den echten Stand der E-Mobilität im Markt.' },
+  { monat:'Juni 2026', datum:'16.–17. Jun 2026', name:'Automobil-Elektronik Kongress (AEK)', ort:'Ludwigsburg', typ:'kongress', highlight:true,
+    desc:'30. Jubiläum des international führenden Elektronik-Kongresses. Fokus: KI-Systeme, E/E-Architekturen, autonomes Fahren, Sicherheitstechnik.',
+    tip:'Jubiläumsausgabe — Rückblick und Ausblick auf 30 Jahre Elektrifizierung. Starke Story-Aufhänger garantiert.' },
+  { monat:'Juni 2026', datum:'Jun 2026', name:'Frankfurter Automobilausstellung (FAA)', ort:'Frankfurt am Main', typ:'messe', highlight:false,
+    desc:'Regionale Automobilausstellung mit Neuheiten für den deutschen Markt. Gute Mischung aus Publikums- und Fachinteresse.',
+    tip:'Gut für regionale Händler-Perspektiven und Markteinführungen.' },
+  { monat:'Juli 2026', datum:'Jul 2026', name:'Abenteuer & Allrad', ort:'Bad Kissingen', typ:'messe', highlight:false,
+    desc:'Europas größte Offroad-Messe. SUVs, Geländefahrzeuge, Zubehör. Wachsendes Nischensegment trotz E-Mobilitätsdiskurs.',
+    tip:'Kontrast-Story zum EV-Mainstream — Verbrenner-Zukunft im Geländesegment als Aufmacher.' },
+  { monat:'August 2026', datum:'Aug 2026', name:'Tuning World Bodensee', ort:'Friedrichshafen', typ:'messe', highlight:false,
+    desc:'Europas führende Tuning-Messe. Individualisierung als Wachstumssegment — spannend besonders im Kontext der EV-Ära.',
+    tip:'Story über Zukunft des Tunings in der EV-Ära: Geht Tuning mit Elektroautos — oder stirbt es?' },
+  { monat:'September 2026', datum:'15.–20. Sep 2026', name:'IAA Transportation 2026', ort:'Hannover', typ:'messe', highlight:true,
+    desc:'Weltgrößte Messe für Nutzfahrzeuge, Transport und Logistik. Fokus: klimaneutrale Mobilität, autonomes Fahren im Fernverkehr, Wasserstoff-LKW.',
+    tip:'Die "vergessene IAA" — während alle über PKW schreiben, laufen hier die Entscheidungen für die Lieferkette der Zukunft.' },
+  { monat:'September 2026', datum:'Sep 2026', name:'i-Mobility Stuttgart', ort:'Stuttgart', typ:'messe', highlight:false,
+    desc:'Süddeutsche Mobilitätsmesse mit Fokus auf E-Mobilität, alternative Antriebe und urbane Mobilität.',
+    tip:'Heimspiel für Mercedes und Porsche — gute Chancen auf Exklusiv-Gespräche in entspannter Atmosphäre.' },
+  { monat:'Oktober 2026', datum:'Okt 2026', name:'Japan Mobility Show 2026', ort:'Tokio, Japan', typ:'international', highlight:true,
+    desc:'Wichtigste asiatische Automesse nach Shanghai. Toyota, Honda, Nissan, Mazda zeigen Hybrid- und Wasserstoff-Strategie.',
+    tip:'Japanischer Gegenpart zur chinesischen EV-Offensive — Hybrid-Zukunft und Wasserstoff als starke Story.' },
+  { monat:'Oktober 2026', datum:'Okt 2026', name:'Automechanika Frankfurt', ort:'Frankfurt am Main', typ:'messe', highlight:true,
+    desc:'Weltgrößte Messe für Kfz-Teile, Zubehör und Service. Aftermarket, Reparatur, Digitalisierung der Werkstatt.',
+    tip:'Aftermarket ist der unterschätzte Billionen-Markt. Besonders interessant: Wie verändert das Elektroauto den Werkstattmarkt?' },
+  { monat:'November 2026', datum:'18.–19. Nov 2026', name:'Automotive Computing Conferences (ACC)', ort:'München', typ:'kongress', highlight:false,
+    desc:'Hochleistungsrechnen im Fahrzeug. Autonomes Fahren, KI-Chips im Auto, Rechenarchitekturen der nächsten Generation.',
+    tip:'Technisch, aber zukunftsweisend — hier werden die Chip-Strategien der OEMs greifbar.' },
+  { monat:'November 2026', datum:'Nov 2026', name:'Auto Camping Caravan Berlin', ort:'Berlin', typ:'messe', highlight:false,
+    desc:'Europas größte Mobilitätsmesse inkl. Caravaning-Segment. Wachstumsmarkt trotz Konjunkturunsicherheit.',
+    tip:'' },
+  { monat:'Dezember 2026', datum:'28. Nov – 06. Dez 2026', name:'Essen Motor Show', ort:'Essen', typ:'messe', highlight:true,
+    desc:'Deutschlands größte Motorshow-Messe. Tuning, Sport, Klassiker. Jahresabschluss-Event der deutschen Automobilwelt.',
+    tip:'Jahresrückblick-Storys und Ausblick auf nächstes Jahr. Gute Stimmung, lockere Interview-Atmosphäre.' },
+  { monat:'Januar 2027', datum:'Jan 2027', name:'Detroit Auto Show (NAIAS)', ort:'Detroit, USA', typ:'international', highlight:true,
+    desc:'Traditionell starkes Signal für den US-Markt. Verleihung North American Car of the Year. Amerikanische Hersteller zeigen Jahresziele.',
+    tip:'Erster großer Ausblick auf das Modelljahr. Wichtig für US-Markt-Berichterstattung und globale Strategie.' },
+  { monat:'Februar 2027', datum:'Feb 2027', name:'Retro Classics Stuttgart', ort:'Stuttgart', typ:'messe', highlight:false,
+    desc:'Europas größte Oldtimer-Messe. Klassiker-Markt als Gegentrend zur E-Mobilitäts-Diskussion — und als Wertspeicher.',
+    tip:'Wachsender Markt für Wertspeicher-Fahrzeuge — interessante Kontrast-Story zum Neuwagen-Absatzdruck.' },
+  { monat:'März 2027', datum:'Mär 2027', name:'Geneva International Motor Show Qatar', ort:'Doha, Katar', typ:'international', highlight:false,
+    desc:'Nachfolger des Genfer Salons. Prestige-Messe für Luxus- und Sportwagen. Mittelost-Markt im Fokus.',
+    tip:'Luxussegment und Naher Osten — interessant für Marken wie Mercedes-AMG, Porsche, Ferrari.' },
+  { monat:'März 2027', datum:'Mär 2027', name:'Automechanika Warsaw', ort:'Nadarzyn, Polen', typ:'messe', highlight:false,
+    desc:'Wichtigste Aftermarket-Messe Osteuropas. Osteuropäischer Markt als Wachstumsregion.',
+    tip:'' },
+];
+
+const CURRENT_MONTH = 'April 2026';
+
+function buildKalender() {
+  const months = [...new Set(KAL_EVENTS.map(e => e.monat))];
+  const timeline = document.getElementById('kalTimeline');
+  timeline.innerHTML = '';
+
+  months.forEach(month => {
+    const monthEvents = KAL_EVENTS.filter(e => e.monat === month);
+    const isCurrent = month === CURRENT_MONTH;
+    const group = document.createElement('div');
+    group.className = 'kal-month-group' + (isCurrent ? ' kal-current' : '');
+    group.dataset.month = month;
+
+    const label = document.createElement('div');
+    label.className = 'kal-month-label';
+    label.innerHTML = `<h3>${month}</h3>
+      <span class="kal-month-count">${monthEvents.length} Event${monthEvents.length>1?'s':''}</span>
+      ${isCurrent ? '<span class="kal-now-badge">● Aktuell</span>' : ''}`;
+
+    const eventsDiv = document.createElement('div');
+    eventsDiv.className = 'kal-events';
+
+    monthEvents.forEach((ev, i) => {
+      const globalIdx = KAL_EVENTS.indexOf(ev);
+      const card = document.createElement('div');
+      card.className = `kal-card kal-${ev.typ}`;
+      card.dataset.typ = ev.typ;
+      card.dataset.highlight = ev.highlight;
+      card.dataset.idx = globalIdx;
+
+      card.innerHTML = `
+        <div class="kal-card-top">
+          <div class="kal-card-name">${ev.name}</div>
+          <div class="kal-card-badges">
+            ${ev.highlight ? '<span class="kal-badge highlight">⭐ Highlight</span>' : ''}
+            <span class="kal-badge ${ev.typ}">${ev.typ.charAt(0).toUpperCase()+ev.typ.slice(1)}</span>
+          </div>
+        </div>
+        <div class="kal-card-meta">
+          <span>📅 ${ev.datum}</span>
+          <span>📍 ${ev.ort}</span>
+        </div>
+        ${ev.desc ? `<div class="kal-card-desc">
+          <p>${ev.desc}</p>
+          ${ev.tip ? `<div class="kal-card-tip">💡 <strong>Journalistentipp:</strong> ${ev.tip}</div>` : ''}
+          <div class="kal-card-actions">
+            <button class="kal-ask-btn" onclick="event.stopPropagation();kalAskKI(${globalIdx})">🤖 KI fragen</button>
+          </div>
+        </div>` : ''}
+      `;
+
+      card.addEventListener('click', () => {
+        const isOpen = card.classList.contains('kal-expanded');
+        document.querySelectorAll('.kal-card.kal-expanded').forEach(c => c.classList.remove('kal-expanded'));
+        if (!isOpen) card.classList.add('kal-expanded');
+      });
+
+      eventsDiv.appendChild(card);
+    });
+
+    group.appendChild(label);
+    group.appendChild(eventsDiv);
+    timeline.appendChild(group);
+  });
+}
+
+function kalFilter(filter, btn) {
+  document.querySelectorAll('.kal-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  document.querySelectorAll('.kal-card').forEach(card => {
+    if (filter === 'all') {
+      card.classList.remove('kal-hidden');
+    } else if (filter === 'highlight') {
+      card.dataset.highlight === 'true' ? card.classList.remove('kal-hidden') : card.classList.add('kal-hidden');
+    } else {
+      card.dataset.typ === filter ? card.classList.remove('kal-hidden') : card.classList.add('kal-hidden');
+    }
+  });
+
+  document.querySelectorAll('.kal-month-group').forEach(group => {
+    const visible = group.querySelectorAll('.kal-card:not(.kal-hidden)').length;
+    group.style.display = visible === 0 ? 'none' : '';
+  });
+}
+
+function kalAskKI(idx) {
+  const ev = KAL_EVENTS[idx];
+  if (!ev) return;
+  const question = `Erkläre mir journalistisch relevante Hintergründe zur Veranstaltung "${ev.name}" (${ev.datum}, ${ev.ort}). Welche Themen, Stories und Interviewpartner wären dort besonders interessant für einen Automobiljournalisten?`;
+  switchView('cockpit', document.querySelector('.main-tab'));
+  document.querySelector('.main-tab').classList.add('active');
+  sendQuick(question);
+}
+
+// ════════════════════════════════════════════════════════════
+//  ORIGINAL DASHBOARD CODE (unverändert)
+// ════════════════════════════════════════════════════════════
 const WORKER = 'https://orange-shape-5ada-autojournal.tblees.workers.dev';
 
-// ── RSS FEEDS — very specific auto queries ─────────────────
 const RSS_FEEDS = [
-  // when:2d = nur Meldungen der letzten 2 Tage — liefert frische Ergebnisse
   { url:'https://news.google.com/rss/search?q=VW+BMW+Mercedes+when:2d&hl=de&gl=DE&ceid=DE:de', lang:'de' },
   { url:'https://news.google.com/rss/search?q=electric+vehicle+car+when:2d&hl=en&gl=US&ceid=US:en', lang:'en' },
   { url:'https://news.google.com/rss/search?q=Tesla+BYD+Elektroauto+Automobil+when:2d&hl=de&gl=DE&ceid=DE:de', lang:'de' },
 ];
 
-// Auto-relevance keywords — headline must contain at least one
 const AUTO_KW = ['auto','car','vehicle','ev','electric','tesla','volkswagen','vw','bmw','mercedes','audi','porsche','toyota','honda','nissan','ford','gm','rivian','nio','byd','stellantis','renault','hyundai','kia','elektro','fahrzeug','motor','antrieb','verbrenner','hybrid','ladesäule','batterie','automotive','automaker','emission','fleet','charging','absatz','zulassung','werk','produktion','stellenabbau','pkw','kraftfahrzeug','mobility'];
 
-// Brand detection map
 const BRANDS = {
   'Volkswagen': ['volkswagen','vw','wolfsburg'],
   'BMW':        ['bmw','bayerische'],
@@ -514,7 +886,6 @@ const BRANDS = {
   'Ford':       ['ford'],
 };
 
-// Trend keywords
 const TREND_KW = {
   'E-Mobilität': ['elektro','ev','electric','batterie','laden','charging','reichweite'],
   'China-Konkurrenz': ['china','chinese','byd','nio','chinesisch'],
@@ -526,7 +897,6 @@ const TREND_KW = {
   'Investitionen': ['investition','investment','milliarden','billion'],
 };
 
-// ── PRESS LINKS ────────────────────────────────────────────
 const PRESS = [
   {s:'🇩🇪 Deutschland'},
   {f:'🔵',n:'Volkswagen',d:'VW Newsroom',u:'https://www.volkswagen-newsroom.com/de'},
@@ -553,853 +923,489 @@ const PRESS = [
   {f:'📰',n:'auto motor sport',d:'Tests & News',u:'https://www.auto-motor-und-sport.de'},
 ];
 
-// ── EXPERTS ────────────────────────────────────────────────
 const EXPERTS = [
   { section: '🏛️ Unabhängige Analysten' },
-  {
-    name: 'Prof. Ferdinand Dudenhöfer',
-    title: 'Direktor, CAR-Center Automotive Research, Uni Duisburg-Essen',
-    topics: ['Marktanalyse','E-Mobilität','Absatzzahlen','VW-Krise'],
-    links: [
-      { label: '🌐 CAR-Institut', url: 'https://www.car-institute.com' },
-      { label: '🔗 LinkedIn', url: 'https://www.linkedin.com/in/prof-dr-ferdinand-dudenhöffer/' },
-    ],
-    ask: 'Was sagt Prof. Dudenhöfer zur aktuellen Lage der deutschen Automobilindustrie?'
-  },
-  {
-    name: 'Prof. Stefan Bratzel',
-    title: 'Direktor, Center of Automotive Management (CAM), FH Bergisch Gladbach',
-    topics: ['Transformation','China','Elektro','Innovation'],
-    links: [
-      { label: '🌐 CAM-Institut', url: 'https://www.auto-institut.de' },
-      { label: '🔗 LinkedIn', url: 'https://www.linkedin.com/in/stefan-bratzel-prof-dr-2b9336/' },
-    ],
-    ask: 'Wie bewertet Prof. Bratzel die Innovationskraft der deutschen Autohersteller?'
-  },
+  { name:'Prof. Ferdinand Dudenhöfer', title:'Direktor, CAR-Center Automotive Research, Uni Duisburg-Essen', topics:['Marktanalyse','E-Mobilität','Absatzzahlen','VW-Krise'], links:[{label:'🌐 CAR-Institut',url:'https://www.car-institute.com'},{label:'🔗 LinkedIn',url:'https://www.linkedin.com/in/prof-dr-ferdinand-dudenhöffer/'}], ask:'Was sagt Prof. Dudenhöffer zur aktuellen Lage der deutschen Automobilindustrie?' },
+  { name:'Prof. Stefan Bratzel', title:'Direktor, Center of Automotive Management (CAM), FH Bergisch Gladbach', topics:['Transformation','China','Elektro','Innovation'], links:[{label:'🌐 CAM-Institut',url:'https://www.auto-institut.de'},{label:'🔗 LinkedIn',url:'https://www.linkedin.com/in/stefan-bratzel-prof-dr-2b9336/'}], ask:'Wie bewertet Prof. Bratzel die Innovationskraft der deutschen Autohersteller?' },
   { section: '💼 Beratung & Research' },
-  {
-    name: 'KPMG Automotive',
-    title: 'Global Automotive Practice — jährliche CEO-Studie',
-    topics: ['CEO-Studie','EV-Trends','Lieferkette','Strategie'],
-    links: [
-      { label: '🌐 KPMG Automotive DE', url: 'https://kpmg.com/de/de/branchen/automobilindustrie.html' },
-    ],
-    ask: 'Was sind die wichtigsten Erkenntnisse aus der aktuellen KPMG Automotive CEO Studie?'
-  },
-  {
-    name: 'McKinsey Automotive',
-    title: 'McKinsey & Company — Automobil & Zulieferer',
-    topics: ['Zukunft Mobilität','SDV','Autonomes Fahren','China'],
-    links: [
-      { label: '🌐 McKinsey Automotive DE', url: 'https://www.mckinsey.de/branchen/automobil-zulieferer' },
-    ],
-    ask: 'Was sagt McKinsey über die Zukunft der Automobilindustrie bis 2030?'
-  },
-  {
-    name: 'EY Automotive',
-    title: 'Ernst & Young — Automotive & Transportation',
-    topics: ['EV-Markt','M&A','Profitabilität','OEM-Strategie'],
-    links: [
-      { label: '🌐 EY Automotive DE', url: 'https://www.ey.com/de_de/industries/automotive' },
-    ],
-    ask: 'Wie bewertet EY die Profitabilität der E-Auto-Hersteller aktuell?'
-  },
+  { name:'KPMG Automotive', title:'Global Automotive Practice — jährliche CEO-Studie', topics:['CEO-Studie','EV-Trends','Lieferkette','Strategie'], links:[{label:'🌐 KPMG Automotive DE',url:'https://kpmg.com/de/de/branchen/automobilindustrie.html'}], ask:'Was sind die wichtigsten Erkenntnisse aus der aktuellen KPMG Automotive CEO Studie?' },
+  { name:'McKinsey Automotive', title:'McKinsey & Company — Automobil & Zulieferer', topics:['Zukunft Mobilität','SDV','Autonomes Fahren','China'], links:[{label:'🌐 McKinsey Automotive DE',url:'https://www.mckinsey.de/branchen/automobil-zulieferer'}], ask:'Was sagt McKinsey über die Zukunft der Automobilindustrie bis 2030?' },
+  { name:'EY Automotive', title:'Ernst & Young — Automotive & Transportation', topics:['EV-Markt','M&A','Profitabilität','OEM-Strategie'], links:[{label:'🌐 EY Automotive DE',url:'https://www.ey.com/de_de/industries/automotive'}], ask:'Wie bewertet EY die Profitabilität der E-Auto-Hersteller aktuell?' },
   { section: '📊 Datenquellen' },
-  {
-    name: 'Statista — Automobilindustrie',
-    title: 'Statistiken, Marktdaten & Studien zur weltweiten Automobilindustrie',
-    topics: ['Absatzzahlen','Marktanteile','EV-Statistiken','Prognosen'],
-    links: [
-      { label: '📊 Statista Automobilindustrie', url: 'https://de.statista.com/themen/2670/weltweite-automobilindustrie/#editorsPicks' },
-    ],
-    ask: 'Welche Statistiken und Marktdaten sind für die Automobilindustrie besonders aussagekräftig?'
-  },
+  { name:'Statista — Automobilindustrie', title:'Statistiken, Marktdaten & Studien zur weltweiten Automobilindustrie', topics:['Absatzzahlen','Marktanteile','EV-Statistiken','Prognosen'], links:[{label:'📊 Statista Automobilindustrie',url:'https://de.statista.com/themen/2670/weltweite-automobilindustrie/#editorsPicks'}], ask:'Welche Statistiken und Marktdaten sind für die Automobilindustrie besonders aussagekräftig?' },
   { section: '🎓 Verbände & Organisationen' },
-  {
-    name: 'VDA — Verband der Automobilindustrie',
-    title: 'Branchenverband — Hildegard Müller (Präsidentin)',
-    topics: ['Lobbyarbeit','Statistiken','Politik','Regulierung'],
-    links: [
-      { label: '🌐 VDA Pressekontakte', url: 'https://www.vda.de/de/presse/ihre-ansprechpartner' },
-    ],
-    ask: 'Was fordert der VDA aktuell von der Politik zur Förderung der Elektromobilität?'
-  },
-  {
-    name: 'ADAC Presse',
-    title: 'Allgemeiner Deutscher Automobil-Club — Pressestelle',
-    topics: ['Verbrauchersicht','Tests','Ladeinfrastruktur','Reichweite'],
-    links: [
-      { label: '🌐 ADAC Pressezentrum', url: 'https://presse.adac.de/home/index.html' },
-    ],
-    ask: 'Wie bewertet der ADAC die aktuelle Ladeinfrastruktur in Deutschland?'
-  },
+  { name:'VDA — Verband der Automobilindustrie', title:'Branchenverband — Hildegard Müller (Präsidentin)', topics:['Lobbyarbeit','Statistiken','Politik','Regulierung'], links:[{label:'🌐 VDA Pressekontakte',url:'https://www.vda.de/de/presse/ihre-ansprechpartner'}], ask:'Was fordert der VDA aktuell von der Politik zur Förderung der Elektromobilität?' },
+  { name:'ADAC Presse', title:'Allgemeiner Deutscher Automobil-Club — Pressestelle', topics:['Verbrauchersicht','Tests','Ladeinfrastruktur','Reichweite'], links:[{label:'🌐 ADAC Pressezentrum',url:'https://presse.adac.de/home/index.html'}], ask:'Wie bewertet der ADAC die aktuelle Ladeinfrastruktur in Deutschland?' },
 ];
 
-// ── STATE ──────────────────────────────────────────────────
 let allNews = [];
 let currentTab = 'all';
 let conversationHistory = [];
-let lastTopic = ''; // Tracks most recent topic for context-aware interview questions
-let countdownSeconds = 15 * 60; // Auto-refresh countdown
+let lastTopic = '';
+let countdownSeconds = 15 * 60;
 
-// ── HELPERS ────────────────────────────────────────────────
-function isAutoRelevant(title) {
-  const t = title.toLowerCase();
-  return AUTO_KW.some(k => t.includes(k));
-}
+function isAutoRelevant(title) { const t=title.toLowerCase(); return AUTO_KW.some(k=>t.includes(k)); }
+function relTime(dateStr) { if(!dateStr)return'heute'; try{const mins=Math.floor((Date.now()-new Date(dateStr))/60000);if(mins<2)return'gerade eben';if(mins<60)return`vor ${mins}min`;if(mins<1440)return`vor ${Math.floor(mins/60)}h`;return`vor ${Math.floor(mins/1440)}d`;}catch{return'heute';} }
+function detectBrands(text) { const t=text.toLowerCase(); return Object.keys(BRANDS).filter(b=>BRANDS[b].some(kw=>t.includes(kw))); }
+function detectTrend(newsItems) { const scores={}; const allText=newsItems.map(n=>n.headline.toLowerCase()).join(' '); for(const[trend,keywords]of Object.entries(TREND_KW)){scores[trend]=keywords.filter(k=>allText.includes(k)).length;} const top=Object.entries(scores).sort((a,b)=>b[1]-a[1])[0]; return top&&top[1]>0?top[0]:'Transformation'; }
 
-function relTime(dateStr) {
-  if (!dateStr) return 'heute';
-  try {
-    const mins = Math.floor((Date.now() - new Date(dateStr)) / 60000);
-    if (mins < 2) return 'gerade eben';
-    if (mins < 60) return `vor ${mins}min`;
-    if (mins < 1440) return `vor ${Math.floor(mins/60)}h`;
-    return `vor ${Math.floor(mins/1440)}d`;
-  } catch { return 'heute'; }
-}
+function renderPress() { document.getElementById('pressList').innerHTML=PRESS.map(p=>{if(p.s)return`<div class="press-section">${p.s}</div>`;return`<a class="press-item" href="${p.u}" target="_blank" rel="noopener"><span class="press-flag">${p.f}</span><div class="press-info"><div class="press-name">${p.n}</div><div class="press-desc">${p.d}</div></div><span class="press-arrow">→</span></a>`;}).join(''); }
 
-function detectBrands(text) {
-  const t = text.toLowerCase();
-  return Object.keys(BRANDS).filter(b => BRANDS[b].some(kw => t.includes(kw)));
-}
-
-function detectTrend(newsItems) {
-  const scores = {};
-  const allText = newsItems.map(n => n.headline.toLowerCase()).join(' ');
-  for (const [trend, keywords] of Object.entries(TREND_KW)) {
-    scores[trend] = keywords.filter(k => allText.includes(k)).length;
-  }
-  const top = Object.entries(scores).sort((a,b)=>b[1]-a[1])[0];
-  return top && top[1] > 0 ? top[0] : 'Transformation';
-}
-
-// ── RENDER PRESS ───────────────────────────────────────────
-function renderPress() {
-  document.getElementById('pressList').innerHTML = PRESS.map(p => {
-    if (p.s) return `<div class="press-section">${p.s}</div>`;
-    return `<a class="press-item" href="${p.u}" target="_blank" rel="noopener">
-      <span class="press-flag">${p.f}</span>
-      <div class="press-info"><div class="press-name">${p.n}</div><div class="press-desc">${p.d}</div></div>
-      <span class="press-arrow">→</span>
-    </a>`;
-  }).join('');
-}
-
-// ── RENDER EXPERTS ─────────────────────────────────────────
 function renderExperts() {
-  window._experts = EXPERTS.filter(e => !e.section);
-  let expertIdx = 0;
-  document.getElementById('expertList').innerHTML = EXPERTS.map(e => {
-    if (e.section) return `<div class="expert-section">${e.section}</div>`;
-    const idx = expertIdx++;
-    return `<div class="expert-item">
-      <div class="expert-name">${e.name}</div>
-      <div class="expert-title">${e.title}</div>
-      <div class="expert-topics">${e.topics.map(t=>`<span class="expert-topic">${t}</span>`).join('')}</div>
-      <div class="expert-links">${e.links.map(l=>`<a class="expert-link" href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`).join('')}</div>
-      <button class="expert-ask" onclick="askExpert(${idx})">🤖 KI fragen</button>
-    </div>`;
+  window._experts=EXPERTS.filter(e=>!e.section);
+  let expertIdx=0;
+  document.getElementById('expertList').innerHTML=EXPERTS.map(e=>{
+    if(e.section)return`<div class="expert-section">${e.section}</div>`;
+    const idx=expertIdx++;
+    return`<div class="expert-item"><div class="expert-name">${e.name}</div><div class="expert-title">${e.title}</div><div class="expert-topics">${e.topics.map(t=>`<span class="expert-topic">${t}</span>`).join('')}</div><div class="expert-links">${e.links.map(l=>`<a class="expert-link" href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`).join('')}</div><button class="expert-ask" onclick="askExpert(${idx})">🤖 KI fragen</button></div>`;
   }).join('');
 }
+function askExpert(idx){const expert=window._experts[idx];if(expert&&expert.ask)sendQuick(expert.ask);}
 
-function askExpert(idx) {
-  const expert = window._experts[idx];
-  if (expert && expert.ask) sendQuick(expert.ask);
-}
-
-// ── LOAD RSS ───────────────────────────────────────────────
 async function loadAllNews() {
-  // Reset countdown on every load (manual or auto)
-  countdownSeconds = 15 * 60;
-  const cdEl = document.getElementById('refreshCountdown');
-  if (cdEl) cdEl.textContent = '15:00';
-  const btn = document.getElementById('refreshBtn');
-  btn.disabled = true;
-  document.getElementById('newsFeed').innerHTML =
-    '<div style="padding:20px;text-align:center;color:#4a6a9a;font-size:13px"><div class="spinner" style="margin:0 auto 10px"></div>Lade & filtere Auto-News...</div>';
-  document.getElementById('storyBadge').textContent = 'lädt News...';
-
-  allNews = [];
-  const seen = new Set();
-
-  await Promise.allSettled(RSS_FEEDS.map(async feed => {
-    try {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 6000); // 6s timeout per feed
-      const cacheBust = Date.now();
-      const resp = await fetch(`${WORKER}?rss=${encodeURIComponent(feed.url)}&t=${cacheBust}`, { signal: controller.signal, cache: 'no-store' });
+  countdownSeconds=15*60;
+  const cdEl=document.getElementById('refreshCountdown');
+  if(cdEl)cdEl.textContent='15:00';
+  const btn=document.getElementById('refreshBtn');
+  btn.disabled=true;
+  document.getElementById('newsFeed').innerHTML='<div style="padding:20px;text-align:center;color:#4a6a9a;font-size:13px"><div class="spinner" style="margin:0 auto 10px"></div>Lade & filtere Auto-News...</div>';
+  document.getElementById('storyBadge').textContent='lädt News...';
+  allNews=[];
+  const seen=new Set();
+  await Promise.allSettled(RSS_FEEDS.map(async feed=>{
+    try{
+      const controller=new AbortController();
+      const timeout=setTimeout(()=>controller.abort(),6000);
+      const cacheBust=Date.now();
+      const resp=await fetch(`${WORKER}?rss=${encodeURIComponent(feed.url)}&t=${cacheBust}`,{signal:controller.signal,cache:'no-store'});
       clearTimeout(timeout);
-      const text = await resp.text();
-      const xml = new DOMParser().parseFromString(text, 'text/xml');
-      [...xml.querySelectorAll('item')].slice(0,10).forEach(item => {
-        const headline = item.querySelector('title')?.textContent?.trim() || '';
-        const pubDate = item.querySelector('pubDate')?.textContent?.trim() || '';
-        // Get publisher info from <source> tag
-        const sourceEl = item.querySelector('source');
-        const sourceName = sourceEl?.textContent?.trim() || 'Google News';
-        const sourceUrl = sourceEl?.getAttribute('url') || '';
-        // Google News RSS redirect link (works on desktop)
-        const googleLink = item.querySelector('link')?.textContent?.trim() || '';
-        // Build search link as mobile fallback using publisher domain + headline
-        const searchLink = sourceUrl
-          ? sourceUrl + '/suche?q=' + encodeURIComponent(headline.split(':')[0])
-          : 'https://news.google.com/search?q=' + encodeURIComponent(headline) + '&hl=de';
-        // Use Google redirect on desktop (works fine), search fallback otherwise
-        const link = googleLink || searchLink;
-        if (!headline || seen.has(headline) || !isAutoRelevant(headline)) return;
+      const text=await resp.text();
+      const xml=new DOMParser().parseFromString(text,'text/xml');
+      [...xml.querySelectorAll('item')].slice(0,10).forEach(item=>{
+        const headline=item.querySelector('title')?.textContent?.trim()||'';
+        const pubDate=item.querySelector('pubDate')?.textContent?.trim()||'';
+        const sourceEl=item.querySelector('source');
+        const sourceName=sourceEl?.textContent?.trim()||'Google News';
+        const sourceUrl=sourceEl?.getAttribute('url')||'';
+        const googleLink=item.querySelector('link')?.textContent?.trim()||'';
+        const searchLink=sourceUrl?sourceUrl+'/suche?q='+encodeURIComponent(headline.split(':')[0]):'https://news.google.com/search?q='+encodeURIComponent(headline)+'&hl=de';
+        const link=googleLink||searchLink;
+        if(!headline||seen.has(headline)||!isAutoRelevant(headline))return;
         seen.add(headline);
-        allNews.push({ headline, link, googleLink, sourceUrl, sourceName, pubDate, lang: feed.lang, time: relTime(pubDate) });
+        allNews.push({headline,link,googleLink,sourceUrl,sourceName,pubDate,lang:feed.lang,time:relTime(pubDate)});
       });
-    } catch(e) { /* silent */ }
+    }catch(e){}
   }));
-
-  // Sort by date
-  allNews.sort((a,b) => {
-    try { return new Date(b.pubDate) - new Date(a.pubDate); } catch { return 0; }
-  });
-
-  if (allNews.length === 0) {
-    await loadAIFallback();
-    return;
-  }
-
-  updateStats();
-  renderNews();
-  updateBrandRadar();
-  document.getElementById('lastUpdate').textContent = '🕐 ' + new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
-  btn.disabled = false;
-  // Delay story generation — don't block initial page render
-  setTimeout(() => generateStories(), 500);
+  allNews.sort((a,b)=>{try{return new Date(b.pubDate)-new Date(a.pubDate);}catch{return 0;}});
+  if(allNews.length===0){await loadAIFallback();return;}
+  updateStats();renderNews();updateBrandRadar();
+  document.getElementById('lastUpdate').textContent='🕐 '+new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
+  btn.disabled=false;
+  setTimeout(()=>generateStories(),500);
 }
 
-function updateStats() {
-  document.getElementById('statNews').textContent = allNews.length;
-  document.getElementById('newsCount').textContent = `${allNews.length} Live`;
-
-  // Trend
-  const trend = detectTrend(allNews);
-  document.getElementById('statTrend').textContent = trend;
-
-  // Top brand
-  const brandCount = {};
-  allNews.forEach(n => detectBrands(n.headline).forEach(b => { brandCount[b] = (brandCount[b]||0)+1; }));
-  const topBrand = Object.entries(brandCount).sort((a,b)=>b[1]-a[1])[0];
-  if (topBrand) {
-    document.getElementById('statTopBrand').textContent = topBrand[0];
-    document.getElementById('statTopBrandSub').textContent = `${topBrand[1]}× erwähnt`;
-  }
+function updateStats(){
+  document.getElementById('statNews').textContent=allNews.length;
+  document.getElementById('newsCount').textContent=`${allNews.length} Live`;
+  const trend=detectTrend(allNews);
+  document.getElementById('statTrend').textContent=trend;
+  const brandCount={};
+  allNews.forEach(n=>detectBrands(n.headline).forEach(b=>{brandCount[b]=(brandCount[b]||0)+1;}));
+  const topBrand=Object.entries(brandCount).sort((a,b)=>b[1]-a[1])[0];
+  if(topBrand){document.getElementById('statTopBrand').textContent=topBrand[0];document.getElementById('statTopBrandSub').textContent=`${topBrand[1]}× erwähnt`;}
 }
 
-function updateBrandRadar() {
-  const brandData = {};
-  allNews.forEach(n => {
-    detectBrands(n.headline).forEach(b => {
-      if (!brandData[b]) brandData[b] = { count:0, items:[] };
-      brandData[b].count++;
-      brandData[b].items.push(n);
-    });
-  });
-
-  const sorted = Object.entries(brandData).sort((a,b)=>b[1].count-a[1].count);
-  const max = sorted[0]?.[1].count || 1;
-
-  if (sorted.length === 0) {
-    document.getElementById('brandList').innerHTML =
-      '<div style="padding:16px;color:#4a6a9a;font-size:13px;text-align:center">Keine Marken in aktuellen News erkannt.</div>';
-    document.getElementById('brandBadge').textContent = '0 Marken';
-    return;
-  }
-
+function updateBrandRadar(){
+  const brandData={};
+  allNews.forEach(n=>{detectBrands(n.headline).forEach(b=>{if(!brandData[b])brandData[b]={count:0,items:[]};brandData[b].count++;brandData[b].items.push(n);});});
+  const sorted=Object.entries(brandData).sort((a,b)=>b[1].count-a[1].count);
+  const max=sorted[0]?.[1].count||1;
+  if(sorted.length===0){document.getElementById('brandList').innerHTML='<div style="padding:16px;color:#4a6a9a;font-size:13px;text-align:center">Keine Marken in aktuellen News erkannt.</div>';document.getElementById('brandBadge').textContent='0 Marken';return;}
   checkBreakingNews(brandData);
-  document.getElementById('brandBadge').textContent = `${sorted.length} Marken`;
-  document.getElementById('brandList').innerHTML = sorted.map(([brand, data]) => {
-    const pct = Math.round((data.count / max) * 100);
-    const pillClass = pct >= 70 ? 'pill-hot' : pct >= 35 ? 'pill-mid' : 'pill-low';
-    const barColor = pct >= 70 ? '#dc2626' : pct >= 35 ? '#d97706' : '#2563eb';
-    const pxUrl = `https://www.perplexity.ai/search?q=${encodeURIComponent(brand+' aktuell Neuigkeiten Automobil')}`;
-    const hlItems = data.items.slice(0,5).map(n => {
-      const linkHtml = n.link
-        ? `<a class="brand-hl-link" href="${n.link}" target="_blank" onclick="event.stopPropagation()">${n.headline}</a>`
-        : `<span>${n.headline}</span>`;
-      return `<div class="brand-hl-item">${linkHtml}<span style="color:#9ab4d0;margin-left:5px">${n.time}</span></div>`;
-    }).join('');
-    return `<div class="brand-item" onclick="toggleBrand(this)">
-      <div class="brand-top">
-        <span class="brand-name">${brand}</span>
-        <span class="brand-pill ${pillClass}">${data.count}× ▾</span>
-      </div>
-      <div class="brand-meter"><div class="brand-meter-fill" style="width:${pct}%;background:${barColor}"></div></div>
-      <div class="brand-headlines">
-        ${hlItems}
-        <a class="brand-px-btn" href="${pxUrl}" target="_blank" onclick="event.stopPropagation()">🔍 ${brand} in Perplexity recherchieren</a>
-      </div>
-    </div>`;
+  document.getElementById('brandBadge').textContent=`${sorted.length} Marken`;
+  document.getElementById('brandList').innerHTML=sorted.map(([brand,data])=>{
+    const pct=Math.round((data.count/max)*100);
+    const pillClass=pct>=70?'pill-hot':pct>=35?'pill-mid':'pill-low';
+    const barColor=pct>=70?'#dc2626':pct>=35?'#d97706':'#2563eb';
+    const pxUrl=`https://www.perplexity.ai/search?q=${encodeURIComponent(brand+' aktuell Neuigkeiten Automobil')}`;
+    const hlItems=data.items.slice(0,5).map(n=>{const linkHtml=n.link?`<a class="brand-hl-link" href="${n.link}" target="_blank" onclick="event.stopPropagation()">${n.headline}</a>`:`<span>${n.headline}</span>`;return`<div class="brand-hl-item">${linkHtml}<span style="color:#9ab4d0;margin-left:5px">${n.time}</span></div>`;}).join('');
+    return`<div class="brand-item" onclick="toggleBrand(this)"><div class="brand-top"><span class="brand-name">${brand}</span><span class="brand-pill ${pillClass}">${data.count}× ▾</span></div><div class="brand-meter"><div class="brand-meter-fill" style="width:${pct}%;background:${barColor}"></div></div><div class="brand-headlines">${hlItems}<a class="brand-px-btn" href="${pxUrl}" target="_blank" onclick="event.stopPropagation()">🔍 ${brand} in Perplexity recherchieren</a></div></div>`;
   }).join('');
 }
 
-function toggleBrand(el) {
-  const wasOpen = el.classList.contains('open');
-  document.querySelectorAll('.brand-item.open').forEach(e => e.classList.remove('open'));
-  if (!wasOpen) {
-    el.classList.add('open');
-    // Track brand as current topic for interview questions
-    const brandName = el.querySelector('.brand-name')?.textContent?.trim();
-    if (brandName) lastTopic = brandName + ' aktuelle Entwicklungen Automobilindustrie';
-  }
-}
+function toggleBrand(el){const wasOpen=el.classList.contains('open');document.querySelectorAll('.brand-item.open').forEach(e=>e.classList.remove('open'));if(!wasOpen){el.classList.add('open');const brandName=el.querySelector('.brand-name')?.textContent?.trim();if(brandName)lastTopic=brandName+' aktuelle Entwicklungen Automobilindustrie';}}
+function switchTab(tab,el){currentTab=tab;document.querySelectorAll('.news-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');renderNews();}
 
-function switchTab(tab, el) {
-  currentTab = tab;
-  document.querySelectorAll('.news-tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  renderNews();
-}
-
-function renderNews() {
-  const filtered = currentTab === 'all' ? allNews : allNews.filter(n => n.lang === currentTab);
-  window._news = filtered;
-  if (!filtered.length) {
-    document.getElementById('newsFeed').innerHTML =
-      '<div style="padding:16px;color:#4a6a9a;font-size:13px">Keine Meldungen für diesen Filter.</div>';
-    return;
-  }
-  document.getElementById('newsFeed').innerHTML = filtered.map((n, i) => {
-    const pxUrl = 'https://www.perplexity.ai/search?q=' + encodeURIComponent(n.headline);
-    return `<div class="news-item" data-idx="${i}" onclick="newsClick(this)">
-      <div class="news-source">
-        <span>${n.lang==='de'?'🇩🇪':'🌍'} ${n.sourceName || 'Google News'}</span>
-        <span class="news-time">${n.time}</span>
-      </div>
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:6px">
-        <div class="news-headline">${n.headline}</div>
-        <button class="bookmark-btn" data-idx="${i}" onclick="event.stopPropagation();newsBookmark(this)" title="Lesezeichen">📌</button>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;margin-top:4px;flex-wrap:wrap">
-        <a class="news-read"
-           href="${n.googleLink || ('https://news.google.com/search?q=' + encodeURIComponent(n.headline) + '&hl=de')}"
-           target="_blank"
-           onclick="event.stopPropagation()">→ Artikel lesen</a>
-        ${n.sourceUrl ? `<a class="news-read" style="color:#4a6a9a;font-size:11px" href="${n.sourceUrl}" target="_blank" onclick="event.stopPropagation()">${n.sourceName}</a>` : ''}
-        <a class="px-btn" href="${pxUrl}" target="_blank" onclick="event.stopPropagation()">🔍 Perplexity</a>
-      </div>
-    </div>`;
+function renderNews(){
+  const filtered=currentTab==='all'?allNews:allNews.filter(n=>n.lang===currentTab);
+  window._news=filtered;
+  if(!filtered.length){document.getElementById('newsFeed').innerHTML='<div style="padding:16px;color:#4a6a9a;font-size:13px">Keine Meldungen für diesen Filter.</div>';return;}
+  document.getElementById('newsFeed').innerHTML=filtered.map((n,i)=>{
+    const pxUrl='https://www.perplexity.ai/search?q='+encodeURIComponent(n.headline);
+    return`<div class="news-item" data-idx="${i}" onclick="newsClick(this)"><div class="news-source"><span>${n.lang==='de'?'🇩🇪':'🌍'} ${n.sourceName||'Google News'}</span><span class="news-time">${n.time}</span></div><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:6px"><div class="news-headline">${n.headline}</div><button class="bookmark-btn" data-idx="${i}" onclick="event.stopPropagation();newsBookmark(this)" title="Lesezeichen">📌</button></div><div style="display:flex;align-items:center;gap:8px;margin-top:4px;flex-wrap:wrap"><a class="news-read" href="${n.googleLink||('https://news.google.com/search?q='+encodeURIComponent(n.headline)+'&hl=de')}" target="_blank" onclick="event.stopPropagation()">→ Artikel lesen</a>${n.sourceUrl?`<a class="news-read" style="color:#4a6a9a;font-size:11px" href="${n.sourceUrl}" target="_blank" onclick="event.stopPropagation()">${n.sourceName}</a>`:''}<a class="px-btn" href="${pxUrl}" target="_blank" onclick="event.stopPropagation()">🔍 Perplexity</a></div></div>`;
   }).join('');
 }
-function newsClick(el) { const n = window._news[+el.dataset.idx]; if(n) askAboutNews(n.headline); }
-function newsBookmark(el) { const n = window._news[+el.dataset.idx]; if(n) addBookmark('news', n.headline, n.time); }
+function newsClick(el){const n=window._news[+el.dataset.idx];if(n)askAboutNews(n.headline);}
+function newsBookmark(el){const n=window._news[+el.dataset.idx];if(n)addBookmark('news',n.headline,n.time);}
 
-
-// ── AI FALLBACK ────────────────────────────────────────────
-async function loadAIFallback() {
-  try {
-    const resp = await fetch(WORKER, {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        model:'claude-sonnet-4-20250514', max_tokens:1000,
-        system:'Generiere 12 realistische Auto-News von heute. NUR JSON: {"news":[{"headline":"max 90 Zeichen","lang":"de oder en","link":"","time":"vor Xh"}]} Mische DE/EN. Nur echte Automobilthemen.',
-        messages:[{role:'user',content:'12 aktuelle Auto-News.'}]
-      })
-    });
-    const data = await resp.json();
-    let text = data.content.filter(c=>c.type==='text').map(c=>c.text).join('');
-    text = text.replace(/```json|```/g,'').trim();
-    allNews = JSON.parse(text).news;
-    document.getElementById('statNews').textContent = allNews.length + ' (KI)';
-    document.getElementById('newsCount').textContent = allNews.length + ' KI';
-    renderNews();
-    updateBrandRadar();
-    generateStories();
-  } catch(e) {
-    document.getElementById('newsFeed').innerHTML = '<div style="padding:16px;color:#4a6a9a;font-size:13px">Fehler beim Laden. Bitte aktualisieren.</div>';
-  }
-  document.getElementById('refreshBtn').disabled = false;
+async function loadAIFallback(){
+  try{
+    const resp=await fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:'Generiere 12 realistische Auto-News von heute. NUR JSON: {"news":[{"headline":"max 90 Zeichen","lang":"de oder en","link":"","time":"vor Xh"}]} Mische DE/EN. Nur echte Automobilthemen.',messages:[{role:'user',content:'12 aktuelle Auto-News.'}]})});
+    const data=await resp.json();
+    let text=data.content.filter(c=>c.type==='text').map(c=>c.text).join('');
+    text=text.replace(/```json|```/g,'').trim();
+    allNews=JSON.parse(text).news;
+    document.getElementById('statNews').textContent=allNews.length+' (KI)';
+    document.getElementById('newsCount').textContent=allNews.length+' KI';
+    renderNews();updateBrandRadar();generateStories();
+  }catch(e){document.getElementById('newsFeed').innerHTML='<div style="padding:16px;color:#4a6a9a;font-size:13px">Fehler beim Laden. Bitte aktualisieren.</div>';}
+  document.getElementById('refreshBtn').disabled=false;
 }
 
-// ── STORY IDEAS ────────────────────────────────────────────
-async function generateStories() {
-  const btn = document.getElementById('storyBtn');
-  btn.disabled = true;
-  document.getElementById('storyGrid').innerHTML = '<div style="grid-column:1/3;padding:14px;text-align:center;color:#4a6a9a;font-size:13px"><div class="spinner" style="margin:0 auto 8px"></div>Generiere Ideen aus aktuellen Headlines...</div>';
-  const headlines = allNews.slice(0,15).map(n=>n.headline).join('\n');
-  try {
-    const resp = await fetch(WORKER, {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        model:'claude-sonnet-4-20250514', max_tokens:800,
-        system:`Du bist ein erfahrener Wirtschaftsredakteur. Basierend auf diesen aktuellen Auto-News-Headlines entwickle 6 konkrete Story-Ideen für einen jungen Journalisten. NUR JSON: {"stories":[{"cat":"KATEGORIE","headline":"Story-Idee max 70 Zeichen"}]} Kategorien: INVESTIGATIV, REPORTAGE, DEEP DIVE, DATENJOURNALISMUS, PERSONALIE, WIRTSCHAFT, TECHNOLOGIE, POLITIK.`,
-        messages:[{role:'user', content:'Aktuelle Headlines:\n'+headlines+'\n\nGeneriere 6 Story-Ideen.'}]
-      })
-    });
-    const data = await resp.json();
-    let text = data.content.filter(c=>c.type==='text').map(c=>c.text).join('');
-    text = text.replace(/```json|```/g,'').trim();
+async function generateStories(){
+  const btn=document.getElementById('storyBtn');
+  btn.disabled=true;
+  document.getElementById('storyGrid').innerHTML='<div style="grid-column:1/3;padding:14px;text-align:center;color:#4a6a9a;font-size:13px"><div class="spinner" style="margin:0 auto 8px"></div>Generiere Ideen aus aktuellen Headlines...</div>';
+  const headlines=allNews.slice(0,15).map(n=>n.headline).join('\n');
+  try{
+    const resp=await fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,system:`Du bist ein erfahrener Wirtschaftsredakteur. Basierend auf diesen aktuellen Auto-News-Headlines entwickle 6 konkrete Story-Ideen für einen jungen Journalisten. NUR JSON: {"stories":[{"cat":"KATEGORIE","headline":"Story-Idee max 70 Zeichen"}]} Kategorien: INVESTIGATIV, REPORTAGE, DEEP DIVE, DATENJOURNALISMUS, PERSONALIE, WIRTSCHAFT, TECHNOLOGIE, POLITIK.`,messages:[{role:'user',content:'Aktuelle Headlines:\n'+headlines+'\n\nGeneriere 6 Story-Ideen.'}]})});
+    const data=await resp.json();
+    let text=data.content.filter(c=>c.type==='text').map(c=>c.text).join('');
+    text=text.replace(/```json|```/g,'').trim();
     renderStories(JSON.parse(text).stories);
-    document.getElementById('storyBadge').textContent = 'aus Live-News';
-  } catch(e) {
-    renderStories([
-      {cat:'DEEP DIVE',headline:'Der stille Abschied vom Verbrenner: Wann ist Schluss?'},
-      {cat:'PERSONALIE',headline:'Wer führt VW in die Zukunft?'},
-      {cat:'WIRTSCHAFT',headline:'Wie BYD zur größten Automarke der Welt wurde'},
-      {cat:'POLITIK',headline:'EU-Strafzölle auf China-Autos: Schutz oder Fehler?'},
-      {cat:'TECHNOLOGIE',headline:'Software statt Stahl: Autos wie iPhones verkaufen'},
-      {cat:'REPORTAGE',headline:'Wolfsburg 2025: Was bleibt wenn Jobs wegfallen?'},
-    ]);
-    document.getElementById('storyBadge').textContent = 'fallback';
+    document.getElementById('storyBadge').textContent='aus Live-News';
+  }catch(e){
+    renderStories([{cat:'DEEP DIVE',headline:'Der stille Abschied vom Verbrenner: Wann ist Schluss?'},{cat:'PERSONALIE',headline:'Wer führt VW in die Zukunft?'},{cat:'WIRTSCHAFT',headline:'Wie BYD zur größten Automarke der Welt wurde'},{cat:'POLITIK',headline:'EU-Strafzölle auf China-Autos: Schutz oder Fehler?'},{cat:'TECHNOLOGIE',headline:'Software statt Stahl: Autos wie iPhones verkaufen'},{cat:'REPORTAGE',headline:'Wolfsburg 2025: Was bleibt wenn Jobs wegfallen?'}]);
+    document.getElementById('storyBadge').textContent='fallback';
   }
-  btn.disabled = false;
+  btn.disabled=false;
 }
 
-function renderStories(stories) {
-  window._stories = stories;
-  document.getElementById('storyGrid').innerHTML = stories.map((s, i) => {
-    const pxUrl = 'https://www.perplexity.ai/search?q=' + encodeURIComponent(s.headline + ' Autoindustrie 2025');
-    return `<div class="story-card" data-idx="${i}" onclick="storyClick(this)">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:4px">
-        <div class="story-category">${s.cat}</div>
-        <button class="bookmark-btn" style="font-size:12px" data-idx="${i}" onclick="event.stopPropagation();storyBookmark(this)" title="Lesezeichen">📌</button>
-      </div>
-      <div class="story-headline">${s.headline}</div>
-      <a class="px-btn" href="${pxUrl}" target="_blank" onclick="event.stopPropagation()">🔍 Recherchieren</a>
-    </div>`;
+function renderStories(stories){
+  window._stories=stories;
+  document.getElementById('storyGrid').innerHTML=stories.map((s,i)=>{
+    const pxUrl='https://www.perplexity.ai/search?q='+encodeURIComponent(s.headline+' Autoindustrie 2025');
+    return`<div class="story-card" data-idx="${i}" onclick="storyClick(this)"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:4px"><div class="story-category">${s.cat}</div><button class="bookmark-btn" style="font-size:12px" data-idx="${i}" onclick="event.stopPropagation();storyBookmark(this)" title="Lesezeichen">📌</button></div><div class="story-headline">${s.headline}</div><a class="px-btn" href="${pxUrl}" target="_blank" onclick="event.stopPropagation()">🔍 Recherchieren</a></div>`;
   }).join('');
 }
-function storyClick(el) { const s = window._stories[+el.dataset.idx]; if(s) developStory(s.headline); }
-function storyBookmark(el) { const s = window._stories[+el.dataset.idx]; if(s) addBookmark('story', s.headline); }
+function storyClick(el){const s=window._stories[+el.dataset.idx];if(s)developStory(s.headline);}
+function storyBookmark(el){const s=window._stories[+el.dataset.idx];if(s)addBookmark('story',s.headline);}
+function askAboutNews(headline){lastTopic=headline;sendQuick('Erkläre mir den journalistischen Hintergrund zu: "'+headline+'"');}
 
-function askAboutNews(headline) {
-  lastTopic = headline;
-  sendQuick('Erkläre mir den journalistischen Hintergrund zu: "' + headline + '"');
-}
-
-// ── AI CHAT ────────────────────────────────────────────────
-// conversationHistory already declared above
-
-async function sendMessage() {
-  const input = document.getElementById('chatInput');
-  const text = input.value.trim();
-  if (!text) return;
-  input.value = '';
-  addMessage('user', text);
-  conversationHistory.push({role:'user', content:text});
-  document.getElementById('sendBtn').disabled = true;
-
-  const typingId = 'typing-' + Date.now();
-  const div = document.getElementById('chatMessages');
-  div.innerHTML += `<div class="message ai" id="${typingId}"><div class="msg-avatar ai">KI</div><div class="msg-content"><div class="msg-bubble"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div></div></div>`;
-  div.scrollTop = div.scrollHeight;
-
-  try {
-    const resp = await fetch(WORKER, {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        model:'claude-sonnet-4-20250514', max_tokens:1000,
-        system: researchModeActive ? RESEARCH_SYSTEM_PROMPT : 'Du bist AutoJournal AI, Recherche-Assistent für Jesper (22), Autofan und angehender Journalismus-Student. Erkläre Branchenzusammenhänge verständlich, nenne konkrete Zahlen und Personen, zeige journalistische Perspektiven (welche Story steckt dahinter? wen sollte man interviewen? welche Quellen?), hilf bei Recherchestrategien und Interview-Fragen. Ton: locker, direkt, kompetent. Auf Deutsch. Max 220 Wörter.',
-        messages: conversationHistory
-      })
-    });
-    const data = await resp.json();
-    const aiText = data.content.filter(c=>c.type==='text').map(c=>c.text).join('');
+async function sendMessage(){
+  const input=document.getElementById('chatInput');
+  const text=input.value.trim();
+  if(!text)return;
+  input.value='';
+  addMessage('user',text);
+  conversationHistory.push({role:'user',content:text});
+  document.getElementById('sendBtn').disabled=true;
+  const typingId='typing-'+Date.now();
+  const div=document.getElementById('chatMessages');
+  div.innerHTML+=`<div class="message ai" id="${typingId}"><div class="msg-avatar ai">KI</div><div class="msg-content"><div class="msg-bubble"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div></div></div>`;
+  div.scrollTop=div.scrollHeight;
+  try{
+    const resp=await fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:researchModeActive?RESEARCH_SYSTEM_PROMPT:'Du bist AutoJournal AI, Recherche-Assistent für Jesper (22), Autofan und angehender Journalismus-Student. Erkläre Branchenzusammenhänge verständlich, nenne konkrete Zahlen und Personen, zeige journalistische Perspektiven (welche Story steckt dahinter? wen sollte man interviewen? welche Quellen?), hilf bei Recherchestrategien und Interview-Fragen. Ton: locker, direkt, kompetent. Auf Deutsch. Max 220 Wörter.',messages:conversationHistory})});
+    const data=await resp.json();
+    const aiText=data.content.filter(c=>c.type==='text').map(c=>c.text).join('');
     document.getElementById(typingId)?.remove();
-    addMessage('ai', aiText);
-    conversationHistory.push({role:'assistant', content:aiText});
-    if (conversationHistory.length > 20) conversationHistory = conversationHistory.slice(-16);
-  } catch(e) {
-    document.getElementById(typingId)?.remove();
-    addMessage('ai', 'Verbindungsfehler. Bitte erneut versuchen.');
-  }
-  document.getElementById('sendBtn').disabled = false;
+    addMessage('ai',aiText);
+    conversationHistory.push({role:'assistant',content:aiText});
+    if(conversationHistory.length>20)conversationHistory=conversationHistory.slice(-16);
+  }catch(e){document.getElementById(typingId)?.remove();addMessage('ai','Verbindungsfehler. Bitte erneut versuchen.');}
+  document.getElementById('sendBtn').disabled=false;
   input.focus();
 }
 
-function addMessage(role, text) {
-  const div = document.getElementById('chatMessages');
-  const time = new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
-  div.innerHTML += `<div class="message ${role}">
-    <div class="msg-avatar ${role==='ai'?'ai':'human'}">${role==='ai'?'KI':'👤'}</div>
-    <div class="msg-content">
-      <div class="msg-bubble">${text.replace(/\n/g,'<br>')}</div>
-      <div class="msg-meta">${role==='ai'?'AutoJournal AI':'Du'} · ${time}</div>
-    </div>
-  </div>`;
-  div.scrollTop = div.scrollHeight;
+function addMessage(role,text){
+  const div=document.getElementById('chatMessages');
+  const time=new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
+  div.innerHTML+=`<div class="message ${role}"><div class="msg-avatar ${role==='ai'?'ai':'human'}">${role==='ai'?'KI':'👤'}</div><div class="msg-content"><div class="msg-bubble">${text.replace(/\n/g,'<br>')}</div><div class="msg-meta">${role==='ai'?'AutoJournal AI':'Du'} · ${time}</div></div></div>`;
+  div.scrollTop=div.scrollHeight;
 }
 
-function sendQuick(text) {
-  // Update lastTopic from meaningful queries (not meta-questions)
-  if (text.length > 20 && !text.startsWith('Erkläre mir den') && !text.startsWith('Basierend auf')) {
-    lastTopic = text.substring(0, 150);
-  }
-  document.getElementById('chatInput').value = text;
+function sendQuick(text){
+  if(text.length>20&&!text.startsWith('Erkläre mir den')&&!text.startsWith('Basierend auf'))lastTopic=text.substring(0,150);
+  document.getElementById('chatInput').value=text;
   sendMessage();
 }
 
-function generateInterviewQuestions() {
-  // Priority 1: lastTopic (set when clicking news/brand/story)
-  // Priority 2: most recent user message in conversation
-  // Priority 3: generic fallback
-  let topic = lastTopic;
-
-  if (!topic && conversationHistory.length > 0) {
-    const userMessages = conversationHistory.filter(m => m.role === 'user');
-    if (userMessages.length > 0) {
-      // Use the LAST user message, not the first
-      topic = userMessages[userMessages.length - 1].content.substring(0, 200);
-    }
-  }
-
+function generateInterviewQuestions(){
+  let topic=lastTopic;
+  if(!topic&&conversationHistory.length>0){const userMessages=conversationHistory.filter(m=>m.role==='user');if(userMessages.length>0)topic=userMessages[userMessages.length-1].content.substring(0,200);}
   let prompt;
-  if (topic && topic.length > 5) {
-    prompt = 'Zum Thema "' + topic + '": Entwickle 5 konkrete, journalistisch scharfe Interviewfragen. '
-      + 'Nenne auch jeweils den idealen Gesprächspartner (z.B. Mercedes Pressesprecher, VDA-Präsidentin, BYD Europe CEO). '
-      + 'Die Fragen sollen präzise sein, auf den Kern zielen und schwer ausweichbar sein.';
-  } else {
-    prompt = 'Entwickle 5 konkrete, journalistisch scharfe Interviewfragen zu einem aktuellen Thema in der Automobilindustrie. '
-      + 'Nenne jeweils den idealen Gesprächspartner. Die Fragen sollen schwer ausweichbar sein.';
-  }
+  if(topic&&topic.length>5)prompt='Zum Thema "'+topic+'": Entwickle 5 konkrete, journalistisch scharfe Interviewfragen. Nenne auch jeweils den idealen Gesprächspartner (z.B. Mercedes Pressesprecher, VDA-Präsidentin, BYD Europe CEO). Die Fragen sollen präzise sein, auf den Kern zielen und schwer ausweichbar sein.';
+  else prompt='Entwickle 5 konkrete, journalistisch scharfe Interviewfragen zu einem aktuellen Thema in der Automobilindustrie. Nenne jeweils den idealen Gesprächspartner. Die Fragen sollen schwer ausweichbar sein.';
+  document.getElementById('chatInput').value=prompt;
+  sendMessage();
+}
+function developStory(h){sendQuick('Hilf mir diese Story zu entwickeln: "'+h+'". Wichtigste Fragen, Quellen, Interviewpartner?');}
 
-  // Don't update lastTopic for this meta-question
+function weiterdrehenNachricht(){
+  var nachricht = lastTopic;
+  if(!nachricht && conversationHistory.length > 0){
+    var userMessages = conversationHistory.filter(function(m){return m.role==='user';});
+    if(userMessages.length > 0) nachricht = userMessages[userMessages.length-1].content.substring(0,300);
+  }
+  if(!nachricht || nachricht.length < 10){
+    addMessage('ai','👆 Klick zuerst auf eine <strong>News-Meldung</strong> oder eine <strong>Story-Idee</strong> — dann dreht die KI genau diese Nachricht für dich weiter.');
+    return;
+  }
+  var prompt = 'Du bist ein erfahrener Redakteur mit starkem Gespür für Nachrichtenwert und überraschende Anschlussgeschichten. Deine Aufgabe: Die folgende Nachricht journalistisch weiterdrehen.\n\nGehe so vor:\n1. Kernnachricht in einem Satz.\n2. Analysiere: Wer ist unmittelbar betroffen? Wer mittelbar? Welche wirtschaftlichen, politischen, sozialen, rechtlichen Folgen? Wo steckt Konflikt, Widerspruch, Überraschung?\n3. Leite mindestens 6 Weiterdreh-Themen ab.\n\nZu jedem Weiterdreh:\n• Arbeitstitel / Themenidee\n• Kurzbegründung warum sich das ergibt\n• Betroffene Zielgruppe oder Branche\n• Journalistischer Blickwinkel (Verbraucher / Politik / Unternehmen / Arbeitnehmer / Gewinner-Verlierer / Trend)\n• Mögliche Headline oder Zuspitzung als Frage\n\nSuche auch nach zweiten und dritten Ebenen. Die Ideen sollen als echte Artikel oder Reportagen funktionieren. Relevanz, Überraschung, Nutzwert oder Konfliktpotenzial bevorzugen.\n\nNachricht: "' + nachricht + '"';
   document.getElementById('chatInput').value = prompt;
   sendMessage();
 }
-function developStory(h) { sendQuick('Hilf mir diese Story zu entwickeln: "' + h + '". Wichtigste Fragen, Quellen, Interviewpartner?'); }
 
-// ── SPEECH RECOGNITION ────────────────────────────────────────
-let recognition = null;
-let isListening = false;
+let recognition=null;
+let isListening=false;
 
-function toggleMic() {
-  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-    alert('Spracheingabe wird von diesem Browser nicht unterstützt. Bitte Chrome oder Edge nutzen.');
-    return;
-  }
-  if (isListening) {
-    recognition.stop();
-    return;
-  }
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  recognition = new SR();
-  recognition.lang = 'de-DE';
-  recognition.continuous = false;
-  recognition.interimResults = true;  // keeps mic open while speaking
-  recognition.maxAlternatives = 1;
-
-  const btn = document.getElementById('micBtn');
-  let finalTranscript = '';
-
-  recognition.onstart = () => {
-    isListening = true;
-    btn.classList.add('listening');
-    btn.textContent = '🔴';
-    document.getElementById('chatInput').placeholder = 'Sprich jetzt...';
-    document.getElementById('chatInput').value = '';
-  };
-
-  recognition.onresult = (e) => {
-    let interim = '';
-    finalTranscript = '';
-    for (let i = e.resultIndex; i < e.results.length; i++) {
-      if (e.results[i].isFinal) {
-        finalTranscript += e.results[i][0].transcript;
-      } else {
-        interim += e.results[i][0].transcript;
-      }
-    }
-    // Show interim results live in input field
-    document.getElementById('chatInput').value = finalTranscript || interim;
-  };
-
-  recognition.onerror = (e) => {
-    console.log('Speech error:', e.error);
-    finalTranscript = '';
-  };
-
-  recognition.onend = () => {
-    isListening = false;
-    btn.classList.remove('listening');
-    btn.textContent = '🎤';
-    const placeholder = researchModeActive
-      ? 'Recherche-Thema eingeben oder 🎤 sprechen...'
-      : 'Frage stellen oder 🎤 sprechen...';
-    document.getElementById('chatInput').placeholder = placeholder;
-
-    const text = document.getElementById('chatInput').value.trim();
-    if (text) {
-      setTimeout(() => sendMessage(), 150);
-    }
-  };
-
+function toggleMic(){
+  if(!('webkitSpeechRecognition'in window)&&!('SpeechRecognition'in window)){alert('Spracheingabe wird von diesem Browser nicht unterstützt. Bitte Chrome oder Edge nutzen.');return;}
+  if(isListening){recognition.stop();return;}
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  recognition=new SR();recognition.lang='de-DE';recognition.continuous=false;recognition.interimResults=true;recognition.maxAlternatives=1;
+  const btn=document.getElementById('micBtn');
+  let finalTranscript='';
+  recognition.onstart=()=>{isListening=true;btn.classList.add('listening');btn.textContent='🔴';document.getElementById('chatInput').placeholder='Sprich jetzt...';document.getElementById('chatInput').value='';};
+  recognition.onresult=(e)=>{let interim='';finalTranscript='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)finalTranscript+=e.results[i][0].transcript;else interim+=e.results[i][0].transcript;}document.getElementById('chatInput').value=finalTranscript||interim;};
+  recognition.onerror=(e)=>{finalTranscript='';};
+  recognition.onend=()=>{isListening=false;btn.classList.remove('listening');btn.textContent='🎤';const placeholder=researchModeActive?'Recherche-Thema eingeben oder 🎤 sprechen...':'Frage stellen oder 🎤 sprechen...';document.getElementById('chatInput').placeholder=placeholder;const text=document.getElementById('chatInput').value.trim();if(text)setTimeout(()=>sendMessage(),150);};
   recognition.start();
 }
 
-function togglePxMic() {
-  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-    alert('Spracheingabe wird von diesem Browser nicht unterstützt. Bitte Chrome oder Edge nutzen.');
-    return;
-  }
-  const pxBtn = document.getElementById('pxMicBtn');
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  const pxRec = new SR();
-  pxRec.lang = 'de-DE';
-  pxRec.continuous = false;
-  pxRec.interimResults = true;
-  pxRec.maxAlternatives = 1;
-
-  let finalTranscript = '';
-
-  pxRec.onstart = () => {
-    pxBtn.classList.add('listening');
-    pxBtn.textContent = '🔴';
-    document.getElementById('pxInput').placeholder = 'Sprich jetzt...';
-    document.getElementById('pxInput').value = '';
-  };
-
-  pxRec.onresult = (e) => {
-    let interim = '';
-    finalTranscript = '';
-    for (let i = e.resultIndex; i < e.results.length; i++) {
-      if (e.results[i].isFinal) {
-        finalTranscript += e.results[i][0].transcript;
-      } else {
-        interim += e.results[i][0].transcript;
-      }
-    }
-    document.getElementById('pxInput').value = finalTranscript || interim;
-  };
-
-  pxRec.onerror = (e) => {
-    console.log('Px speech error:', e.error);
-    finalTranscript = '';
-  };
-
-  pxRec.onend = () => {
-    pxBtn.classList.remove('listening');
-    pxBtn.textContent = '🎤';
-    document.getElementById('pxInput').placeholder = '🔍 In Perplexity recherchieren...';
-    const text = document.getElementById('pxInput').value.trim();
-    if (text) openPx(text);
-  };
-
+function togglePxMic(){
+  if(!('webkitSpeechRecognition'in window)&&!('SpeechRecognition'in window)){alert('Spracheingabe wird von diesem Browser nicht unterstützt. Bitte Chrome oder Edge nutzen.');return;}
+  const pxBtn=document.getElementById('pxMicBtn');
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  const pxRec=new SR();pxRec.lang='de-DE';pxRec.continuous=false;pxRec.interimResults=true;pxRec.maxAlternatives=1;
+  let finalTranscript='';
+  pxRec.onstart=()=>{pxBtn.classList.add('listening');pxBtn.textContent='🔴';document.getElementById('pxInput').placeholder='Sprich jetzt...';document.getElementById('pxInput').value='';};
+  pxRec.onresult=(e)=>{let interim='';finalTranscript='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)finalTranscript+=e.results[i][0].transcript;else interim+=e.results[i][0].transcript;}document.getElementById('pxInput').value=finalTranscript||interim;};
+  pxRec.onerror=(e)=>{finalTranscript='';};
+  pxRec.onend=()=>{pxBtn.classList.remove('listening');pxBtn.textContent='🎤';document.getElementById('pxInput').placeholder='🔍 In Perplexity recherchieren...';const text=document.getElementById('pxInput').value.trim();if(text)openPx(text);};
   pxRec.start();
 }
 
-// ── BOOKMARKS ────────────────────────────────────────────────
-let bookmarks = [];
-try { bookmarks = JSON.parse(localStorage.getItem('autojournal_bookmarks') || '[]'); } catch(e) { bookmarks = []; }
-
-function saveBookmarks() {
-  try { localStorage.setItem('autojournal_bookmarks', JSON.stringify(bookmarks)); } catch(e) {}
-  updateBookmarksBadge();
-  renderBookmarks();
+let bookmarks=[];
+try{bookmarks=JSON.parse(localStorage.getItem('autojournal_bookmarks')||'[]');}catch(e){bookmarks=[];}
+function saveBookmarks(){try{localStorage.setItem('autojournal_bookmarks',JSON.stringify(bookmarks));}catch(e){}updateBookmarksBadge();renderBookmarks();}
+function addBookmark(type,text,extra){if(bookmarks.find(b=>b.text===text)){alert('Bereits gespeichert!');return;}bookmarks.unshift({type,text,extra:extra||'',date:new Date().toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})});saveBookmarks();const fab=document.getElementById('bookmarksFab');fab.style.transform='scale(1.3)';setTimeout(()=>fab.style.transform='',300);}
+function removeBookmark(index){bookmarks.splice(index,1);saveBookmarks();}
+function updateBookmarksBadge(){const badge=document.getElementById('bookmarksBadge');if(bookmarks.length>0){badge.textContent=bookmarks.length;badge.style.display='flex';}else{badge.style.display='none';}}
+function renderBookmarks(){
+  const list=document.getElementById('bookmarksList');
+  if(!bookmarks.length){list.innerHTML='<div class="bookmarks-empty">Noch keine Lesezeichen.<br>Klicke 📌 bei News oder Story-Ideen.</div>';return;}
+  list.innerHTML=bookmarks.map((b,i)=>{const pxUrl='https://www.perplexity.ai/search?q='+encodeURIComponent(b.text);return`<div class="bookmark-item"><button class="bookmark-item-del" onclick="removeBookmark(${i})">✕</button><div class="bookmark-item-type">${b.type==='news'?'📰 News':'✦ Story-Idee'} · ${b.date}</div><div class="bookmark-item-text">${b.text}</div><div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap"><a class="px-btn" href="${pxUrl}" target="_blank">🔍 Recherchieren</a><button class="px-btn" style="border:none;cursor:pointer" onclick="sendQuick('${b.text.replace(/'/g,"&apos;")}')">🤖 KI fragen</button></div></div>`;}).join('');
 }
+function toggleBookmarksPanel(){const panel=document.getElementById('bookmarksPanel');panel.classList.toggle('visible');if(panel.classList.contains('visible'))renderBookmarks();}
+function exportBookmarksEmail(){if(!bookmarks.length){alert('Keine Lesezeichen zum Exportieren.');return;}const subject=encodeURIComponent('AutoJournal — Meine Lesezeichen');let body='Meine gespeicherten AutoJournal-Lesezeichen:\n\n';const news=bookmarks.filter(b=>b.type==='news');const stories=bookmarks.filter(b=>b.type==='story');if(news.length){body+='📰 NEWS:\n';news.forEach(b=>body+=`• ${b.text}\n`);body+='\n';}if(stories.length){body+='✦ STORY-IDEEN:\n';stories.forEach(b=>body+=`• ${b.text}\n`);}window.open('mailto:?subject='+subject+'&body='+encodeURIComponent(body));}
 
-function addBookmark(type, text, extra) {
-  if (bookmarks.find(b => b.text === text)) { alert('Bereits gespeichert!'); return; }
-  bookmarks.unshift({ type, text, extra: extra||'', date: new Date().toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) });
-  saveBookmarks();
-  const fab = document.getElementById('bookmarksFab');
-  fab.style.transform = 'scale(1.3)';
-  setTimeout(() => fab.style.transform = '', 300);
-}
+let prevBrandCounts={};
+function checkBreakingNews(brandData){const spikes=[];for(const[brand,data]of Object.entries(brandData)){const prev=prevBrandCounts[brand]||0;if(prev>0&&data.count>=prev*2&&data.count>=4)spikes.push(brand+' ('+data.count+'× erwähnt)');}prevBrandCounts=Object.fromEntries(Object.entries(brandData).map(([k,v])=>[k,v.count]));if(spikes.length){document.getElementById('breakingAlertText').textContent='🚨 Spike: '+spikes.join(' · ');document.getElementById('breakingAlert').classList.add('visible');setTimeout(dismissBreaking,8000);}}
+function dismissBreaking(){document.getElementById('breakingAlert').classList.remove('visible');}
 
-function removeBookmark(index) { bookmarks.splice(index, 1); saveBookmarks(); }
-
-function updateBookmarksBadge() {
-  const badge = document.getElementById('bookmarksBadge');
-  if (bookmarks.length > 0) { badge.textContent = bookmarks.length; badge.style.display = 'flex'; }
-  else { badge.style.display = 'none'; }
-}
-
-function renderBookmarks() {
-  const list = document.getElementById('bookmarksList');
-  if (!bookmarks.length) {
-    list.innerHTML = '<div class="bookmarks-empty">Noch keine Lesezeichen.<br>Klicke 📌 bei News oder Story-Ideen.</div>';
-    return;
-  }
-  list.innerHTML = bookmarks.map((b, i) => {
-    const pxUrl = 'https://www.perplexity.ai/search?q=' + encodeURIComponent(b.text);
-    return `<div class="bookmark-item">
-      <button class="bookmark-item-del" onclick="removeBookmark(${i})">✕</button>
-      <div class="bookmark-item-type">${b.type==='news'?'📰 News':'✦ Story-Idee'} · ${b.date}</div>
-      <div class="bookmark-item-text">${b.text}</div>
-      <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap">
-        <a class="px-btn" href="${pxUrl}" target="_blank">🔍 Recherchieren</a>
-        <button class="px-btn" style="border:none;cursor:pointer" onclick="sendQuick('${b.text.replace(/'/g,'&apos;')}')">🤖 KI fragen</button>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function toggleBookmarksPanel() {
-  const panel = document.getElementById('bookmarksPanel');
-  panel.classList.toggle('visible');
-  if (panel.classList.contains('visible')) renderBookmarks();
-}
-
-function exportBookmarksEmail() {
-  if (!bookmarks.length) { alert('Keine Lesezeichen zum Exportieren.'); return; }
-  const subject = encodeURIComponent('AutoJournal — Meine Lesezeichen');
-  let body = 'Meine gespeicherten AutoJournal-Lesezeichen:\n\n';
-  const news = bookmarks.filter(b=>b.type==='news');
-  const stories = bookmarks.filter(b=>b.type==='story');
-  if (news.length) { body += '📰 NEWS:\n'; news.forEach(b=>body+=`• ${b.text}\n`); body+='\n'; }
-  if (stories.length) { body += '✦ STORY-IDEEN:\n'; stories.forEach(b=>body+=`• ${b.text}\n`); }
-  window.open('mailto:?subject='+subject+'&body='+encodeURIComponent(body));
-}
-
-// ── BREAKING NEWS ────────────────────────────────────────────
-let prevBrandCounts = {};
-
-function checkBreakingNews(brandData) {
-  const spikes = [];
-  for (const [brand, data] of Object.entries(brandData)) {
-    const prev = prevBrandCounts[brand] || 0;
-    if (prev > 0 && data.count >= prev * 2 && data.count >= 4) {
-      spikes.push(brand + ' (' + data.count + '× erwähnt)');
-    }
-  }
-  prevBrandCounts = Object.fromEntries(Object.entries(brandData).map(([k,v])=>[k,v.count]));
-  if (spikes.length) {
-    document.getElementById('breakingAlertText').textContent = '🚨 Spike: ' + spikes.join(' · ');
-    document.getElementById('breakingAlert').classList.add('visible');
-    setTimeout(dismissBreaking, 8000);
-  }
-}
-
-function dismissBreaking() { document.getElementById('breakingAlert').classList.remove('visible'); }
-
-// ── PDF ANALYSIS ────────────────────────────────────────────
-let pdfBase64 = null;
-
-function pdfDragOver(e) { e.preventDefault(); document.getElementById('pdfDropzone').classList.add('dragover'); }
-function pdfDragLeave() { document.getElementById('pdfDropzone').classList.remove('dragover'); }
-function pdfDrop(e) {
-  e.preventDefault();
-  document.getElementById('pdfDropzone').classList.remove('dragover');
-  const file = e.dataTransfer.files[0];
-  if (file && file.type === 'application/pdf') loadPDF(file);
-}
-function pdfFileSelected(input) { if (input.files[0]) loadPDF(input.files[0]); }
-
-function loadPDF(file) {
-  document.getElementById('pdfFileName').textContent = file.name;
-  document.getElementById('pdfFileSize').textContent = (file.size/1024/1024).toFixed(1)+' MB';
-  document.getElementById('pdfFileInfo').style.display = 'flex';
-  document.getElementById('pdfButtons').style.display = 'flex';
-  document.getElementById('pdfDropzone').style.display = 'none';
-  document.getElementById('pdfResult').classList.remove('visible');
-  const reader = new FileReader();
-  reader.onload = (e) => { pdfBase64 = e.target.result.split(',')[1]; };
-  reader.readAsDataURL(file);
-}
-
-function pdfClear() {
-  pdfBase64 = null;
-  document.getElementById('pdfFileInput').value = '';
-  document.getElementById('pdfFileInfo').style.display = 'none';
-  document.getElementById('pdfButtons').style.display = 'none';
-  document.getElementById('pdfDropzone').style.display = 'block';
-  document.getElementById('pdfResult').classList.remove('visible');
-}
-
-async function analyzePDF(mode) {
-  if (!pdfBase64) return;
-  const prompts = {
-    summary: 'Fasse dieses Dokument in maximal 200 Wörtern zusammen. Klar und verständlich.',
-    key: 'Was sind die 5 wichtigsten Aussagen? Nummeriere sie, je 1-2 Sätze.',
-    simple: 'Erkläre die wichtigsten Inhalte so, dass ein Laie es versteht. Kein Fachjargon. Max 200 Wörter.',
-    journalist: 'Du bist Wirtschaftsjournalist. Welche 3-4 journalistischen Story-Winkel siehst du? Was ist überraschend oder kontrovers? Welche Fragen würdest du dem Autor stellen?',
-  };
-  const titles = { summary:'📝 Zusammenfassung', key:'🎯 Kernaussagen', simple:'🙋 Laienverständlich', journalist:'🎤 Story-Winkel' };
+let pdfBase64=null;
+function pdfDragOver(e){e.preventDefault();document.getElementById('pdfDropzone').classList.add('dragover');}
+function pdfDragLeave(){document.getElementById('pdfDropzone').classList.remove('dragover');}
+function pdfDrop(e){e.preventDefault();document.getElementById('pdfDropzone').classList.remove('dragover');const file=e.dataTransfer.files[0];if(file&&file.type==='application/pdf')loadPDF(file);}
+function pdfFileSelected(input){if(input.files[0])loadPDF(input.files[0]);}
+function loadPDF(file){document.getElementById('pdfFileName').textContent=file.name;document.getElementById('pdfFileSize').textContent=(file.size/1024/1024).toFixed(1)+' MB';document.getElementById('pdfFileInfo').style.display='flex';document.getElementById('pdfButtons').style.display='flex';document.getElementById('pdfDropzone').style.display='none';document.getElementById('pdfResult').classList.remove('visible');const reader=new FileReader();reader.onload=(e)=>{pdfBase64=e.target.result.split(',')[1];};reader.readAsDataURL(file);}
+function pdfClear(){pdfBase64=null;document.getElementById('pdfFileInput').value='';document.getElementById('pdfFileInfo').style.display='none';document.getElementById('pdfButtons').style.display='none';document.getElementById('pdfDropzone').style.display='block';document.getElementById('pdfResult').classList.remove('visible');}
+async function analyzePDF(mode){
+  if(!pdfBase64)return;
+  const prompts={summary:'Fasse dieses Dokument in maximal 200 Wörtern zusammen. Klar und verständlich.',key:'Was sind die 5 wichtigsten Aussagen? Nummeriere sie, je 1-2 Sätze.',simple:'Erkläre die wichtigsten Inhalte so, dass ein Laie es versteht. Kein Fachjargon. Max 200 Wörter.',journalist:'Du bist Wirtschaftsjournalist. Welche 3-4 journalistischen Story-Winkel siehst du? Was ist überraschend oder kontrovers? Welche Fragen würdest du dem Autor stellen?'};
+  const titles={summary:'📝 Zusammenfassung',key:'🎯 Kernaussagen',simple:'🙋 Laienverständlich',journalist:'🎤 Story-Winkel'};
   document.querySelectorAll('.pdf-action-btn').forEach(b=>b.disabled=true);
-  const resultDiv = document.getElementById('pdfResult');
-  const resultText = document.getElementById('pdfResultText');
-  document.getElementById('pdfResultTitle').textContent = titles[mode];
-  resultText.innerHTML = '<span style="color:#4a6a9a"><span class="spinner"></span> KI analysiert...</span>';
+  const resultDiv=document.getElementById('pdfResult');
+  const resultText=document.getElementById('pdfResultText');
+  document.getElementById('pdfResultTitle').textContent=titles[mode];
+  resultText.innerHTML='<span style="color:#4a6a9a"><span class="spinner"></span> KI analysiert...</span>';
   resultDiv.classList.add('visible');
-  try {
-    const resp = await fetch(WORKER, {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        model:'claude-sonnet-4-20250514', max_tokens:1000,
-        messages:[{ role:'user', content:[
-          { type:'document', source:{ type:'base64', media_type:'application/pdf', data:pdfBase64 } },
-          { type:'text', text:prompts[mode] }
-        ]}]
-      })
-    });
-    const data = await resp.json();
-    resultText.innerHTML = data.content.filter(c=>c.type==='text').map(c=>c.text).join('').replace(/\n/g,'<br>');
-  } catch(e) {
-    resultText.innerHTML = '<span style="color:#dc2626">Fehler. Bitte erneut versuchen.</span>';
-  }
+  try{const resp=await fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:[{type:'document',source:{type:'base64',media_type:'application/pdf',data:pdfBase64}},{type:'text',text:prompts[mode]}]}]})});const data=await resp.json();resultText.innerHTML=data.content.filter(c=>c.type==='text').map(c=>c.text).join('').replace(/\n/g,'<br>');}
+  catch(e){resultText.innerHTML='<span style="color:#dc2626">Fehler. Bitte erneut versuchen.</span>';}
   document.querySelectorAll('.pdf-action-btn').forEach(b=>b.disabled=false);
 }
 
-// ── PERPLEXITY ────────────────────────────────────────────
-function openPx(query) {
-  if (!query || !query.trim()) return;
-  window.open('https://www.perplexity.ai/search?q=' + encodeURIComponent(query.trim()), '_blank');
+function openPx(query){if(!query||!query.trim())return;window.open('https://www.perplexity.ai/search?q='+encodeURIComponent(query.trim()),'_blank');}
+
+const RESEARCH_SYSTEM_PROMPT=`Du bist ein hochqualifizierter Rechercheassistent im AutoJournal-Dashboard. Führe den Nutzer durch einen strukturierten, interaktiven Rechercheprozess.\n\nHINWEIS: Dein Wissen geht bis Anfang 2025. Für tagesaktuelle Fakten empfehle den Perplexity-Button.\n\nSCHRITT 1: Wenn der Nutzer ein Thema nennt, schlage sofort 4-5 Recherchefragen vor. Frage: "Passen diese Fragen? Möchtest du sie anpassen?" Warte auf Bestätigung.\n\nSCHRITT 2: Arbeite jede Frage einzeln ab mit 3-5 fundierten Antwortpunkten. Frage dann: "Soll ich mit Frage N+1 weitermachen?"\n\nSCHRITT 3: Nach allen Fragen frage: "Mehr Details oder finaler Bericht?"\n\nSCHRITT 4: Erstelle Bericht mit: Zusammenfassung, Haupterkenntnisse, Detailanalyse, Schlussfolgerung, Journalistische Anknüpfungspunkte.\n\nTon: professionell, direkt. Deutsch. Max 400 Wörter pro Antwort.`;
+let researchModeActive=false;
+function toggleResearch(active){researchModeActive=active;document.getElementById('researchBanner').classList.toggle('visible',active);document.getElementById('researchBtn').classList.toggle('active',active);conversationHistory=[];document.getElementById('chatMessages').innerHTML='';if(active){addMessage('ai','🔬 <strong>Tiefenrecherche-Modus aktiv!</strong><br><br>Nenn mir das Thema — ich führe dich durch einen strukturierten Rechercheprozess mit Fragen, Analyse und finalem Bericht.');document.getElementById('chatInput').placeholder='Recherche-Thema eingeben oder 🎤 sprechen...';}else{addMessage('ai','Tiefenrecherche beendet. Wie kann ich dir weiterhelfen?');document.getElementById('chatInput').placeholder='Frage stellen oder 🎤 sprechen...';}document.getElementById('chatInput').focus();}
+
+
+// ── PR ENTLARVER ──────────────────────────────────────────
+async function analyzePR(mode) {
+  const text = document.getElementById('prInput').value.trim();
+  if (!text) {
+    document.getElementById('prInput').focus();
+    document.getElementById('prInput').placeholder = '⚠️ Bitte zuerst eine Pressemitteilung einfügen...';
+    return;
+  }
+  const prompts = {
+    news: `Du bist kritischer Wirtschaftsjournalist. Lies diese Pressemitteilung und beantworte klar und direkt:
+1. Was ist daran wirklich neu — in einem Satz?
+2. Was davon war bereits bekannt oder absehbar?
+3. Was fehlt in dieser Meldung auffällig? (Zahlen, Zeitpläne, Verantwortliche)
+4. Welche Fakten lassen sich unabhängig verifizieren?
+Sei konkret, keine Floskeln. Max 200 Wörter.
+
+Pressemitteilung:
+` + text,
+    spin: `Du bist ein erfahrener Redakteur mit Gespür für PR-Sprache. Analysiere diese Pressemitteilung auf Marketing-Sprech und Spin:
+1. Welche Formulierungen sind typische PR-Floskeln ohne Substanz? (Zitiere sie direkt)
+2. Was wird beschönigt oder verschleiert?
+3. Welche Aussagen klingen positiv, enthalten aber schlechte Nachrichten?
+4. Welche Fragen werden bewusst nicht beantwortet?
+Sei direkt und konkret. Max 200 Wörter.
+
+Pressemitteilung:
+` + text,
+    questions: `Du bereitest einen Journalisten auf eine Pressekonferenz vor. Entwickle 6 kritische Rückfragen zu dieser Pressemitteilung.
+Jede Frage soll:
+- Schwer auszuweichen sein
+- Auf Lücken, Widersprüche oder Unklarheiten zielen
+- Konkret und präzise formuliert sein
+Format: Nummerierte Liste mit je einer Kurzbegründung warum diese Frage wichtig ist.
+
+Pressemitteilung:
+` + text,
+    angle: `Du bist Ressortleiter und suchst den besten journalistischen Aufhänger. Analysiere diese Pressemitteilung und liefere:
+1. Den stärksten journalistischen Aufhänger (1 Satz — was ist die eigentliche Story?)
+2. Warum dieser Aspekt relevanter ist als der PR-Aufhänger
+3. Zwei alternative Blickwinkel (z.B. Verbraucher, Arbeitnehmer, Wettbewerber)
+4. Eine mögliche Schlagzeile die ehrlicher ist als die offizielle
+Max 180 Wörter.
+
+Pressemitteilung:
+` + text,
+  };
+  const titles = {news:'📰 Was ist wirklich neu', spin:'🎭 PR-Sprech entarnt', questions:'❓ Kritische Rückfragen', angle:'🎯 Journalistischer Aufhänger'};
+
+  document.querySelectorAll('.pr-panel .pdf-action-btn').forEach(b => b.disabled = true);
+  const resultDiv = document.getElementById('prResult');
+  const resultText = document.getElementById('prResultText');
+  document.getElementById('prResultTitle').textContent = titles[mode];
+  resultText.innerHTML = '<span style="color:#4a6a9a"><span class="spinner"></span> KI analysiert...</span>';
+  resultDiv.classList.add('visible');
+
+  try {
+    const resp = await fetch(WORKER, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:1000,
+        messages:[{role:'user', content: prompts[mode]}] })
+    });
+    const data = await resp.json();
+    resultText.innerHTML = data.content.filter(c=>c.type==='text').map(c=>c.text).join('').replace(/
+/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+  } catch(e) {
+    resultText.innerHTML = '<span style="color:#dc2626">Fehler. Bitte erneut versuchen.</span>';
+  }
+  document.querySelectorAll('.pr-panel .pdf-action-btn').forEach(b => b.disabled = false);
 }
 
-// ── RESEARCH MODE ─────────────────────────────────────────
-const RESEARCH_SYSTEM_PROMPT = `Du bist ein hochqualifizierter Rechercheassistent im AutoJournal-Dashboard. Führe den Nutzer durch einen strukturierten, interaktiven Rechercheprozess.
+function prClear() {
+  document.getElementById('prInput').value = '';
+  document.getElementById('prResult').classList.remove('visible');
+  document.getElementById('prInput').placeholder = 'Pressemitteilung hier einfügen — KI filtert heraus, was wirklich neu ist, was Marketing-Sprech ist, welche Rückfragen entstehen und welcher journalistische Aufhänger steckt...';
+}
 
-HINWEIS: Dein Wissen geht bis Anfang 2025. Für tagesaktuelle Fakten empfehle den Perplexity-Button.
+// ── INTERVIEW VORBEREITER ─────────────────────────────────
+let ivTypeActive = 'ceo';
 
-SCHRITT 1: Wenn der Nutzer ein Thema nennt, schlage sofort 4-5 Recherchefragen vor. Frage: "Passen diese Fragen? Möchtest du sie anpassen?" Warte auf Bestätigung.
+function setIvType(type, btn) {
+  ivTypeActive = type;
+  document.querySelectorAll('.iv-type-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
 
-SCHRITT 2: Arbeite jede Frage einzeln ab mit 3-5 fundierten Antwortpunkten. Frage dann: "Soll ich mit Frage N+1 weitermachen?"
+async function generateIV() {
+  const person = document.getElementById('ivPerson').value.trim();
+  const role   = document.getElementById('ivRole').value.trim();
+  const topic  = document.getElementById('ivTopic').value.trim();
 
-SCHRITT 3: Nach allen Fragen frage: "Mehr Details oder finaler Bericht?"
-
-SCHRITT 4: Erstelle Bericht mit: Zusammenfassung, Haupterkenntnisse, Detailanalyse, Schlussfolgerung, Journalistische Anknüpfungspunkte.
-
-Ton: professionell, direkt. Deutsch. Max 400 Wörter pro Antwort.`;
-
-let researchModeActive = false;
-
-function toggleResearch(active) {
-  researchModeActive = active;
-  document.getElementById('researchBanner').classList.toggle('visible', active);
-  document.getElementById('researchBtn').classList.toggle('active', active);
-  conversationHistory = [];
-  document.getElementById('chatMessages').innerHTML = '';
-  if (active) {
-    addMessage('ai', '🔬 <strong>Tiefenrecherche-Modus aktiv!</strong><br><br>Nenn mir das Thema — ich führe dich durch einen strukturierten Rechercheprozess mit Fragen, Analyse und finalem Bericht.');
-    document.getElementById('chatInput').placeholder = 'Recherche-Thema eingeben oder 🎤 sprechen...';
-  } else {
-    addMessage('ai', 'Tiefenrecherche beendet. Wie kann ich dir weiterhelfen?');
-    document.getElementById('chatInput').placeholder = 'Frage stellen oder 🎤 sprechen...';
+  if (!person || !topic) {
+    if(!person) document.getElementById('ivPerson').focus();
+    else document.getElementById('ivTopic').focus();
+    return;
   }
-  document.getElementById('chatInput').focus();
+
+  const typeDescriptions = {
+    ceo:        'einem CEO oder Vorstandsmitglied — prüfe Unternehmensverantwortung, Strategie und Entscheidungen kritisch',
+    experte:    'einem unabhängigen Experten oder Analysten — hinterfrage Methodik, Interessenkonflikte und Prognosen',
+    politiker:  'einem Politiker oder Verbandsfunktionär — hinterfrage Lobbying, Widersprüche zu früheren Aussagen und Umsetzbarkeit',
+    betroffene: 'einer direkt betroffenen Person oder einem Arbeitnehmervertreter — frage nach persönlichen Auswirkungen, konkreten Erfahrungen und Forderungen',
+  };
+
+  const systemPrompt = `Du bist ein erfahrener investigativer Journalist und bereitest ein Interview vor. Erstelle einen professionellen Fragenkatalog.`;
+
+  const userPrompt = `Ich führe ein Interview mit ${person}${role ? ' (' + role + ')' : ''} zum Thema: "${topic}".
+Es handelt sich um ${typeDescriptions[ivTypeActive]}.
+
+Erstelle einen strukturierten Fragenkatalog mit:
+
+**EINSTIEGSFRAGEN (2)** — zum Aufwärmen, nicht zu direkt
+**KERNFRAGEN (4–5)** — die wichtigsten, kritischen Fragen zum Thema. Schwer ausweichbar, präzise.
+**NACHFRAGE-STRATEGIEN (3)** — typische Ausweich-Antworten und wie man darauf scharf nachhakt
+**ABSCHLUSSFRAGEN (2)** — Zusammenfassung, Zukunft, persönliches Statement
+
+Zu jeder Kernfrage: kurze Notiz warum diese Frage wichtig ist und was sie aufdecken soll.
+Ton: direkt, professionell, journalistisch. Deutsch.`;
+
+  document.querySelectorAll('.iv-panel .pdf-action-btn').forEach(b => b.disabled = true);
+  const resultDiv = document.getElementById('ivResult');
+  const resultText = document.getElementById('ivResultText');
+  document.getElementById('ivResultTitle').textContent = `🎙️ Interview: ${person}`;
+  resultText.innerHTML = '<span style="color:#4a6a9a"><span class="spinner"></span> Fragenkatalog wird erstellt...</span>';
+  resultDiv.classList.add('visible');
+
+  try {
+    const resp = await fetch(WORKER, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:1200,
+        system: systemPrompt,
+        messages:[{role:'user', content: userPrompt}] })
+    });
+    const data = await resp.json();
+    resultText.innerHTML = data.content.filter(c=>c.type==='text').map(c=>c.text).join('')
+      .replace(/
+/g,'<br>')
+      .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+  } catch(e) {
+    resultText.innerHTML = '<span style="color:#dc2626">Fehler. Bitte erneut versuchen.</span>';
+  }
+  document.querySelectorAll('.iv-panel .pdf-action-btn').forEach(b => b.disabled = false);
+}
+
+function ivClear() {
+  document.getElementById('ivPerson').value = '';
+  document.getElementById('ivRole').value = '';
+  document.getElementById('ivTopic').value = '';
+  document.getElementById('ivResult').classList.remove('visible');
+  ivTypeActive = 'ceo';
+  document.querySelectorAll('.iv-type-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('ivType-ceo').classList.add('active');
 }
 
 // ── INIT ─────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('chatInput').addEventListener('keydown', e => {
-    if (e.key==='Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+    if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}
   });
   renderPress();
   renderExperts();
   loadAllNews();
   updateBookmarksBadge();
-  // Countdown timer — updates every second, triggers loadAllNews at 0
-  function updateCountdown() {
-    countdownSeconds--;
-    if (countdownSeconds <= 0) {
-      countdownSeconds = 15 * 60;
-      loadAllNews();
-    }
-    const mins = Math.floor(countdownSeconds / 60);
-    const secs = countdownSeconds % 60;
-    const el = document.getElementById('refreshCountdown');
-    if (el) el.textContent = mins + ':' + String(secs).padStart(2, '0');
-  }
-  setInterval(updateCountdown, 1000);
+  buildKalender();
 
-  // Reset countdown when manually refreshed
-  const origLoadAllNews = loadAllNews;
+  function updateCountdown(){
+    countdownSeconds--;
+    if(countdownSeconds<=0){countdownSeconds=15*60;loadAllNews();}
+    const mins=Math.floor(countdownSeconds/60);
+    const secs=countdownSeconds%60;
+    const el=document.getElementById('refreshCountdown');
+    if(el)el.textContent=mins+':'+String(secs).padStart(2,'0');
+  }
+  setInterval(updateCountdown,1000);
 });
 </script>
 </body>
