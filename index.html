@@ -185,6 +185,74 @@
   .pdf-clear-btn { font-size:11px; background:transparent; border:1px solid #b8d4f0; color:#7a9ac0; padding:2px 8px; border-radius:4px; cursor:pointer; font-family:"DM Sans",sans-serif; }
   .pdf-clear-btn:hover { border-color:#dc2626; color:#dc2626; }
 
+  /* MIC BUTTON */
+  .mic-btn { background:transparent; border:1px solid #a8c8e8; color:#4a6a9a; width:36px; height:36px; border-radius:8px; cursor:pointer; transition:all .2s; display:flex; align-items:center; justify-content:center; font-size:15px; flex-shrink:0; }
+  .mic-btn:hover { background:#dbeafe; border-color:#1a3a6b; color:#1a3a6b; }
+  .mic-btn.listening { background:#fee2e2; border-color:#dc2626; color:#dc2626; animation:micPulse 1s infinite; }
+  @keyframes micPulse { 0%,100%{transform:scale(1)}50%{transform:scale(1.1)} }
+
+  /* BOOKMARKS */
+  .bookmark-btn { background:transparent; border:none; color:#a8c8e8; font-size:14px; cursor:pointer; padding:2px 4px; transition:all .2s; flex-shrink:0; }
+  .bookmark-btn:hover { color:#f59e0b; }
+  .bookmark-btn.saved { color:#f59e0b; }
+  .bookmarks-panel { position:fixed; right:20px; bottom:20px; width:320px; max-height:420px; background:#deeaf8; border:1px solid #a8c8e8; border-radius:12px; box-shadow:0 8px 32px rgba(26,58,107,.2); z-index:200; display:none; flex-direction:column; overflow:hidden; }
+  .bookmarks-panel.visible { display:flex; }
+  .bookmarks-header { padding:12px 15px; background:#1a3a6b; color:#fff; display:flex; align-items:center; justify-content:space-between; }
+  .bookmarks-title { font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:2px; }
+  .bookmarks-close { background:transparent; border:none; color:#fff; font-size:16px; cursor:pointer; opacity:.7; }
+  .bookmarks-close:hover { opacity:1; }
+  .bookmarks-list { flex:1; overflow-y:auto; padding:8px; display:flex; flex-direction:column; gap:6px; }
+  .bookmark-item { background:#eef5fd; border:1px solid #b8d4f0; border-radius:7px; padding:9px 11px; position:relative; }
+  .bookmark-item-type { font-family:'JetBrains Mono',monospace; font-size:10px; color:#4a6a9a; text-transform:uppercase; margin-bottom:3px; }
+  .bookmark-item-text { font-size:12px; color:#1a2f5a; line-height:1.4; }
+  .bookmark-item-del { position:absolute; top:6px; right:8px; background:transparent; border:none; color:#a8c8e8; font-size:12px; cursor:pointer; }
+  .bookmark-item-del:hover { color:#dc2626; }
+  .bookmarks-empty { padding:20px; text-align:center; color:#4a6a9a; font-size:13px; }
+  .bookmarks-fab { position:fixed; right:20px; bottom:20px; background:#1a3a6b; color:#fff; border:none; border-radius:50%; width:48px; height:48px; font-size:20px; cursor:pointer; box-shadow:0 4px 16px rgba(26,58,107,.3); transition:all .2s; z-index:199; display:flex; align-items:center; justify-content:center; }
+  .bookmarks-fab:hover { background:#2563eb; transform:scale(1.08); }
+  .bookmarks-badge { position:absolute; top:-4px; right:-4px; background:#dc2626; color:#fff; border-radius:50%; width:18px; height:18px; font-size:10px; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; }
+
+  /* BREAKING NEWS ALERT */
+  .breaking-alert { position:fixed; top:70px; left:50%; transform:translateX(-50%); background:linear-gradient(90deg,#dc2626,#b91c1c); color:#fff; padding:10px 20px; border-radius:8px; font-size:13px; font-weight:600; box-shadow:0 4px 20px rgba(220,38,38,.4); z-index:300; display:none; align-items:center; gap:10px; animation:slideDown .4s ease; }
+  .breaking-alert.visible { display:flex; }
+  @keyframes slideDown { from{opacity:0;transform:translateX(-50%) translateY(-10px)}to{opacity:1;transform:translateX(-50%) translateY(0)} }
+  .breaking-alert-close { background:rgba(255,255,255,.2); border:none; color:#fff; border-radius:4px; padding:2px 8px; cursor:pointer; font-size:12px; }
+
+  /* EMAIL EXPORT */
+  .export-btn { background:transparent; border:1px solid #a8c8e8; color:#1a3a6b; font-family:'DM Sans',sans-serif; font-size:12px; padding:4px 11px; border-radius:20px; cursor:pointer; transition:all .2s; }
+  .export-btn:hover { background:#1a3a6b; color:#fff; }
+
+  /* MOBILE */
+  @media (max-width:900px) {
+    .dashboard { grid-template-columns:1fr 1fr; grid-template-rows:auto; }
+    .brands-panel { grid-column:1; grid-row:1; max-height:300px; }
+    .chat-panel { grid-column:1/3; grid-row:2; }
+    .news-panel { grid-column:2; grid-row:1; max-height:300px; }
+    .press-panel { grid-column:1; grid-row:3; max-height:none; }
+    .experts-panel { grid-column:2; grid-row:3; max-height:none; }
+    .stories-panel { grid-column:1/3; grid-row:4; }
+    .pdf-panel { grid-column:1/3; grid-row:5; }
+    .stats-row { flex-wrap:wrap; }
+    .stat-box { min-width:calc(50% - 5px); }
+    .px-search { display:none; }
+    header { padding:0 16px; }
+    .header-right { gap:10px; }
+    .dashboard { padding:8px 10px 16px; }
+    .stats-row { padding:10px 10px 0; }
+  }
+  @media (max-width:600px) {
+    .dashboard { grid-template-columns:1fr; }
+    .brands-panel,.news-panel,.chat-panel,.press-panel,.experts-panel,.stories-panel,.pdf-panel { grid-column:1; }
+    .chat-panel { grid-row:1; }
+    .news-panel { grid-row:2; }
+    .brands-panel { grid-row:3; }
+    .stories-panel { grid-row:4; }
+    .press-panel { grid-row:5; }
+    .experts-panel { grid-row:6; }
+    .pdf-panel { grid-row:7; }
+    .stat-box { min-width:100%; }
+  }
+
   .spinner { display:inline-block; width:12px; height:12px; border:2px solid transparent; border-top-color:currentColor; border-radius:50%; animation:spin .7s linear infinite; }
   @keyframes spin { to{transform:rotate(360deg)} }
   ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:#b8d4f0;border-radius:3px}::-webkit-scrollbar-thumb{background:#7a9ac0;border-radius:3px}
@@ -278,7 +346,8 @@
         <button class="research-btn" id="researchBtn" onclick="toggleResearch(true)">🔬 Tiefenrecherche</button>
       </div>
       <div class="input-row">
-        <input type="text" class="chat-input" id="chatInput" placeholder="Frage stellen, Thema recherchieren..." />
+        <button class="mic-btn" id="micBtn" onclick="toggleMic()" title="Spracheingabe">🎤</button>
+        <input type="text" class="chat-input" id="chatInput" placeholder="Frage stellen oder 🎤 sprechen..." />
         <button class="send-btn" id="sendBtn" onclick="sendMessage()">SENDEN</button>
       </div>
     </div>
@@ -366,6 +435,32 @@
   </div>
 
 </div>
+
+<!-- BOOKMARKS FAB -->
+<button class="bookmarks-fab" id="bookmarksFab" onclick="toggleBookmarksPanel()" title="Lesezeichen">
+  📌<span class="bookmarks-badge" id="bookmarksBadge" style="display:none">0</span>
+</button>
+
+<!-- BOOKMARKS PANEL -->
+<div class="bookmarks-panel" id="bookmarksPanel">
+  <div class="bookmarks-header">
+    <span class="bookmarks-title">📌 Lesezeichen</span>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="export-btn" style="font-size:11px;padding:3px 8px;color:#fff;border-color:rgba(255,255,255,.4)" onclick="exportBookmarksEmail()">📧 E-Mail</button>
+      <button class="bookmarks-close" onclick="toggleBookmarksPanel()">✕</button>
+    </div>
+  </div>
+  <div class="bookmarks-list" id="bookmarksList">
+    <div class="bookmarks-empty">Noch keine Lesezeichen.<br>Klicke 📌 bei News oder Story-Ideen.</div>
+  </div>
+</div>
+
+<!-- BREAKING ALERT -->
+<div class="breaking-alert" id="breakingAlert">
+  <span>🚨</span><span id="breakingAlertText">Breaking: Neue Entwicklung erkannt</span>
+  <button class="breaking-alert-close" onclick="dismissBreaking()">✕</button>
+</div>
+
 <script>
 const WORKER = 'https://orange-shape-5ada-autojournal.tblees.workers.dev';
 
@@ -668,6 +763,7 @@ function updateBrandRadar() {
     return;
   }
 
+  checkBreakingNews(brandData);
   document.getElementById('brandBadge').textContent = `${sorted.length} Marken`;
   document.getElementById('brandList').innerHTML = sorted.map(([brand, data]) => {
     const pct = Math.round((data.count / max) * 100);
@@ -720,9 +816,14 @@ function renderNews() {
         <span>${n.lang==='de'?'🇩🇪':'🌍'} Google News</span>
         <span class="news-time">${n.time}</span>
       </div>
-      <div class="news-headline">${n.headline}</div>
-      ${n.link ? `<a class="news-read" href="${n.link}" target="_blank" onclick="event.stopPropagation()">→ Artikel lesen</a>` : ''}
-      <a class="px-btn" href="${`https://www.perplexity.ai/search?q=${encodeURIComponent(n.headline)}`}" target="_blank" onclick="event.stopPropagation()">🔍 Perplexity</a>
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:6px">
+        <div class="news-headline">${n.headline}</div>
+        <button class="bookmark-btn" onclick="event.stopPropagation();addBookmark('news','${n.headline.replace(/'/g,"\'").replace(/"/g,'&quot;')}','${n.time}')" title="Lesezeichen">📌</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-top:4px;flex-wrap:wrap">
+        ${n.link ? `<a class="news-read" href="${n.link}" target="_blank" onclick="event.stopPropagation()">→ Artikel lesen</a>` : ''}
+        <a class="px-btn" href="${`https://www.perplexity.ai/search?q=${encodeURIComponent(n.headline)}`}" target="_blank" onclick="event.stopPropagation()">🔍 Perplexity</a>
+      </div>
     </div>`).join('');
 }
 
@@ -790,12 +891,19 @@ async function generateStories() {
 }
 
 function renderStories(stories) {
-  document.getElementById('storyGrid').innerHTML = stories.map(s => `
-    <div class="story-card" onclick="developStory('${s.headline.replace(/'/g,"\\'")}')">
-      <div class="story-category">${s.cat}</div>
+  // Store for index-based access
+  window._stories = stories;
+  document.getElementById('storyGrid').innerHTML = stories.map((s, i) => {
+    const pxUrl = 'https://www.perplexity.ai/search?q=' + encodeURIComponent(s.headline + ' Autoindustrie 2025');
+    return `<div class="story-card" onclick="developStory(window._stories[${i}].headline)">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:4px">
+        <div class="story-category">${s.cat}</div>
+        <button class="bookmark-btn" style="font-size:12px" onclick="event.stopPropagation();addBookmark('story',window._stories[${i}].headline)" title="Lesezeichen">📌</button>
+      </div>
       <div class="story-headline">${s.headline}</div>
-      <a class="px-btn" href="${`https://www.perplexity.ai/search?q=${encodeURIComponent(s.headline+' Autoindustrie 2025')}`}" target="_blank" onclick="event.stopPropagation()">🔍 Recherchieren</a>
-    </div>`).join('');
+      <a class="px-btn" href="${pxUrl}" target="_blank" onclick="event.stopPropagation()">🔍 Recherchieren</a>
+    </div>`;
+  }).join('');
 }
 
 // ── AI CHAT ────────────────────────────────────────────────
@@ -852,9 +960,179 @@ function addMessage(role, text) {
 function sendQuick(text) { document.getElementById('chatInput').value = text; sendMessage(); }
 // askAboutBrand replaced by toggleBrand + Perplexity
 function askAboutNews(headline) { sendQuick(`Erkläre mir den journalistischen Hintergrund zu: "${headline}"`); }
-function developStory(h) { sendQuick(`Hilf mir diese Story zu entwickeln: "${h}". Wichtigste Fragen, Quellen, Interviewpartner?`); }
+function developStory(h) { if (typeof h === 'number') h = window._stories[h].headline; sendQuick('Hilf mir diese Story zu entwickeln: ' + h + '. Wichtigste Fragen, Quellen, Interviewpartner?'); }
 
 // ── INIT ───────────────────────────────────────────────────
+
+// ── SPEECH RECOGNITION ────────────────────────────────────
+let recognition = null;
+let isListening = false;
+
+function toggleMic() {
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+    alert('Spracheingabe wird von diesem Browser nicht unterstützt. Bitte Chrome oder Edge nutzen.');
+    return;
+  }
+  if (isListening) {
+    recognition.stop();
+    return;
+  }
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = new SpeechRecognition();
+  recognition.lang = 'de-DE';
+  recognition.continuous = false;
+  recognition.interimResults = false;
+
+  recognition.onstart = () => {
+    isListening = true;
+    const btn = document.getElementById('micBtn');
+    btn.classList.add('listening');
+    btn.textContent = '🔴';
+    document.getElementById('chatInput').placeholder = 'Sprich jetzt...';
+  };
+
+  recognition.onresult = (e) => {
+    const transcript = e.results[0][0].transcript;
+    document.getElementById('chatInput').value = transcript;
+    sendMessage();
+  };
+
+  recognition.onerror = (e) => {
+    console.log('Speech error:', e.error);
+  };
+
+  recognition.onend = () => {
+    isListening = false;
+    const btn = document.getElementById('micBtn');
+    btn.classList.remove('listening');
+    btn.textContent = '🎤';
+    document.getElementById('chatInput').placeholder = researchModeActive
+      ? 'Recherche-Thema eingeben oder 🎤 sprechen...'
+      : 'Frage stellen oder 🎤 sprechen...';
+  };
+
+  recognition.start();
+}
+
+// ── BOOKMARKS ──────────────────────────────────────────────
+let bookmarks = JSON.parse(localStorage.getItem('autojournal_bookmarks') || '[]');
+
+function saveBookmarks() {
+  localStorage.setItem('autojournal_bookmarks', JSON.stringify(bookmarks));
+  updateBookmarksBadge();
+  renderBookmarks();
+}
+
+function addBookmark(type, text, extra) {
+  if (bookmarks.find(b => b.text === text)) {
+    alert('Bereits als Lesezeichen gespeichert!');
+    return;
+  }
+  bookmarks.unshift({
+    type,
+    text,
+    extra: extra || '',
+    date: new Date().toLocaleDateString('de-DE', {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'})
+  });
+  saveBookmarks();
+  // Visual feedback
+  const fab = document.getElementById('bookmarksFab');
+  fab.style.transform = 'scale(1.3)';
+  setTimeout(() => fab.style.transform = '', 300);
+}
+
+function removeBookmark(index) {
+  bookmarks.splice(index, 1);
+  saveBookmarks();
+}
+
+function updateBookmarksBadge() {
+  const badge = document.getElementById('bookmarksBadge');
+  if (bookmarks.length > 0) {
+    badge.textContent = bookmarks.length;
+    badge.style.display = 'flex';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+function renderBookmarks() {
+  const list = document.getElementById('bookmarksList');
+  if (bookmarks.length === 0) {
+    list.innerHTML = '<div class="bookmarks-empty">Noch keine Lesezeichen.<br>Klicke 📌 bei News oder Story-Ideen.</div>';
+    return;
+  }
+  list.innerHTML = bookmarks.map((b, i) => `
+    <div class="bookmark-item">
+      <button class="bookmark-item-del" onclick="removeBookmark(${i})">✕</button>
+      <div class="bookmark-item-type">${b.type === 'news' ? '📰 News' : '✦ Story-Idee'} · ${b.date}</div>
+      <div class="bookmark-item-text">${b.text}</div>
+      <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap">
+        <a class="px-btn" href="https://www.perplexity.ai/search?q=${encodeURIComponent(b.text)}" target="_blank">🔍 Recherchieren</a>
+        <button class="px-btn" style="border:none;cursor:pointer" onclick="sendQuick('${b.text.replace(/'/g,"\'")}')">🤖 KI fragen</button>
+      </div>
+    </div>`).join('');
+}
+
+function toggleBookmarksPanel() {
+  const panel = document.getElementById('bookmarksPanel');
+  panel.classList.toggle('visible');
+  if (panel.classList.contains('visible')) renderBookmarks();
+}
+
+function exportBookmarksEmail() {
+  if (bookmarks.length === 0) {
+    alert('Keine Lesezeichen zum Exportieren.');
+    return;
+  }
+  const subject = encodeURIComponent('AutoJournal — Meine Lesezeichen');
+  const newsItems = bookmarks.filter(b => b.type === 'news');
+  const storyItems = bookmarks.filter(b => b.type === 'story');
+  let body = 'Meine gespeicherten AutoJournal-Lesezeichen:
+
+';
+  if (newsItems.length) {
+    body += '📰 NEWS:
+';
+    newsItems.forEach(b => body += `• ${b.text} (${b.date})
+`);
+    body += '
+';
+  }
+  if (storyItems.length) {
+    body += '✦ STORY-IDEEN:
+';
+    storyItems.forEach(b => body += `• ${b.text}
+`);
+  }
+  window.open(`mailto:?subject=${subject}&body=${encodeURIComponent(body)}`);
+}
+
+// ── BREAKING NEWS ALERT ────────────────────────────────────
+let prevBrandCounts = {};
+
+function checkBreakingNews(newBrandData) {
+  const spikes = [];
+  for (const [brand, data] of Object.entries(newBrandData)) {
+    const prev = prevBrandCounts[brand] || 0;
+    const curr = data.count;
+    if (prev > 0 && curr >= prev * 2 && curr >= 4) {
+      spikes.push(`${brand} (${curr}× erwähnt, +${curr - prev} seit letztem Refresh)`);
+    }
+  }
+  prevBrandCounts = Object.fromEntries(Object.entries(newBrandData).map(([k,v]) => [k, v.count]));
+  if (spikes.length > 0) {
+    document.getElementById('breakingAlertText').textContent =
+      '🚨 Spike erkannt: ' + spikes.join(' · ');
+    document.getElementById('breakingAlert').classList.add('visible');
+    setTimeout(dismissBreaking, 8000);
+  }
+}
+
+function dismissBreaking() {
+  document.getElementById('breakingAlert').classList.remove('visible');
+}
+
 // ── PERPLEXITY ────────────────────────────────────────────
 function openPx(query) {
   if (!query || !query.trim()) return;
@@ -1038,6 +1316,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderPress();
   renderExperts();
   loadAllNews();
+  updateBookmarksBadge();
   // Auto-refresh alle 15 Minuten
   setInterval(loadAllNews, 15 * 60 * 1000);
 });
