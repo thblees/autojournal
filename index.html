@@ -1297,8 +1297,7 @@ Pressemitteilung:
         messages:[{role:'user', content: prompts[mode]}] })
     });
     const data = await resp.json();
-    resultText.innerHTML = data.content.filter(c=>c.type==='text').map(c=>c.text).join('').replace(/
-/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+    resultText.innerHTML = data.content.filter(c=>c.type==='text').map(c=>c.text).join('').replace(/\n/g,'<br>');
   } catch(e) {
     resultText.innerHTML = '<span style="color:#dc2626">Fehler. Bitte erneut versuchen.</span>';
   }
@@ -1369,8 +1368,7 @@ Ton: direkt, professionell, journalistisch. Deutsch.`;
     });
     const data = await resp.json();
     resultText.innerHTML = data.content.filter(c=>c.type==='text').map(c=>c.text).join('')
-      .replace(/
-/g,'<br>')
+      .replace(/\n/g,'<br>')
       .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
   } catch(e) {
     resultText.innerHTML = '<span style="color:#dc2626">Fehler. Bitte erneut versuchen.</span>';
