@@ -124,6 +124,13 @@
 
   /* NEWS */
   .news-panel { grid-column:3; grid-row:1/3; display:flex; flex-direction:column; max-height:800px; }
+  .news-refresh-bar { display:flex; align-items:center; justify-content:space-between; padding:7px 12px; background:#deeaf8; border-bottom:1px solid #b8d4f0; font-size:11px; color:#4a6a9a; font-family:'JetBrains Mono',monospace; }
+  .news-refresh-bar-left { display:flex; align-items:center; gap:6px; }
+  .news-auto-dot { width:6px; height:6px; border-radius:50%; background:#16a34a; animation:pulse 2s infinite; flex-shrink:0; }
+  .news-countdown { color:#1a3a6b; font-weight:600; }
+  .news-manual-btn { background:#1a3a6b; border:none; color:#fff; font-size:11px; font-family:'DM Sans',sans-serif; padding:3px 10px; border-radius:5px; cursor:pointer; transition:all .2s; white-space:nowrap; }
+  .news-manual-btn:hover { background:#2563eb; }
+  .news-manual-btn:disabled { background:#8aabcc; cursor:not-allowed; }
   .news-tabs { display:flex; padding:7px 9px 0; gap:5px; background:#ccdff4; border-bottom:1px solid #b8d4f0; }
   .news-tab { font-size:12px; font-family:'JetBrains Mono',monospace; padding:4px 10px; border-radius:4px 4px 0 0; cursor:pointer; color:#4a6a9a; background:transparent; border:none; transition:all .2s; }
   .news-tab.active { background:#deeaf8; color:#1a2f5a; font-weight:600; }
@@ -366,6 +373,13 @@
       <div class="panel-title">◉ Live News-Radar</div>
       <div class="panel-badge" id="newsCount">lädt...</div>
     </div>
+    <div class="news-refresh-bar">
+      <div class="news-refresh-bar-left">
+        <div class="news-auto-dot"></div>
+        <span>Auto-Update in <span class="news-countdown" id="refreshCountdown">15:00</span></span>
+      </div>
+      <button class="news-manual-btn" id="refreshBtn" onclick="loadAllNews()">⟳ Jetzt aktualisieren</button>
+    </div>
     <div class="news-tabs">
       <button class="news-tab active" onclick="switchTab('all',this)">Alle</button>
       <button class="news-tab" onclick="switchTab('de',this)">🇩🇪 DE</button>
@@ -374,7 +388,6 @@
     <div class="news-feed" id="newsFeed">
       <div style="padding:20px;text-align:center;color:#4a6a9a;font-size:13px"><div class="spinner" style="margin:0 auto 10px"></div>Lade & filtere Auto-News...</div>
     </div>
-    <button class="refresh-btn" id="refreshBtn" onclick="loadAllNews()">⟳ News aktualisieren</button>
   </div>
 
   <!-- COL 4: PRESS -->
@@ -627,6 +640,7 @@ let allNews = [];
 let currentTab = 'all';
 let conversationHistory = [];
 let lastTopic = ''; // Tracks most recent topic for context-aware interview questions
+let countdownSeconds = 15 * 60; // Auto-refresh countdown
 
 // ── HELPERS ────────────────────────────────────────────────
 function isAutoRelevant(title) {
@@ -696,6 +710,10 @@ function askExpert(idx) {
 
 // ── LOAD RSS ───────────────────────────────────────────────
 async function loadAllNews() {
+  // Reset countdown on every load (manual or auto)
+  countdownSeconds = 15 * 60;
+  const cdEl = document.getElementById('refreshCountdown');
+  if (cdEl) cdEl.textContent = '15:00';
   const btn = document.getElementById('refreshBtn');
   btn.disabled = true;
   document.getElementById('newsFeed').innerHTML =
@@ -1366,7 +1384,22 @@ document.addEventListener('DOMContentLoaded', () => {
   renderExperts();
   loadAllNews();
   updateBookmarksBadge();
-  setInterval(loadAllNews, 15 * 60 * 1000);
+  // Countdown timer — updates every second, triggers loadAllNews at 0
+  function updateCountdown() {
+    countdownSeconds--;
+    if (countdownSeconds <= 0) {
+      countdownSeconds = 15 * 60;
+      loadAllNews();
+    }
+    const mins = Math.floor(countdownSeconds / 60);
+    const secs = countdownSeconds % 60;
+    const el = document.getElementById('refreshCountdown');
+    if (el) el.textContent = mins + ':' + String(secs).padStart(2, '0');
+  }
+  setInterval(updateCountdown, 1000);
+
+  // Reset countdown when manually refreshed
+  const origLoadAllNews = loadAllNews;
 });
 </script>
 </body>
