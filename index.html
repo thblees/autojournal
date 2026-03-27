@@ -712,7 +712,21 @@ async function loadAllNews() {
       const xml = new DOMParser().parseFromString(text, 'text/xml');
       [...xml.querySelectorAll('item')].slice(0,10).forEach(item => {
         const headline = item.querySelector('title')?.textContent?.trim() || '';
-        const link = item.querySelector('link')?.textContent?.trim() || '';
+        // Google News RSS uses <link> as self-closing tag — extract via multiple fallbacks
+        const linkEl = item.querySelector('link');
+        let link = '';
+        if (linkEl) {
+          // Try textContent first
+          link = linkEl.textContent?.trim() || '';
+          // If empty, try nextSibling (Google RSS quirk)
+          if (!link && linkEl.nextSibling) {
+            link = linkEl.nextSibling.textContent?.trim() || '';
+          }
+          // Try href attribute
+          if (!link) link = linkEl.getAttribute('href') || '';
+          // Try <guid> as fallback (often contains the URL)
+          if (!link) link = item.querySelector('guid')?.textContent?.trim() || '';
+        }
         const pubDate = item.querySelector('pubDate')?.textContent?.trim() || '';
         if (!headline || seen.has(headline) || !isAutoRelevant(headline)) return;
         seen.add(headline);
@@ -843,7 +857,10 @@ function renderNews() {
         <button class="bookmark-btn" data-idx="${i}" onclick="event.stopPropagation();newsBookmark(this)" title="Lesezeichen">📌</button>
       </div>
       <div style="display:flex;align-items:center;gap:8px;margin-top:4px;flex-wrap:wrap">
-        ${n.link ? `<a class="news-read" href="${n.link}" target="_blank" onclick="event.stopPropagation()">→ Artikel lesen</a>` : ''}
+        ${n.link
+          ? `<a class="news-read" href="${n.link}" target="_blank" onclick="event.stopPropagation()">→ Artikel lesen</a>`
+          : `<a class="news-read" href="https://news.google.com/search?q=${encodeURIComponent(n.headline)}&hl=de" target="_blank" onclick="event.stopPropagation()">→ Google News</a>`
+        }
         <a class="px-btn" href="${pxUrl}" target="_blank" onclick="event.stopPropagation()">🔍 Perplexity</a>
       </div>
     </div>`;
