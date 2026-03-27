@@ -267,6 +267,7 @@
     <div class="status-dot">🚗 Jespers Recherche-Cockpit · Autoindustrie</div>
     <div class="status-dot" id="lastUpdate">lädt...</div>
     <div class="px-search">
+      <button id="pxMicBtn" onclick="togglePxMic()" title="Spracheingabe für Perplexity" style="background:transparent;border:none;color:rgba(255,255,255,.7);font-size:14px;padding:0 8px;cursor:pointer;transition:all .2s">🎤</button>
       <input type="text" id="pxInput" placeholder="🔍 In Perplexity recherchieren..." onkeydown="if(event.key==='Enter'&&this.value) openPx(this.value)" />
       <button onclick="if(document.getElementById('pxInput').value) openPx(document.getElementById('pxInput').value)">→ Suchen</button>
     </div>
@@ -667,16 +668,24 @@ function renderPress() {
 
 // ── RENDER EXPERTS ─────────────────────────────────────────
 function renderExperts() {
+  window._experts = EXPERTS.filter(e => !e.section);
+  let expertIdx = 0;
   document.getElementById('expertList').innerHTML = EXPERTS.map(e => {
     if (e.section) return `<div class="expert-section">${e.section}</div>`;
+    const idx = expertIdx++;
     return `<div class="expert-item">
       <div class="expert-name">${e.name}</div>
       <div class="expert-title">${e.title}</div>
       <div class="expert-topics">${e.topics.map(t=>`<span class="expert-topic">${t}</span>`).join('')}</div>
       <div class="expert-links">${e.links.map(l=>`<a class="expert-link" href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`).join('')}</div>
-      <button class="expert-ask" onclick="sendQuick('${e.ask.replace(/'/g,"\\'")}')">🤖 KI fragen</button>
+      <button class="expert-ask" onclick="askExpert(${idx})">🤖 KI fragen</button>
     </div>`;
   }).join('');
+}
+
+function askExpert(idx) {
+  const expert = window._experts[idx];
+  if (expert && expert.ask) sendQuick(expert.ask);
 }
 
 // ── LOAD RSS ───────────────────────────────────────────────
@@ -805,27 +814,33 @@ function switchTab(tab, el) {
 
 function renderNews() {
   const filtered = currentTab === 'all' ? allNews : allNews.filter(n => n.lang === currentTab);
+  window._news = filtered;
   if (!filtered.length) {
     document.getElementById('newsFeed').innerHTML =
       '<div style="padding:16px;color:#4a6a9a;font-size:13px">Keine Meldungen für diesen Filter.</div>';
     return;
   }
-  document.getElementById('newsFeed').innerHTML = filtered.map(n => `
-    <div class="news-item" onclick="askAboutNews('${n.headline.replace(/'/g,"\\'").replace(/"/g,'&quot;')}')">
+  document.getElementById('newsFeed').innerHTML = filtered.map((n, i) => {
+    const pxUrl = 'https://www.perplexity.ai/search?q=' + encodeURIComponent(n.headline);
+    return `<div class="news-item" data-idx="${i}" onclick="newsClick(this)">
       <div class="news-source">
         <span>${n.lang==='de'?'🇩🇪':'🌍'} Google News</span>
         <span class="news-time">${n.time}</span>
       </div>
       <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:6px">
         <div class="news-headline">${n.headline}</div>
-        <button class="bookmark-btn" onclick="event.stopPropagation();addBookmark('news','${n.headline.replace(/'/g,"\'").replace(/"/g,'&quot;')}','${n.time}')" title="Lesezeichen">📌</button>
+        <button class="bookmark-btn" data-idx="${i}" onclick="event.stopPropagation();newsBookmark(this)" title="Lesezeichen">📌</button>
       </div>
       <div style="display:flex;align-items:center;gap:8px;margin-top:4px;flex-wrap:wrap">
         ${n.link ? `<a class="news-read" href="${n.link}" target="_blank" onclick="event.stopPropagation()">→ Artikel lesen</a>` : ''}
-        <a class="px-btn" href="${`https://www.perplexity.ai/search?q=${encodeURIComponent(n.headline)}`}" target="_blank" onclick="event.stopPropagation()">🔍 Perplexity</a>
+        <a class="px-btn" href="${pxUrl}" target="_blank" onclick="event.stopPropagation()">🔍 Perplexity</a>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
+function newsClick(el) { const n = window._news[+el.dataset.idx]; if(n) askAboutNews(n.headline); }
+function newsBookmark(el) { const n = window._news[+el.dataset.idx]; if(n) addBookmark('news', n.headline, n.time); }
+
 
 // ── AI FALLBACK ────────────────────────────────────────────
 async function loadAIFallback() {
@@ -834,41 +849,38 @@ async function loadAIFallback() {
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
         model:'claude-sonnet-4-20250514', max_tokens:1000,
-        system:'Generiere 12 realistische Auto-News von heute. NUR JSON: {"news":[{"headline":"max 90 Zeichen","lang":"de oder en","link":""}]} Mische DE/EN. Nur echte Automobilthemen.',
+        system:'Generiere 12 realistische Auto-News von heute. NUR JSON: {"news":[{"headline":"max 90 Zeichen","lang":"de oder en","link":"","time":"vor Xh"}]} Mische DE/EN. Nur echte Automobilthemen.',
         messages:[{role:'user',content:'12 aktuelle Auto-News.'}]
       })
     });
     const data = await resp.json();
     let text = data.content.filter(c=>c.type==='text').map(c=>c.text).join('');
     text = text.replace(/```json|```/g,'').trim();
-    allNews = JSON.parse(text).news.map(n=>({...n, time:'KI-generiert', pubDate:''}));
+    allNews = JSON.parse(text).news;
     document.getElementById('statNews').textContent = allNews.length + ' (KI)';
-    document.getElementById('newsCount').textContent = `${allNews.length} KI`;
+    document.getElementById('newsCount').textContent = allNews.length + ' KI';
     renderNews();
     updateBrandRadar();
     generateStories();
   } catch(e) {
-    document.getElementById('newsFeed').innerHTML =
-      '<div style="padding:16px;color:#4a6a9a;font-size:13px">Fehler beim Laden. Bitte aktualisieren.</div>';
+    document.getElementById('newsFeed').innerHTML = '<div style="padding:16px;color:#4a6a9a;font-size:13px">Fehler beim Laden. Bitte aktualisieren.</div>';
   }
   document.getElementById('refreshBtn').disabled = false;
 }
 
-// ── STORY IDEAS from real headlines ───────────────────────
+// ── STORY IDEAS ────────────────────────────────────────────
 async function generateStories() {
   const btn = document.getElementById('storyBtn');
   btn.disabled = true;
-  document.getElementById('storyGrid').innerHTML =
-    '<div style="grid-column:1/3;padding:14px;text-align:center;color:#4a6a9a;font-size:13px"><div class="spinner" style="margin:0 auto 8px"></div>Generiere Ideen aus aktuellen Headlines...</div>';
-
+  document.getElementById('storyGrid').innerHTML = '<div style="grid-column:1/3;padding:14px;text-align:center;color:#4a6a9a;font-size:13px"><div class="spinner" style="margin:0 auto 8px"></div>Generiere Ideen aus aktuellen Headlines...</div>';
   const headlines = allNews.slice(0,15).map(n=>n.headline).join('\n');
   try {
     const resp = await fetch(WORKER, {
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
         model:'claude-sonnet-4-20250514', max_tokens:800,
-        system:`Du bist ein erfahrener Wirtschaftsredakteur. Basierend auf diesen aktuellen Auto-News-Headlines entwickle 6 konkrete Story-Ideen für einen jungen Journalisten. NUR JSON: {"stories":[{"cat":"KATEGORIE","headline":"Story-Idee max 70 Zeichen"}]} Kategorien: INVESTIGATIV, REPORTAGE, DEEP DIVE, DATENJOURNALISMUS, PERSONALIE, WIRTSCHAFT, TECHNOLOGIE, POLITIK. Die Ideen sollen direkt auf den aktuellen Headlines basieren.`,
-        messages:[{role:'user', content:`Aktuelle Headlines:\n${headlines}\n\nGeneriere 6 Story-Ideen.`}]
+        system:`Du bist ein erfahrener Wirtschaftsredakteur. Basierend auf diesen aktuellen Auto-News-Headlines entwickle 6 konkrete Story-Ideen für einen jungen Journalisten. NUR JSON: {"stories":[{"cat":"KATEGORIE","headline":"Story-Idee max 70 Zeichen"}]} Kategorien: INVESTIGATIV, REPORTAGE, DEEP DIVE, DATENJOURNALISMUS, PERSONALIE, WIRTSCHAFT, TECHNOLOGIE, POLITIK.`,
+        messages:[{role:'user', content:'Aktuelle Headlines:\n'+headlines+'\n\nGeneriere 6 Story-Ideen.'}]
       })
     });
     const data = await resp.json();
@@ -905,13 +917,67 @@ function renderStories(stories) {
   }).join('');
 }
 function storyClick(el) { const s = window._stories[+el.dataset.idx]; if(s) developStory(s.headline); }
-function storyBookmark(el) { const s = window._stories[+el.dataset.idx]; if(s) addBookmark("story", s.headline); }
+function storyBookmark(el) { const s = window._stories[+el.dataset.idx]; if(s) addBookmark('story', s.headline); }
 
-function developStory(h) { if (typeof h === 'number') h = window._stories[h].headline; sendQuick('Hilf mir diese Story zu entwickeln: ' + h + '. Wichtigste Fragen, Quellen, Interviewpartner?'); }
+function askAboutNews(headline) { sendQuick('Erkläre mir den journalistischen Hintergrund zu: "' + headline + '"'); }
 
-// ── INIT ───────────────────────────────────────────────────
+// ── AI CHAT ────────────────────────────────────────────────
+let conversationHistory = [];
 
-// ── SPEECH RECOGNITION ────────────────────────────────────
+async function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  addMessage('user', text);
+  conversationHistory.push({role:'user', content:text});
+  document.getElementById('sendBtn').disabled = true;
+
+  const typingId = 'typing-' + Date.now();
+  const div = document.getElementById('chatMessages');
+  div.innerHTML += `<div class="message ai" id="${typingId}"><div class="msg-avatar ai">KI</div><div class="msg-content"><div class="msg-bubble"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div></div></div>`;
+  div.scrollTop = div.scrollHeight;
+
+  try {
+    const resp = await fetch(WORKER, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model:'claude-sonnet-4-20250514', max_tokens:1000,
+        system: researchModeActive ? RESEARCH_SYSTEM_PROMPT : 'Du bist AutoJournal AI, Recherche-Assistent für Jesper (22), Autofan und angehender Journalismus-Student. Erkläre Branchenzusammenhänge verständlich, nenne konkrete Zahlen und Personen, zeige journalistische Perspektiven (welche Story steckt dahinter? wen sollte man interviewen? welche Quellen?), hilf bei Recherchestrategien und Interview-Fragen. Ton: locker, direkt, kompetent. Auf Deutsch. Max 220 Wörter.',
+        messages: conversationHistory
+      })
+    });
+    const data = await resp.json();
+    const aiText = data.content.filter(c=>c.type==='text').map(c=>c.text).join('');
+    document.getElementById(typingId)?.remove();
+    addMessage('ai', aiText);
+    conversationHistory.push({role:'assistant', content:aiText});
+    if (conversationHistory.length > 20) conversationHistory = conversationHistory.slice(-16);
+  } catch(e) {
+    document.getElementById(typingId)?.remove();
+    addMessage('ai', 'Verbindungsfehler. Bitte erneut versuchen.');
+  }
+  document.getElementById('sendBtn').disabled = false;
+  input.focus();
+}
+
+function addMessage(role, text) {
+  const div = document.getElementById('chatMessages');
+  const time = new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
+  div.innerHTML += `<div class="message ${role}">
+    <div class="msg-avatar ${role==='ai'?'ai':'human'}">${role==='ai'?'KI':'👤'}</div>
+    <div class="msg-content">
+      <div class="msg-bubble">${text.replace(/\n/g,'<br>')}</div>
+      <div class="msg-meta">${role==='ai'?'AutoJournal AI':'Du'} · ${time}</div>
+    </div>
+  </div>`;
+  div.scrollTop = div.scrollHeight;
+}
+
+function sendQuick(text) { document.getElementById('chatInput').value = text; sendMessage(); }
+function developStory(h) { sendQuick('Hilf mir diese Story zu entwickeln: "' + h + '". Wichtigste Fragen, Quellen, Interviewpartner?'); }
+
+// ── SPEECH RECOGNITION ────────────────────────────────────────
 let recognition = null;
 let isListening = false;
 
@@ -920,16 +986,12 @@ function toggleMic() {
     alert('Spracheingabe wird von diesem Browser nicht unterstützt. Bitte Chrome oder Edge nutzen.');
     return;
   }
-  if (isListening) {
-    recognition.stop();
-    return;
-  }
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  recognition = new SpeechRecognition();
+  if (isListening) { recognition.stop(); return; }
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = new SR();
   recognition.lang = 'de-DE';
   recognition.continuous = false;
   recognition.interimResults = false;
-
   recognition.onstart = () => {
     isListening = true;
     const btn = document.getElementById('micBtn');
@@ -937,17 +999,12 @@ function toggleMic() {
     btn.textContent = '🔴';
     document.getElementById('chatInput').placeholder = 'Sprich jetzt...';
   };
-
+  let transcript = '';
   recognition.onresult = (e) => {
-    const transcript = e.results[0][0].transcript;
+    transcript = e.results[0][0].transcript;
     document.getElementById('chatInput').value = transcript;
-    sendMessage();
   };
-
-  recognition.onerror = (e) => {
-    console.log('Speech error:', e.error);
-  };
-
+  recognition.onerror = () => { transcript = ''; };
   recognition.onend = () => {
     isListening = false;
     const btn = document.getElementById('micBtn');
@@ -956,12 +1013,45 @@ function toggleMic() {
     document.getElementById('chatInput').placeholder = researchModeActive
       ? 'Recherche-Thema eingeben oder 🎤 sprechen...'
       : 'Frage stellen oder 🎤 sprechen...';
+    // Send only after recognition fully ended
+    if (transcript.trim()) {
+      document.getElementById('chatInput').value = transcript;
+      setTimeout(() => sendMessage(), 100);
+    }
   };
-
   recognition.start();
 }
 
-// ── BOOKMARKS ──────────────────────────────────────────────
+function togglePxMic() {
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+    alert('Spracheingabe wird von diesem Browser nicht unterstützt. Bitte Chrome oder Edge nutzen.');
+    return;
+  }
+  const pxBtn = document.getElementById('pxMicBtn');
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const pxRec = new SpeechRecognition();
+  pxRec.lang = 'de-DE';
+  pxRec.continuous = false;
+  pxRec.interimResults = false;
+
+  pxBtn.textContent = '🔴';
+  pxBtn.style.color = '#f87171';
+
+  let pxTranscript = '';
+  pxRec.onresult = (e) => {
+    pxTranscript = e.results[0][0].transcript;
+    document.getElementById('pxInput').value = pxTranscript;
+  };
+  pxRec.onerror = () => { pxTranscript = ''; };
+  pxRec.onend = () => {
+    pxBtn.textContent = '🎤';
+    pxBtn.style.color = 'rgba(255,255,255,.7)';
+    if (pxTranscript.trim()) openPx(pxTranscript);
+  };
+  pxRec.start();
+}
+
+// ── BOOKMARKS ────────────────────────────────────────────────
 let bookmarks = [];
 try { bookmarks = JSON.parse(localStorage.getItem('autojournal_bookmarks') || '[]'); } catch(e) { bookmarks = []; }
 
@@ -972,54 +1062,40 @@ function saveBookmarks() {
 }
 
 function addBookmark(type, text, extra) {
-  if (bookmarks.find(b => b.text === text)) {
-    alert('Bereits als Lesezeichen gespeichert!');
-    return;
-  }
-  bookmarks.unshift({
-    type,
-    text,
-    extra: extra || '',
-    date: new Date().toLocaleDateString('de-DE', {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'})
-  });
+  if (bookmarks.find(b => b.text === text)) { alert('Bereits gespeichert!'); return; }
+  bookmarks.unshift({ type, text, extra: extra||'', date: new Date().toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) });
   saveBookmarks();
-  // Visual feedback
   const fab = document.getElementById('bookmarksFab');
   fab.style.transform = 'scale(1.3)';
   setTimeout(() => fab.style.transform = '', 300);
 }
 
-function removeBookmark(index) {
-  bookmarks.splice(index, 1);
-  saveBookmarks();
-}
+function removeBookmark(index) { bookmarks.splice(index, 1); saveBookmarks(); }
 
 function updateBookmarksBadge() {
   const badge = document.getElementById('bookmarksBadge');
-  if (bookmarks.length > 0) {
-    badge.textContent = bookmarks.length;
-    badge.style.display = 'flex';
-  } else {
-    badge.style.display = 'none';
-  }
+  if (bookmarks.length > 0) { badge.textContent = bookmarks.length; badge.style.display = 'flex'; }
+  else { badge.style.display = 'none'; }
 }
 
 function renderBookmarks() {
   const list = document.getElementById('bookmarksList');
-  if (bookmarks.length === 0) {
+  if (!bookmarks.length) {
     list.innerHTML = '<div class="bookmarks-empty">Noch keine Lesezeichen.<br>Klicke 📌 bei News oder Story-Ideen.</div>';
     return;
   }
-  list.innerHTML = bookmarks.map((b, i) => `
-    <div class="bookmark-item">
+  list.innerHTML = bookmarks.map((b, i) => {
+    const pxUrl = 'https://www.perplexity.ai/search?q=' + encodeURIComponent(b.text);
+    return `<div class="bookmark-item">
       <button class="bookmark-item-del" onclick="removeBookmark(${i})">✕</button>
-      <div class="bookmark-item-type">${b.type === 'news' ? '📰 News' : '✦ Story-Idee'} · ${b.date}</div>
+      <div class="bookmark-item-type">${b.type==='news'?'📰 News':'✦ Story-Idee'} · ${b.date}</div>
       <div class="bookmark-item-text">${b.text}</div>
       <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap">
-        <a class="px-btn" href="https://www.perplexity.ai/search?q=${encodeURIComponent(b.text)}" target="_blank">🔍 Recherchieren</a>
-        <button class="px-btn" style="border:none;cursor:pointer" onclick="sendQuick('${b.text.replace(/'/g,"\'")}')">🤖 KI fragen</button>
+        <a class="px-btn" href="${pxUrl}" target="_blank">🔍 Recherchieren</a>
+        <button class="px-btn" style="border:none;cursor:pointer" onclick="sendQuick('${b.text.replace(/'/g,'&apos;')}')">🤖 KI fragen</button>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 function toggleBookmarksPanel() {
@@ -1029,103 +1105,64 @@ function toggleBookmarksPanel() {
 }
 
 function exportBookmarksEmail() {
-  if (bookmarks.length === 0) {
-    alert('Keine Lesezeichen zum Exportieren.');
-    return;
-  }
+  if (!bookmarks.length) { alert('Keine Lesezeichen zum Exportieren.'); return; }
   const subject = encodeURIComponent('AutoJournal — Meine Lesezeichen');
-  const newsItems = bookmarks.filter(b => b.type === 'news');
-  const storyItems = bookmarks.filter(b => b.type === 'story');
   let body = 'Meine gespeicherten AutoJournal-Lesezeichen:\n\n';
-  if (newsItems.length) {
-    body += '📰 NEWS:\n';
-    newsItems.forEach(b => body += '• ' + b.text + ' (' + b.date + ')\n');
-    body += '\n';
-  }
-  if (storyItems.length) {
-    body += '✦ STORY-IDEEN:\n';
-    storyItems.forEach(b => body += '• ' + b.text + '\n');
-  }
-  window.open(`mailto:?subject=${subject}&body=${encodeURIComponent(body)}`);
+  const news = bookmarks.filter(b=>b.type==='news');
+  const stories = bookmarks.filter(b=>b.type==='story');
+  if (news.length) { body += '📰 NEWS:\n'; news.forEach(b=>body+=`• ${b.text}\n`); body+='\n'; }
+  if (stories.length) { body += '✦ STORY-IDEEN:\n'; stories.forEach(b=>body+=`• ${b.text}\n`); }
+  window.open('mailto:?subject='+subject+'&body='+encodeURIComponent(body));
 }
 
-// ── BREAKING NEWS ALERT ────────────────────────────────────
+// ── BREAKING NEWS ────────────────────────────────────────────
 let prevBrandCounts = {};
 
-function checkBreakingNews(newBrandData) {
+function checkBreakingNews(brandData) {
   const spikes = [];
-  for (const [brand, data] of Object.entries(newBrandData)) {
+  for (const [brand, data] of Object.entries(brandData)) {
     const prev = prevBrandCounts[brand] || 0;
-    const curr = data.count;
-    if (prev > 0 && curr >= prev * 2 && curr >= 4) {
-      spikes.push(`${brand} (${curr}× erwähnt, +${curr - prev} seit letztem Refresh)`);
+    if (prev > 0 && data.count >= prev * 2 && data.count >= 4) {
+      spikes.push(brand + ' (' + data.count + '× erwähnt)');
     }
   }
-  prevBrandCounts = Object.fromEntries(Object.entries(newBrandData).map(([k,v]) => [k, v.count]));
-  if (spikes.length > 0) {
-    document.getElementById('breakingAlertText').textContent =
-      '🚨 Spike erkannt: ' + spikes.join(' · ');
+  prevBrandCounts = Object.fromEntries(Object.entries(brandData).map(([k,v])=>[k,v.count]));
+  if (spikes.length) {
+    document.getElementById('breakingAlertText').textContent = '🚨 Spike: ' + spikes.join(' · ');
     document.getElementById('breakingAlert').classList.add('visible');
     setTimeout(dismissBreaking, 8000);
   }
 }
 
-function dismissBreaking() {
-  document.getElementById('breakingAlert').classList.remove('visible');
-}
+function dismissBreaking() { document.getElementById('breakingAlert').classList.remove('visible'); }
 
-// ── PERPLEXITY ────────────────────────────────────────────
-function openPx(query) {
-  if (!query || !query.trim()) return;
-  const q = encodeURIComponent(query.trim());
-  window.open(`https://www.perplexity.ai/search?q=${q}`, '_blank');
-}
-
-// ── PDF ANALYSIS ──────────────────────────────────────────
+// ── PDF ANALYSIS ────────────────────────────────────────────
 let pdfBase64 = null;
-let pdfName = '';
 
-function pdfDragOver(e) {
-  e.preventDefault();
-  document.getElementById('pdfDropzone').classList.add('dragover');
-}
-
-function pdfDragLeave(e) {
-  document.getElementById('pdfDropzone').classList.remove('dragover');
-}
-
+function pdfDragOver(e) { e.preventDefault(); document.getElementById('pdfDropzone').classList.add('dragover'); }
+function pdfDragLeave() { document.getElementById('pdfDropzone').classList.remove('dragover'); }
 function pdfDrop(e) {
   e.preventDefault();
   document.getElementById('pdfDropzone').classList.remove('dragover');
   const file = e.dataTransfer.files[0];
   if (file && file.type === 'application/pdf') loadPDF(file);
 }
-
-function pdfFileSelected(input) {
-  const file = input.files[0];
-  if (file) loadPDF(file);
-}
+function pdfFileSelected(input) { if (input.files[0]) loadPDF(input.files[0]); }
 
 function loadPDF(file) {
-  pdfName = file.name;
-  const sizeMB = (file.size / 1024 / 1024).toFixed(1);
   document.getElementById('pdfFileName').textContent = file.name;
-  document.getElementById('pdfFileSize').textContent = sizeMB + ' MB';
+  document.getElementById('pdfFileSize').textContent = (file.size/1024/1024).toFixed(1)+' MB';
   document.getElementById('pdfFileInfo').style.display = 'flex';
   document.getElementById('pdfButtons').style.display = 'flex';
   document.getElementById('pdfDropzone').style.display = 'none';
   document.getElementById('pdfResult').classList.remove('visible');
-
   const reader = new FileReader();
-  reader.onload = (e) => {
-    pdfBase64 = e.target.result.split(',')[1];
-  };
+  reader.onload = (e) => { pdfBase64 = e.target.result.split(',')[1]; };
   reader.readAsDataURL(file);
 }
 
 function pdfClear() {
   pdfBase64 = null;
-  pdfName = '';
   document.getElementById('pdfFileInput').value = '';
   document.getElementById('pdfFileInfo').style.display = 'none';
   document.getElementById('pdfButtons').style.display = 'none';
@@ -1135,98 +1172,58 @@ function pdfClear() {
 
 async function analyzePDF(mode) {
   if (!pdfBase64) return;
-
   const prompts = {
-    summary:    'Fasse dieses Dokument in maximal 200 Wörtern zusammen. Schreibe klar und verständlich. Beginne direkt mit der Zusammenfassung.',
-    key:        'Was sind die 5 wichtigsten Aussagen dieses Dokuments? Nummeriere sie. Schreibe jeden Punkt in 1-2 Sätzen, klar und präzise.',
-    simple:     'Erkläre die wichtigsten Inhalte dieses Dokuments so, dass ein interessierter Laie ohne Fachkenntnisse es versteht. Vermeide Fachjargon oder erkläre ihn sofort. Maximal 200 Wörter.',
-    journalist: 'Du bist ein erfahrener Wirtschaftsjournalist. Welche 3-4 journalistischen Story-Winkel siehst du in diesem Dokument? Was ist überraschend, kontrovers oder gesellschaftlich relevant? Welche Fragen würdest du dem Autor stellen?',
+    summary: 'Fasse dieses Dokument in maximal 200 Wörtern zusammen. Klar und verständlich.',
+    key: 'Was sind die 5 wichtigsten Aussagen? Nummeriere sie, je 1-2 Sätze.',
+    simple: 'Erkläre die wichtigsten Inhalte so, dass ein Laie es versteht. Kein Fachjargon. Max 200 Wörter.',
+    journalist: 'Du bist Wirtschaftsjournalist. Welche 3-4 journalistischen Story-Winkel siehst du? Was ist überraschend oder kontrovers? Welche Fragen würdest du dem Autor stellen?',
   };
-
-  const titles = {
-    summary: '📝 Zusammenfassung',
-    key: '🎯 Kernaussagen',
-    simple: '🙋 Laienverständlich',
-    journalist: '🎤 Story-Winkel',
-  };
-
-  const btns = document.querySelectorAll('.pdf-action-btn');
-  btns.forEach(b => b.disabled = true);
-
+  const titles = { summary:'📝 Zusammenfassung', key:'🎯 Kernaussagen', simple:'🙋 Laienverständlich', journalist:'🎤 Story-Winkel' };
+  document.querySelectorAll('.pdf-action-btn').forEach(b=>b.disabled=true);
   const resultDiv = document.getElementById('pdfResult');
   const resultText = document.getElementById('pdfResultText');
   document.getElementById('pdfResultTitle').textContent = titles[mode];
-  resultText.innerHTML = '<span style="color:#4a6a9a"><span class="spinner"></span> KI analysiert Dokument...</span>';
+  resultText.innerHTML = '<span style="color:#4a6a9a"><span class="spinner"></span> KI analysiert...</span>';
   resultDiv.classList.add('visible');
-
   try {
     const resp = await fetch(WORKER, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        messages: [{
-          role: 'user',
-          content: [
-            {
-              type: 'document',
-              source: {
-                type: 'base64',
-                media_type: 'application/pdf',
-                data: pdfBase64
-              }
-            },
-            {
-              type: 'text',
-              text: prompts[mode]
-            }
-          ]
-        }]
+        model:'claude-sonnet-4-20250514', max_tokens:1000,
+        messages:[{ role:'user', content:[
+          { type:'document', source:{ type:'base64', media_type:'application/pdf', data:pdfBase64 } },
+          { type:'text', text:prompts[mode] }
+        ]}]
       })
     });
     const data = await resp.json();
-    const text = data.content.filter(c => c.type === 'text').map(c => c.text).join('');
-    resultText.innerHTML = text.replace(/\n/g, '<br>');
+    resultText.innerHTML = data.content.filter(c=>c.type==='text').map(c=>c.text).join('').replace(/\n/g,'<br>');
   } catch(e) {
-    resultText.innerHTML = '<span style="color:#dc2626">Fehler bei der Analyse. Bitte erneut versuchen.</span>';
+    resultText.innerHTML = '<span style="color:#dc2626">Fehler. Bitte erneut versuchen.</span>';
   }
+  document.querySelectorAll('.pdf-action-btn').forEach(b=>b.disabled=false);
+}
 
-  btns.forEach(b => b.disabled = false);
+// ── PERPLEXITY ────────────────────────────────────────────
+function openPx(query) {
+  if (!query || !query.trim()) return;
+  window.open('https://www.perplexity.ai/search?q=' + encodeURIComponent(query.trim()), '_blank');
 }
 
 // ── RESEARCH MODE ─────────────────────────────────────────
-const RESEARCH_SYSTEM_PROMPT = `Du bist ein hochqualifizierter Rechercheassistent im AutoJournal-Dashboard. Du führst den Nutzer durch einen strukturierten, interaktiven Rechercheprozess.
+const RESEARCH_SYSTEM_PROMPT = `Du bist ein hochqualifizierter Rechercheassistent im AutoJournal-Dashboard. Führe den Nutzer durch einen strukturierten, interaktiven Rechercheprozess.
 
-WICHTIG: Du hast KEINEN direkten Internetzugang. Weise den Nutzer darauf hin, dass du auf dein Trainingswissen bis Anfang 2025 zurückgreifst, und empfehle für tagesaktuelle Fakten Perplexity (Button im Dashboard).
+HINWEIS: Dein Wissen geht bis Anfang 2025. Für tagesaktuelle Fakten empfehle den Perplexity-Button.
 
-Dein Prozess — folge diesen Schritten genau:
+SCHRITT 1: Wenn der Nutzer ein Thema nennt, schlage sofort 4-5 Recherchefragen vor. Frage: "Passen diese Fragen? Möchtest du sie anpassen?" Warte auf Bestätigung.
 
-SCHRITT 1 — THEMA ANALYSIEREN & RECHERCHEFRAGEN VORSCHLAGEN:
-Wenn der Nutzer ein Thema nennt, analysiere es sofort und schlage 4–5 konkrete Recherchefragen vor. Frage dann:
-"Passen diese Fragen zu deinem Informationsbedarf, oder möchtest du sie anpassen?"
-Warte auf Bestätigung bevor du weitermachst.
+SCHRITT 2: Arbeite jede Frage einzeln ab mit 3-5 fundierten Antwortpunkten. Frage dann: "Soll ich mit Frage N+1 weitermachen?"
 
-SCHRITT 2 — SEQUENZIELL RECHERCHIEREN:
-Arbeite jede Frage einzeln ab. Für jede Frage:
-- Nenne die Frage als Überschrift
-- Liefere 3–5 fundierte Antwortpunkte aus deinem Wissen
-- Nenne relevante Zahlen, Personen, Studien wo vorhanden
-- Frage dann: "Soll ich mit Frage [N+1] weitermachen?"
+SCHRITT 3: Nach allen Fragen frage: "Mehr Details oder finaler Bericht?"
 
-SCHRITT 3 — NACHFRAGE:
-Nach allen Fragen: "Benötigst du zu bestimmten Punkten noch mehr Details, oder soll ich jetzt den finalen Bericht erstellen?"
+SCHRITT 4: Erstelle Bericht mit: Zusammenfassung, Haupterkenntnisse, Detailanalyse, Schlussfolgerung, Journalistische Anknüpfungspunkte.
 
-SCHRITT 4 — FINALER BERICHT:
-Erstelle einen strukturierten Bericht mit:
-## Recherche-Bericht: [Thema]
-**Zusammenfassung** (2–3 Sätze)
-**Haupterkenntnisse** (5–7 Punkte)
-**Detailanalyse** (nach Recherchefragen gegliedert)
-**Schlussfolgerung**
-**Journalistische Anknüpfungspunkte** (Story-Winkel, Interviewpartner, offene Fragen)
-
-Ton: professionell, direkt, wie ein erfahrener Redakteur. Auf Deutsch. Maximal 400 Wörter pro Antwort.`;
+Ton: professionell, direkt. Deutsch. Max 400 Wörter pro Antwort.`;
 
 let researchModeActive = false;
 
@@ -1234,22 +1231,19 @@ function toggleResearch(active) {
   researchModeActive = active;
   document.getElementById('researchBanner').classList.toggle('visible', active);
   document.getElementById('researchBtn').classList.toggle('active', active);
-
+  conversationHistory = [];
+  document.getElementById('chatMessages').innerHTML = '';
   if (active) {
-    // Reset conversation and start research mode
-    conversationHistory = [];
-    document.getElementById('chatMessages').innerHTML = '';
-    addMessage('ai', '🔬 <strong>Tiefenrecherche-Modus aktiviert!</strong><br><br>Nenn mir das Thema das du recherchieren möchtest — zum Beispiel eine Frage, ein Unternehmen, ein Trend oder ein Ereignis aus der Autoindustrie.<br><br>Ich werde dir dann konkrete Recherchefragen vorschlagen, sie mit dir abstimmen und anschließend jeden Aspekt strukturiert aufarbeiten. Am Ende bekommst du einen vollständigen Recherche-Bericht.');
-    document.getElementById('chatInput').placeholder = 'Recherche-Thema eingeben, z.B. "BYD Expansion Europa" oder "VW Krise Ursachen"...';
+    addMessage('ai', '🔬 <strong>Tiefenrecherche-Modus aktiv!</strong><br><br>Nenn mir das Thema — ich führe dich durch einen strukturierten Rechercheprozess mit Fragen, Analyse und finalem Bericht.');
+    document.getElementById('chatInput').placeholder = 'Recherche-Thema eingeben oder 🎤 sprechen...';
   } else {
-    conversationHistory = [];
-    document.getElementById('chatMessages').innerHTML = '';
     addMessage('ai', 'Tiefenrecherche beendet. Wie kann ich dir weiterhelfen?');
-    document.getElementById('chatInput').placeholder = 'Frage stellen, Thema recherchieren...';
+    document.getElementById('chatInput').placeholder = 'Frage stellen oder 🎤 sprechen...';
   }
   document.getElementById('chatInput').focus();
 }
 
+// ── INIT ─────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('chatInput').addEventListener('keydown', e => {
     if (e.key==='Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
@@ -1258,7 +1252,6 @@ document.addEventListener('DOMContentLoaded', () => {
   renderExperts();
   loadAllNews();
   updateBookmarksBadge();
-  // Auto-refresh alle 15 Minuten
   setInterval(loadAllNews, 15 * 60 * 1000);
 });
 </script>
