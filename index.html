@@ -470,11 +470,9 @@ const WORKER = 'https://orange-shape-5ada-autojournal.tblees.workers.dev';
 
 // ── RSS FEEDS — very specific auto queries ─────────────────
 const RSS_FEEDS = [
-  { url:'https://news.google.com/rss/search?q=Elektroauto+Autohersteller+Automobil&hl=de&gl=DE&ceid=DE:de', lang:'de' },
-  { url:'https://news.google.com/rss/search?q=Volkswagen+OR+BMW+OR+Mercedes+OR+Audi+Automobil&hl=de&gl=DE&ceid=DE:de', lang:'de' },
-  { url:'https://news.google.com/rss/search?q=BYD+OR+Tesla+OR+Stellantis+Elektroauto+OR+Auto&hl=de&gl=DE&ceid=DE:de', lang:'de' },
-  { url:'https://news.google.com/rss/search?q=electric+vehicle+automaker+automotive+industry&hl=en&gl=US&ceid=US:en', lang:'en' },
-  { url:'https://news.google.com/rss/search?q=Tesla+OR+BYD+OR+Volkswagen+car+sales+EV+2025&hl=en&gl=US&ceid=US:en', lang:'en' },
+  { url:'https://news.google.com/rss/search?q=Elektroauto+Autohersteller+Automobil+VW+BMW+Mercedes&hl=de&gl=DE&ceid=DE:de', lang:'de' },
+  { url:'https://news.google.com/rss/search?q=BYD+Tesla+Stellantis+Elektroauto+Auto&hl=de&gl=DE&ceid=DE:de', lang:'de' },
+  { url:'https://news.google.com/rss/search?q=electric+vehicle+automaker+Tesla+BYD+automotive&hl=en&gl=US&ceid=US:en', lang:'en' },
 ];
 
 // Auto-relevance keywords — headline must contain at least one
@@ -697,7 +695,6 @@ async function loadAllNews() {
   btn.disabled = true;
   document.getElementById('newsFeed').innerHTML =
     '<div style="padding:20px;text-align:center;color:#4a6a9a;font-size:13px"><div class="spinner" style="margin:0 auto 10px"></div>Lade & filtere Auto-News...</div>';
-  document.getElementById('storyBtn').disabled = true;
   document.getElementById('storyBadge').textContent = 'lädt News...';
 
   allNews = [];
@@ -705,7 +702,10 @@ async function loadAllNews() {
 
   await Promise.allSettled(RSS_FEEDS.map(async feed => {
     try {
-      const resp = await fetch(`${WORKER}?rss=${encodeURIComponent(feed.url)}`);
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 6000); // 6s timeout per feed
+      const resp = await fetch(`${WORKER}?rss=${encodeURIComponent(feed.url)}`, { signal: controller.signal });
+      clearTimeout(timeout);
       const text = await resp.text();
       const xml = new DOMParser().parseFromString(text, 'text/xml');
       [...xml.querySelectorAll('item')].slice(0,10).forEach(item => {
@@ -732,9 +732,10 @@ async function loadAllNews() {
   updateStats();
   renderNews();
   updateBrandRadar();
-  generateStories();
   document.getElementById('lastUpdate').textContent = '🕐 ' + new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
   btn.disabled = false;
+  // Delay story generation — don't block initial page render
+  setTimeout(() => generateStories(), 500);
 }
 
 function updateStats() {
