@@ -705,7 +705,8 @@ async function loadAllNews() {
     try {
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 6000); // 6s timeout per feed
-      const resp = await fetch(`${WORKER}?rss=${encodeURIComponent(feed.url)}`, { signal: controller.signal });
+      const cacheBust = Date.now();
+      const resp = await fetch(`${WORKER}?rss=${encodeURIComponent(feed.url)}&t=${cacheBust}`, { signal: controller.signal, cache: 'no-store' });
       clearTimeout(timeout);
       const text = await resp.text();
       const xml = new DOMParser().parseFromString(text, 'text/xml');
