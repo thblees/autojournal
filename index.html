@@ -337,6 +337,8 @@
   .kal-card-actions { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
   .kal-ask-btn { background:#1a3a6b; border:none; color:#fff; font-family:'DM Sans',sans-serif; font-size:12px; padding:6px 14px; border-radius:6px; cursor:pointer; transition:all .2s; }
   .kal-ask-btn:hover { background:#2563eb; }
+  .kal-website-btn { display:inline-flex; align-items:center; gap:5px; background:#2563eb; border:none; color:#fff; font-family:'DM Sans',sans-serif; font-size:12px; padding:6px 14px; border-radius:6px; cursor:pointer; transition:all .2s; text-decoration:none; }
+  .kal-website-btn:hover { background:#1d4ed8; }
 
   .kal-hidden { display:none !important; }
 
@@ -697,78 +699,139 @@ function switchView(view, btn) {
 //  BRANCHENKALENDER DATA & LOGIC
 // ════════════════════════════════════════════════════════════
 const KAL_EVENTS = [
-  { monat:'April 2026', datum:'08.–09. Apr 2026', name:'Automotive Masterminds', ort:'Berlin', typ:'kongress', highlight:false,
-    desc:'Führender Strategie-Kongress der deutschen Automobilindustrie. Fokus: Transformation, Software-Defined Vehicles, E-Mobilitätsstrategie. Entscheider von OEMs und Zulieferern.',
+  // ── APRIL ──
+  { monat:'April', tag:1, jahr:2026, datumText:'08.–09. Apr', name:'Automotive Masterminds', ort:'Berlin', typ:'kongress', highlight:false,
+    url:'https://www.automotive-masterminds.de',
+    desc:'Führender Strategie-Kongress der deutschen Automobilindustrie. Fokus: Transformation, Software-Defined Vehicles, E-Mobilitätsstrategie.',
     tip:'Früh akkreditieren — Vorabgespräche mit Entscheidern sind hier oft ergiebiger als die offiziellen Panels.' },
-  { monat:'April 2026', datum:'14.–18. Apr 2026', name:'Auto Shanghai 2026', ort:'Shanghai, China', typ:'international', highlight:true,
-    desc:'Größte Automesse Asiens im Zweijahresrhythmus. Weltpremieren chinesischer Hersteller — entscheidend für die Europa-Strategie von BYD, NIO, SAIC und Co.',
-    tip:'Entscheidend für China-Faktor-Berichterstattung. Was hier gezeigt wird, landet 6–12 Monate später in Europa.' },
-  { monat:'Mai 2026', datum:'05.–06. Mai 2026', name:'Bordnetze im Automobil', ort:'Ludwigsburg', typ:'kongress', highlight:false,
+  { monat:'April', tag:14, jahr:2026, datumText:'14.–18. Apr', name:'Auto Shanghai', ort:'Shanghai, China', typ:'international', highlight:true,
+    url:'https://www.autoshanghai.com.cn',
+    desc:'Größte Automesse Asiens im Zweijahresrhythmus. Weltpremieren chinesischer Hersteller — entscheidend für die Europa-Strategie von BYD, NIO, SAIC.',
+    tip:'Was hier gezeigt wird, landet 6–12 Monate später in Europa. Pflichttermin für China-Berichterstattung.' },
+  // ── MAI ──
+  { monat:'Mai', tag:5, jahr:2026, datumText:'05.–06. Mai', name:'Bordnetze im Automobil', ort:'Ludwigsburg', typ:'kongress', highlight:false,
+    url:'https://www.automobil-elektronik-kongress.de',
     desc:'Internationales Fachforum für Bordnetz-Entwickler. High-Voltage-Architekturen, Software-Defined Vehicles, Kabelbaum-Automation.',
     tip:'Sehr technisch, aber goldwert für Zulieferer-Storys und SDV-Hintergründe.' },
-  { monat:'Mai 2026', datum:'19.–20. Mai 2026', name:'Automotive Software Summit', ort:'München', typ:'kongress', highlight:true,
-    desc:'Deep-Dive in Automotive-Software-Strategien. Fokus: Connected Vehicles, KI im Fahrzeug, Over-the-Air Updates. Software-Strategen der großen OEMs.',
-    tip:'Hier treffen sich die Software-Strategen der OEMs — ideal für Exklusiv-Interviews zur Digitalstrategie.' },
-  { monat:'Mai 2026', datum:'Anfang Mai 2026', name:'Automotive Dealer Day', ort:'Verona, Italien', typ:'international', highlight:false,
+  { monat:'Mai', tag:19, jahr:2026, datumText:'19.–20. Mai', name:'Automotive Software Summit', ort:'München', typ:'kongress', highlight:true,
+    url:'https://www.automotive-software-connect.com',
+    desc:'Deep-Dive in Automotive-Software-Strategien. Connected Vehicles, KI im Fahrzeug, Over-the-Air Updates. Software-Strategen der großen OEMs.',
+    tip:'Ideal für Exklusiv-Interviews zur Digitalstrategie der OEMs.' },
+  { monat:'Mai', tag:6, jahr:2026, datumText:'Anfang Mai', name:'Automotive Dealer Day', ort:'Verona, Italien', typ:'international', highlight:false,
+    url:'https://www.automotivdealerday.it',
     desc:'Größter Händlerkongress Europas. Vertriebstransformation, E-Mobilität im Handel, Direktvertrieb der Hersteller vs. Händlernetz.',
     tip:'Händlerperspektive — oft unterschätzte Story über den echten Stand der E-Mobilität im Markt.' },
-  { monat:'Juni 2026', datum:'16.–17. Jun 2026', name:'Automobil-Elektronik Kongress (AEK)', ort:'Ludwigsburg', typ:'kongress', highlight:true,
-    desc:'30. Jubiläum des international führenden Elektronik-Kongresses. Fokus: KI-Systeme, E/E-Architekturen, autonomes Fahren, Sicherheitstechnik.',
-    tip:'Jubiläumsausgabe — Rückblick und Ausblick auf 30 Jahre Elektrifizierung. Starke Story-Aufhänger garantiert.' },
-  { monat:'Juni 2026', datum:'Jun 2026', name:'Frankfurter Automobilausstellung (FAA)', ort:'Frankfurt am Main', typ:'messe', highlight:false,
+  // ── JUNI ──
+  { monat:'Juni', tag:16, jahr:2026, datumText:'16.–17. Jun', name:'Automobil-Elektronik Kongress (AEK)', ort:'Ludwigsburg', typ:'kongress', highlight:true,
+    url:'https://www.automobil-elektronik-kongress.de',
+    desc:'30. Jubiläum des international führenden Elektronik-Kongresses. KI-Systeme, E/E-Architekturen, autonomes Fahren, Sicherheitstechnik.',
+    tip:'Jubiläumsausgabe — Rückblick auf 30 Jahre Elektrifizierung. Starke Story-Aufhänger garantiert.' },
+  { monat:'Juni', tag:15, jahr:2026, datumText:'Jun', name:'Frankfurter Automobilausstellung (FAA)', ort:'Frankfurt am Main', typ:'messe', highlight:false,
+    url:'https://www.faa-frankfurt.de',
     desc:'Regionale Automobilausstellung mit Neuheiten für den deutschen Markt. Gute Mischung aus Publikums- und Fachinteresse.',
     tip:'Gut für regionale Händler-Perspektiven und Markteinführungen.' },
-  { monat:'Juli 2026', datum:'Jul 2026', name:'Abenteuer & Allrad', ort:'Bad Kissingen', typ:'messe', highlight:false,
+  // ── JULI ──
+  { monat:'Juli', tag:10, jahr:2026, datumText:'Jul', name:'Abenteuer & Allrad', ort:'Bad Kissingen', typ:'messe', highlight:false,
+    url:'https://www.abenteuer-allrad.de',
     desc:'Europas größte Offroad-Messe. SUVs, Geländefahrzeuge, Zubehör. Wachsendes Nischensegment trotz E-Mobilitätsdiskurs.',
-    tip:'Kontrast-Story zum EV-Mainstream — Verbrenner-Zukunft im Geländesegment als Aufmacher.' },
-  { monat:'August 2026', datum:'Aug 2026', name:'Tuning World Bodensee', ort:'Friedrichshafen', typ:'messe', highlight:false,
-    desc:'Europas führende Tuning-Messe. Individualisierung als Wachstumssegment — spannend besonders im Kontext der EV-Ära.',
-    tip:'Story über Zukunft des Tunings in der EV-Ära: Geht Tuning mit Elektroautos — oder stirbt es?' },
-  { monat:'September 2026', datum:'15.–20. Sep 2026', name:'IAA Transportation 2026', ort:'Hannover', typ:'messe', highlight:true,
-    desc:'Weltgrößte Messe für Nutzfahrzeuge, Transport und Logistik. Fokus: klimaneutrale Mobilität, autonomes Fahren im Fernverkehr, Wasserstoff-LKW.',
-    tip:'Die "vergessene IAA" — während alle über PKW schreiben, laufen hier die Entscheidungen für die Lieferkette der Zukunft.' },
-  { monat:'September 2026', datum:'Sep 2026', name:'i-Mobility Stuttgart', ort:'Stuttgart', typ:'messe', highlight:false,
+    tip:'Kontrast-Story zum EV-Mainstream — Verbrenner-Zukunft im Geländesegment.' },
+  // ── AUGUST ──
+  { monat:'August', tag:5, jahr:2026, datumText:'Aug', name:'Tuning World Bodensee', ort:'Friedrichshafen', typ:'messe', highlight:false,
+    url:'https://www.tuning-world-bodensee.de',
+    desc:'Europas führende Tuning-Messe. Individualisierung als Wachstumssegment — spannend im Kontext der EV-Ära.',
+    tip:'Story: Geht Tuning mit Elektroautos — oder stirbt es?' },
+  // ── SEPTEMBER ──
+  { monat:'September', tag:15, jahr:2026, datumText:'15.–20. Sep', name:'IAA Transportation 2026', ort:'Hannover', typ:'messe', highlight:true,
+    url:'https://www.iaa-transportation.com/de',
+    desc:'Weltgrößte Messe für Nutzfahrzeuge, Transport und Logistik. Klimaneutrale Mobilität, autonomes Fahren im Fernverkehr, Wasserstoff-LKW.',
+    tip:'Die "vergessene IAA" — hier laufen die Entscheidungen für die Lieferkette der Zukunft.' },
+  { monat:'September', tag:10, jahr:2026, datumText:'Sep', name:'i-Mobility Stuttgart', ort:'Stuttgart', typ:'messe', highlight:false,
+    url:'https://www.i-mobility.de',
     desc:'Süddeutsche Mobilitätsmesse mit Fokus auf E-Mobilität, alternative Antriebe und urbane Mobilität.',
-    tip:'Heimspiel für Mercedes und Porsche — gute Chancen auf Exklusiv-Gespräche in entspannter Atmosphäre.' },
-  { monat:'Oktober 2026', datum:'Okt 2026', name:'Japan Mobility Show 2026', ort:'Tokio, Japan', typ:'international', highlight:true,
-    desc:'Wichtigste asiatische Automesse nach Shanghai. Toyota, Honda, Nissan, Mazda zeigen Hybrid- und Wasserstoff-Strategie.',
+    tip:'Heimspiel für Mercedes und Porsche — gute Chancen auf Exklusiv-Gespräche.' },
+  // ── OKTOBER ──
+  { monat:'Oktober', tag:28, jahr:2026, datumText:'Ende Okt', name:'Japan Mobility Show 2026', ort:'Tokio, Japan', typ:'international', highlight:true,
+    url:'https://www.japan-mobility-show.com',
+    desc:'Wichtigste asiatische Automesse nach Shanghai. Toyota, Honda, Nissan, Mazda — Hybrid- und Wasserstoff-Strategie.',
     tip:'Japanischer Gegenpart zur chinesischen EV-Offensive — Hybrid-Zukunft und Wasserstoff als starke Story.' },
-  { monat:'Oktober 2026', datum:'Okt 2026', name:'Automechanika Frankfurt', ort:'Frankfurt am Main', typ:'messe', highlight:true,
+  { monat:'Oktober', tag:13, jahr:2026, datumText:'Okt', name:'Automechanika Frankfurt', ort:'Frankfurt am Main', typ:'messe', highlight:true,
+    url:'https://automechanika.messefrankfurt.com/frankfurt/de.html',
     desc:'Weltgrößte Messe für Kfz-Teile, Zubehör und Service. Aftermarket, Reparatur, Digitalisierung der Werkstatt.',
-    tip:'Aftermarket ist der unterschätzte Billionen-Markt. Besonders interessant: Wie verändert das Elektroauto den Werkstattmarkt?' },
-  { monat:'November 2026', datum:'18.–19. Nov 2026', name:'Automotive Computing Conferences (ACC)', ort:'München', typ:'kongress', highlight:false,
-    desc:'Hochleistungsrechnen im Fahrzeug. Autonomes Fahren, KI-Chips im Auto, Rechenarchitekturen der nächsten Generation.',
+    tip:'Aftermarket ist der unterschätzte Billionen-Markt. Wie verändert das Elektroauto den Werkstattmarkt?' },
+  // ── NOVEMBER ──
+  { monat:'November', tag:18, jahr:2026, datumText:'18.–19. Nov', name:'Automotive Computing Conferences (ACC)', ort:'München', typ:'kongress', highlight:false,
+    url:'https://www.automobil-elektronik-kongress.de',
+    desc:'Hochleistungsrechnen im Fahrzeug. Autonomes Fahren, KI-Chips, Rechenarchitekturen der nächsten Generation.',
     tip:'Technisch, aber zukunftsweisend — hier werden die Chip-Strategien der OEMs greifbar.' },
-  { monat:'November 2026', datum:'Nov 2026', name:'Auto Camping Caravan Berlin', ort:'Berlin', typ:'messe', highlight:false,
+  { monat:'November', tag:5, jahr:2026, datumText:'Nov', name:'Auto Camping Caravan Berlin', ort:'Berlin', typ:'messe', highlight:false,
+    url:'https://www.messe-berlin.de/veranstaltungen/auto-camping-caravan/',
     desc:'Europas größte Mobilitätsmesse inkl. Caravaning-Segment. Wachstumsmarkt trotz Konjunkturunsicherheit.',
     tip:'' },
-  { monat:'Dezember 2026', datum:'28. Nov – 06. Dez 2026', name:'Essen Motor Show', ort:'Essen', typ:'messe', highlight:true,
+  // ── DEZEMBER ──
+  { monat:'Dezember', tag:28, jahr:2026, datumText:'28. Nov – 06. Dez', name:'Essen Motor Show', ort:'Essen', typ:'messe', highlight:true,
+    url:'https://www.essen-motorshow.de',
     desc:'Deutschlands größte Motorshow-Messe. Tuning, Sport, Klassiker. Jahresabschluss-Event der deutschen Automobilwelt.',
-    tip:'Jahresrückblick-Storys und Ausblick auf nächstes Jahr. Gute Stimmung, lockere Interview-Atmosphäre.' },
-  { monat:'Januar 2027', datum:'Jan 2027', name:'Detroit Auto Show (NAIAS)', ort:'Detroit, USA', typ:'international', highlight:true,
+    tip:'Jahresrückblick-Storys und Ausblick auf nächstes Jahr. Lockere Interview-Atmosphäre.' },
+  // ── JANUAR ──
+  { monat:'Januar', tag:10, jahr:2027, datumText:'Jan', name:'Detroit Auto Show (NAIAS)', ort:'Detroit, USA', typ:'international', highlight:true,
+    url:'https://naias.com',
     desc:'Traditionell starkes Signal für den US-Markt. Verleihung North American Car of the Year. Amerikanische Hersteller zeigen Jahresziele.',
-    tip:'Erster großer Ausblick auf das Modelljahr. Wichtig für US-Markt-Berichterstattung und globale Strategie.' },
-  { monat:'Februar 2027', datum:'Feb 2027', name:'Retro Classics Stuttgart', ort:'Stuttgart', typ:'messe', highlight:false,
+    tip:'Erster großer Ausblick auf das Modelljahr. Wichtig für US-Markt und globale Strategie.' },
+  // ── FEBRUAR ──
+  { monat:'Februar', tag:12, jahr:2027, datumText:'Feb', name:'Retro Classics Stuttgart', ort:'Stuttgart', typ:'messe', highlight:false,
+    url:'https://www.retro-classics.de',
     desc:'Europas größte Oldtimer-Messe. Klassiker-Markt als Gegentrend zur E-Mobilitäts-Diskussion — und als Wertspeicher.',
-    tip:'Wachsender Markt für Wertspeicher-Fahrzeuge — interessante Kontrast-Story zum Neuwagen-Absatzdruck.' },
-  { monat:'März 2027', datum:'Mär 2027', name:'Geneva International Motor Show Qatar', ort:'Doha, Katar', typ:'international', highlight:false,
+    tip:'Wachsender Markt für Wertspeicher-Fahrzeuge — Kontrast-Story zum Neuwagen-Absatzdruck.' },
+  // ── MÄRZ ──
+  { monat:'März', tag:10, jahr:2027, datumText:'Mär', name:'Geneva International Motor Show Qatar', ort:'Doha, Katar', typ:'international', highlight:false,
+    url:'https://www.gims.swiss',
     desc:'Nachfolger des Genfer Salons. Prestige-Messe für Luxus- und Sportwagen. Mittelost-Markt im Fokus.',
-    tip:'Luxussegment und Naher Osten — interessant für Marken wie Mercedes-AMG, Porsche, Ferrari.' },
-  { monat:'März 2027', datum:'Mär 2027', name:'Automechanika Warsaw', ort:'Nadarzyn, Polen', typ:'messe', highlight:false,
+    tip:'Luxussegment und Naher Osten — interessant für Mercedes-AMG, Porsche, Ferrari.' },
+  { monat:'März', tag:20, jahr:2027, datumText:'Mär', name:'Automechanika Warsaw', ort:'Nadarzyn, Polen', typ:'messe', highlight:false,
+    url:'https://automechanika-warsaw.com',
     desc:'Wichtigste Aftermarket-Messe Osteuropas. Osteuropäischer Markt als Wachstumsregion.',
     tip:'' },
 ];
 
-const CURRENT_MONTH = 'April 2026';
+// ── DYNAMISCHES DATUM: Zeige immer die nächsten 12 Monate ab heute ──
+function getVisibleEvents() {
+  const today = new Date();
+  const in12months = new Date(today);
+  in12months.setMonth(in12months.getMonth() + 12);
+
+  return KAL_EVENTS.filter(ev => {
+    const evDate = new Date(ev.jahr, monthIndex(ev.monat), ev.tag);
+    return evDate >= new Date(today.getFullYear(), today.getMonth(), 1) && evDate <= in12months;
+  });
+}
+
+function monthIndex(name) {
+  return ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'].indexOf(name);
+}
+
+function getCurrentMonthLabel() {
+  const today = new Date();
+  const months = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+  return months[today.getMonth()];
+}
 
 function buildKalender() {
-  const months = [...new Set(KAL_EVENTS.map(e => e.monat))];
+  const visibleEvents = getVisibleEvents();
+  const currentMonthName = getCurrentMonthLabel();
+  const months = [...new Set(visibleEvents.map(e => e.monat))];
   const timeline = document.getElementById('kalTimeline');
   timeline.innerHTML = '';
 
+  // Update stats dynamically
+  document.getElementById('kalTotal').textContent = visibleEvents.length;
+  document.getElementById('kalMesse').textContent = visibleEvents.filter(e=>e.typ==='messe').length;
+  document.getElementById('kalKongress').textContent = visibleEvents.filter(e=>e.typ==='kongress').length;
+  document.getElementById('kalIntl').textContent = visibleEvents.filter(e=>e.typ==='international').length;
+  document.getElementById('kalHighlight').textContent = visibleEvents.filter(e=>e.highlight).length;
+
   months.forEach(month => {
-    const monthEvents = KAL_EVENTS.filter(e => e.monat === month);
-    const isCurrent = month === CURRENT_MONTH;
+    const monthEvents = visibleEvents.filter(e => e.monat === month);
+    const isCurrent = month === currentMonthName;
     const group = document.createElement('div');
     group.className = 'kal-month-group' + (isCurrent ? ' kal-current' : '');
     group.dataset.month = month;
@@ -807,6 +870,7 @@ function buildKalender() {
           ${ev.tip ? `<div class="kal-card-tip">💡 <strong>Journalistentipp:</strong> ${ev.tip}</div>` : ''}
           <div class="kal-card-actions">
             <button class="kal-ask-btn" onclick="event.stopPropagation();kalAskKI(${globalIdx})">🤖 KI fragen</button>
+            ${ev.url ? '<a class=\"kal-website-btn\" href=\"' + ev.url + '\" target=\"_blank\" rel=\"noopener\" onclick=\"event.stopPropagation()\">🌐 Website</a>' : ''}
           </div>
         </div>` : ''}
       `;
