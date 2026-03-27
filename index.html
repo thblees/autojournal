@@ -622,6 +622,7 @@ const EXPERTS = [
 let allNews = [];
 let currentTab = 'all';
 let conversationHistory = [];
+let lastTopic = ''; // Tracks most recent topic for context-aware interview questions
 
 // ── HELPERS ────────────────────────────────────────────────
 function isAutoRelevant(title) {
@@ -806,7 +807,12 @@ function updateBrandRadar() {
 function toggleBrand(el) {
   const wasOpen = el.classList.contains('open');
   document.querySelectorAll('.brand-item.open').forEach(e => e.classList.remove('open'));
-  if (!wasOpen) el.classList.add('open');
+  if (!wasOpen) {
+    el.classList.add('open');
+    // Track brand as current topic for interview questions
+    const brandName = el.querySelector('.brand-name')?.textContent?.trim();
+    if (brandName) lastTopic = brandName + ' aktuelle Entwicklungen Automobilindustrie';
+  }
 }
 
 function switchTab(tab, el) {
@@ -923,7 +929,10 @@ function renderStories(stories) {
 function storyClick(el) { const s = window._stories[+el.dataset.idx]; if(s) developStory(s.headline); }
 function storyBookmark(el) { const s = window._stories[+el.dataset.idx]; if(s) addBookmark('story', s.headline); }
 
-function askAboutNews(headline) { sendQuick('Erkläre mir den journalistischen Hintergrund zu: "' + headline + '"'); }
+function askAboutNews(headline) {
+  lastTopic = headline;
+  sendQuick('Erkläre mir den journalistischen Hintergrund zu: "' + headline + '"');
+}
 
 // ── AI CHAT ────────────────────────────────────────────────
 // conversationHistory already declared above
@@ -978,27 +987,42 @@ function addMessage(role, text) {
   div.scrollTop = div.scrollHeight;
 }
 
-function sendQuick(text) { document.getElementById('chatInput').value = text; sendMessage(); }
+function sendQuick(text) {
+  // Update lastTopic from meaningful queries (not meta-questions)
+  if (text.length > 20 && !text.startsWith('Erkläre mir den') && !text.startsWith('Basierend auf')) {
+    lastTopic = text.substring(0, 150);
+  }
+  document.getElementById('chatInput').value = text;
+  sendMessage();
+}
 
 function generateInterviewQuestions() {
-  // Build context from conversation history
-  let topic = '';
-  if (conversationHistory.length > 0) {
-    // Extract topic from first user message or most recent context
+  // Priority 1: lastTopic (set when clicking news/brand/story)
+  // Priority 2: most recent user message in conversation
+  // Priority 3: generic fallback
+  let topic = lastTopic;
+
+  if (!topic && conversationHistory.length > 0) {
     const userMessages = conversationHistory.filter(m => m.role === 'user');
     if (userMessages.length > 0) {
-      // Use first message as topic seed, limit to 120 chars
-      topic = userMessages[0].content.substring(0, 120);
+      // Use the LAST user message, not the first
+      topic = userMessages[userMessages.length - 1].content.substring(0, 200);
     }
   }
 
   let prompt;
   if (topic && topic.length > 5) {
-    prompt = `Basierend auf unserem bisherigen Gespräch über "${topic}" — entwickle 5 konkrete, scharfe Interviewfragen die ich einem Experten oder Manager zu diesem Thema stellen würde. Die Fragen sollen journalistisch präzise sein, auf den Kern zielen und schwer ausweichbar sein.`;
+    prompt = 'Zum Thema "' + topic + '": Entwickle 5 konkrete, journalistisch scharfe Interviewfragen. '
+      + 'Nenne auch jeweils den idealen Gesprächspartner (z.B. Mercedes Pressesprecher, VDA-Präsidentin, BYD Europe CEO). '
+      + 'Die Fragen sollen präzise sein, auf den Kern zielen und schwer ausweichbar sein.';
   } else {
-    prompt = 'Entwickle 5 konkrete, journalistisch scharfe Interviewfragen für einen Auto-Manager oder Branchenexperten. Die Fragen sollen auf aktuelle Themen in der Automobilindustrie zielen und schwer ausweichbar sein.';
+    prompt = 'Entwickle 5 konkrete, journalistisch scharfe Interviewfragen zu einem aktuellen Thema in der Automobilindustrie. '
+      + 'Nenne jeweils den idealen Gesprächspartner. Die Fragen sollen schwer ausweichbar sein.';
   }
-  sendQuick(prompt);
+
+  // Don't update lastTopic for this meta-question
+  document.getElementById('chatInput').value = prompt;
+  sendMessage();
 }
 function developStory(h) { sendQuick('Hilf mir diese Story zu entwickeln: "' + h + '". Wichtigste Fragen, Quellen, Interviewpartner?'); }
 
