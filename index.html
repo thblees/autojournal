@@ -342,6 +342,22 @@
 
   .kal-hidden { display:none !important; }
 
+  /* KAL UPDATE */
+  .kal-update-bar { display:flex; align-items:center; gap:10px; margin-bottom:18px; flex-wrap:wrap; }
+  .kal-update-btn { background:#1a3a6b; border:none; color:#fff; font-family:'Bebas Neue',sans-serif; font-size:13px; letter-spacing:1px; padding:9px 18px; border-radius:8px; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:7px; }
+  .kal-update-btn:hover { background:#2563eb; }
+  .kal-update-btn:disabled { background:#8aabcc; cursor:not-allowed; }
+  .kal-update-info { font-family:'JetBrains Mono',monospace; font-size:11px; color:#4a6a9a; }
+  .kal-update-result { background:#deeaf8; border:1px solid #a8c8e8; border-radius:10px; padding:16px; margin-bottom:20px; display:none; }
+  .kal-update-result.visible { display:block; }
+  .kal-update-result-header { font-family:'Bebas Neue',sans-serif; font-size:14px; letter-spacing:2px; color:#1a3a6b; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; }
+  .kal-new-event { background:#eef5fd; border:1px solid #b8d4f0; border-left:4px solid #16a34a; border-radius:8px; padding:12px 14px; margin-bottom:8px; }
+  .kal-new-event-name { font-size:14px; font-weight:700; color:#1a2f5a; margin-bottom:4px; }
+  .kal-new-event-meta { font-size:12px; color:#4a6a9a; display:flex; gap:14px; flex-wrap:wrap; margin-bottom:6px; }
+  .kal-new-event-desc { font-size:12px; color:#1a2f5a; line-height:1.5; }
+  .kal-new-event-url { font-size:12px; color:#2563eb; text-decoration:none; display:inline-block; margin-top:5px; }
+  .kal-new-event-url:hover { text-decoration:underline; }
+
   @media (max-width:900px) {
     .dashboard { grid-template-columns:1fr 1fr; grid-template-rows:auto; }
     .brands-panel { grid-column:1; grid-row:1; max-height:300px; }
@@ -658,6 +674,19 @@
     <button class="kal-filter-btn" onclick="kalFilter('highlight',this)">⭐ Highlights</button>
   </div>
 
+  <div class="kal-update-bar">
+    <button class="kal-update-btn" id="kalUpdateBtn" onclick="kalSucheNeueTermine()">
+      🔄 Neue Termine recherchieren
+    </button>
+    <span class="kal-update-info" id="kalUpdateInfo">KI sucht aktuelle Messe- und Kongresstermine für die nächsten 12 Monate</span>
+  </div>
+  <div class="kal-update-result" id="kalUpdateResult">
+    <div class="kal-update-result-header">
+      <span>🆕 Neu gefundene Termine</span>
+      <button class="pdf-clear-btn" onclick="document.getElementById('kalUpdateResult').classList.remove('visible')">✕ Schließen</button>
+    </div>
+    <div id="kalUpdateResultContent"></div>
+  </div>
   <div class="kal-timeline" id="kalTimeline"></div>
 </div>
 
@@ -1275,7 +1304,36 @@ function pdfDragOver(e){e.preventDefault();document.getElementById('pdfDropzone'
 function pdfDragLeave(){document.getElementById('pdfDropzone').classList.remove('dragover');}
 function pdfDrop(e){e.preventDefault();document.getElementById('pdfDropzone').classList.remove('dragover');const file=e.dataTransfer.files[0];if(file&&file.type==='application/pdf')loadPDF(file);}
 function pdfFileSelected(input){if(input.files[0])loadPDF(input.files[0]);}
-function loadPDF(file){document.getElementById('pdfFileName').textContent=file.name;document.getElementById('pdfFileSize').textContent=(file.size/1024/1024).toFixed(1)+' MB';document.getElementById('pdfFileInfo').style.display='flex';document.getElementById('pdfButtons').style.display='flex';document.getElementById('pdfDropzone').style.display='none';document.getElementById('pdfResult').classList.remove('visible');const reader=new FileReader();reader.onload=(e)=>{pdfBase64=e.target.result.split(',')[1];};reader.readAsDataURL(file);}
+function loadPDF(file){
+  const sizeMB = file.size/1024/1024;
+  document.getElementById('pdfFileName').textContent=file.name;
+  document.getElementById('pdfFileSize').textContent=sizeMB.toFixed(1)+' MB';
+  document.getElementById('pdfFileInfo').style.display='flex';
+  document.getElementById('pdfDropzone').style.display='none';
+  document.getElementById('pdfResult').classList.remove('visible');
+
+  if(sizeMB > 14){
+    // Zu groß — Fehlermeldung, kein Upload
+    document.getElementById('pdfButtons').style.display='none';
+    const resultDiv=document.getElementById('pdfResult');
+    document.getElementById('pdfResultTitle').textContent='⚠️ Datei zu groß';
+    document.getElementById('pdfResultText').innerHTML=
+      '<p style="color:#dc2626;font-weight:600">Diese PDF ist '+sizeMB.toFixed(1)+' MB groß.</p>'
+      +'<p style="margin-top:8px;color:#1a2f5a">Die KI-Analyse funktioniert bis ca. 14 MB. Bitte versuche:</p>'
+      +'<ul style="margin-top:6px;color:#1a2f5a;padding-left:18px;line-height:1.8">'
+      +'<li>Nur relevante Seiten als PDF exportieren (z.B. Seiten 1–20)</li>'
+      +'<li>Bilder im PDF komprimieren (z.B. mit <a href="https://www.ilovepdf.com/compress_pdf" target="_blank" style="color:#2563eb">ilovepdf.com</a>)</li>'
+      +'<li>PDF in Abschnitte aufteilen und einzeln analysieren</li>'
+      +'</ul>';
+    resultDiv.classList.add('visible');
+    return;
+  }
+
+  document.getElementById('pdfButtons').style.display='flex';
+  const reader=new FileReader();
+  reader.onload=(e)=>{pdfBase64=e.target.result.split(',')[1];};
+  reader.readAsDataURL(file);
+}
 function pdfClear(){pdfBase64=null;document.getElementById('pdfFileInput').value='';document.getElementById('pdfFileInfo').style.display='none';document.getElementById('pdfButtons').style.display='none';document.getElementById('pdfDropzone').style.display='block';document.getElementById('pdfResult').classList.remove('visible');}
 async function analyzePDF(mode){
   if(!pdfBase64)return;
@@ -1448,6 +1506,115 @@ function ivClear() {
   ivTypeActive = 'ceo';
   document.querySelectorAll('.iv-type-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('ivType-ceo').classList.add('active');
+}
+
+
+// ── KALENDER: NEUE TERMINE RECHERCHIEREN ─────────────────
+async function kalSucheNeueTermine() {
+  const btn = document.getElementById('kalUpdateBtn');
+  const info = document.getElementById('kalUpdateInfo');
+  const resultDiv = document.getElementById('kalUpdateResult');
+  const resultContent = document.getElementById('kalUpdateResultContent');
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Recherchiere...';
+  info.textContent = 'KI sucht gerade aktuelle Termine im Web...';
+  resultDiv.classList.remove('visible');
+
+  // Berechne den Zeitraum
+  const today = new Date();
+  const months_de = ['Januar','Februar','März','April','Mai','Juni','Juli',
+                     'August','September','Oktober','November','Dezember'];
+  const in12 = new Date(today);
+  in12.setMonth(in12.getMonth() + 12);
+  const zeitraum = months_de[today.getMonth()] + ' ' + today.getFullYear()
+    + ' bis ' + months_de[in12.getMonth()] + ' ' + in12.getFullYear();
+
+  // Bereits bekannte Events als Kontext
+  const bekannte = KAL_EVENTS.map(e => e.name).join(', ');
+
+  const prompt = `Du bist ein Recherche-Assistent für einen Automobiljournalisten. 
+Recherchiere aktuelle Messen, Kongresse und Fachveranstaltungen der Automobilindustrie für den Zeitraum: ${zeitraum}.
+
+Bereits bekannte Events (diese NICHT nochmal nennen): ${bekannte}
+
+Suche nach NEUEN oder FEHLENDEN wichtigen Terminen — insbesondere:
+- Internationale Automobilmessen (z.B. Peking, Paris, Tokio, Detroit, Genf/Doha)
+- Fachmessen (Automechanika, Zulieferermessen, Elektromotoren-Messen)
+- Branchenkongresse (VDA, ADAC, Batterie-Kongresse, Wasserstoff-Konferenzen)
+- Wichtige Herstellerevents (Produktpräsentationen, Investorentage)
+
+Antworte NUR mit einem JSON-Array, kein anderer Text, kein Markdown:
+[
+  {
+    "name": "Name der Veranstaltung",
+    "datum": "Datum oder Zeitraum (z.B. 15.-18. Sep 2026)",
+    "ort": "Stadt, Land",
+    "typ": "messe oder kongress oder international",
+    "url": "offizielle Website URL",
+    "desc": "Kurzbeschreibung 1-2 Sätze",
+    "relevanz": "Warum ist das für Automobiljournalisten wichtig?"
+  }
+]
+Liefere 5-8 Events. Nur echte, verifizierbare Veranstaltungen.`;
+
+  try {
+    const resp = await fetch(WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 2000,
+        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+        system: 'Du bist ein präziser Recherche-Assistent. Antworte ausschließlich mit gültigem JSON, ohne Erklärungen oder Markdown.',
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    const data = await resp.json();
+    const text = data.content
+      .filter(c => c.type === 'text')
+      .map(c => c.text)
+      .join('');
+
+    // JSON extrahieren
+    const jsonMatch = text.match(/\[[\s\S]*\]/);
+    if (!jsonMatch) throw new Error('Kein JSON gefunden');
+
+    const events = JSON.parse(jsonMatch[0]);
+
+    if (!events.length) {
+      resultContent.innerHTML = '<p style="color:#4a6a9a;font-size:13px">Keine neuen Termine gefunden — der Kalender scheint aktuell zu sein.</p>';
+    } else {
+      resultContent.innerHTML = events.map(ev => {
+        const typeLabels = { messe:'🏛 Messe', kongress:'🎤 Kongress', international:'🌍 International' };
+        const typeLabel = typeLabels[ev.typ] || '📅 Event';
+        return '<div class="kal-new-event">'
+          + '<div class="kal-new-event-name">' + ev.name + '</div>'
+          + '<div class="kal-new-event-meta">'
+          + '<span>' + typeLabel + '</span>'
+          + '<span>📅 ' + ev.datum + '</span>'
+          + '<span>📍 ' + ev.ort + '</span>'
+          + '</div>'
+          + '<div class="kal-new-event-desc">' + ev.desc + '</div>'
+          + (ev.relevanz ? '<div class="kal-new-event-desc" style="color:#4a6a9a;margin-top:4px">💡 ' + ev.relevanz + '</div>' : '')
+          + (ev.url ? '<a class="kal-new-event-url" href="' + ev.url + '" target="_blank" rel="noopener">🌐 ' + ev.url + '</a>' : '')
+          + '</div>';
+      }).join('');
+    }
+
+    const now = new Date().toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'});
+    info.textContent = 'Zuletzt aktualisiert: ' + now + ' · ' + events.length + ' neue Termine gefunden';
+    resultDiv.classList.add('visible');
+
+  } catch(e) {
+    resultContent.innerHTML = '<p style="color:#dc2626;font-size:13px">Fehler bei der Recherche: ' + e.message + '. Bitte erneut versuchen.</p>';
+    resultDiv.classList.add('visible');
+    info.textContent = 'Recherche fehlgeschlagen — bitte erneut versuchen';
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '🔄 Neue Termine recherchieren';
 }
 
 // ── INIT ─────────────────────────────────────────────────
