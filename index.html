@@ -470,9 +470,10 @@ const WORKER = 'https://orange-shape-5ada-autojournal.tblees.workers.dev';
 
 // ── RSS FEEDS — very specific auto queries ─────────────────
 const RSS_FEEDS = [
-  { url:'https://news.google.com/rss/search?q=Elektroauto+Autohersteller+Automobil+VW+BMW+Mercedes&hl=de&gl=DE&ceid=DE:de', lang:'de' },
-  { url:'https://news.google.com/rss/search?q=BYD+Tesla+Stellantis+Elektroauto+Auto&hl=de&gl=DE&ceid=DE:de', lang:'de' },
-  { url:'https://news.google.com/rss/search?q=electric+vehicle+automaker+Tesla+BYD+automotive&hl=en&gl=US&ceid=US:en', lang:'en' },
+  // when:2d = nur Meldungen der letzten 2 Tage — liefert frische Ergebnisse
+  { url:'https://news.google.com/rss/search?q=VW+BMW+Mercedes+when:2d&hl=de&gl=DE&ceid=DE:de', lang:'de' },
+  { url:'https://news.google.com/rss/search?q=electric+vehicle+car+when:2d&hl=en&gl=US&ceid=US:en', lang:'en' },
+  { url:'https://news.google.com/rss/search?q=Tesla+BYD+Elektroauto+Automobil+when:2d&hl=de&gl=DE&ceid=DE:de', lang:'de' },
 ];
 
 // Auto-relevance keywords — headline must contain at least one
