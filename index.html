@@ -346,7 +346,7 @@
         <button class="quick-btn" onclick="sendQuick('Was macht Tesla anders als europäische Hersteller?')">Tesla vs. Europa</button>
         <button class="quick-btn" onclick="sendQuick('Warum sind chinesische E-Autos so billig?')">China-Faktor</button>
         <button class="quick-btn" onclick="sendQuick('Erkläre Hybrid vs. vollelektrisch')">Hybrid vs. EV</button>
-        <button class="quick-btn" onclick="sendQuick('Welche 5 Fragen würde ich Oliver Blume stellen?')">Interview-Fragen</button>
+        <button class="quick-btn" onclick="generateInterviewQuestions()">🎤 Interview-Fragen</button>
         <button class="research-btn" id="researchBtn" onclick="toggleResearch(true)">🔬 Tiefenrecherche</button>
       </div>
       <div class="input-row">
@@ -979,6 +979,27 @@ function addMessage(role, text) {
 }
 
 function sendQuick(text) { document.getElementById('chatInput').value = text; sendMessage(); }
+
+function generateInterviewQuestions() {
+  // Build context from conversation history
+  let topic = '';
+  if (conversationHistory.length > 0) {
+    // Extract topic from first user message or most recent context
+    const userMessages = conversationHistory.filter(m => m.role === 'user');
+    if (userMessages.length > 0) {
+      // Use first message as topic seed, limit to 120 chars
+      topic = userMessages[0].content.substring(0, 120);
+    }
+  }
+
+  let prompt;
+  if (topic && topic.length > 5) {
+    prompt = `Basierend auf unserem bisherigen Gespräch über "${topic}" — entwickle 5 konkrete, scharfe Interviewfragen die ich einem Experten oder Manager zu diesem Thema stellen würde. Die Fragen sollen journalistisch präzise sein, auf den Kern zielen und schwer ausweichbar sein.`;
+  } else {
+    prompt = 'Entwickle 5 konkrete, journalistisch scharfe Interviewfragen für einen Auto-Manager oder Branchenexperten. Die Fragen sollen auf aktuelle Themen in der Automobilindustrie zielen und schwer ausweichbar sein.';
+  }
+  sendQuick(prompt);
+}
 function developStory(h) { sendQuick('Hilf mir diese Story zu entwickeln: "' + h + '". Wichtigste Fragen, Quellen, Interviewpartner?'); }
 
 // ── SPEECH RECOGNITION ────────────────────────────────────────
